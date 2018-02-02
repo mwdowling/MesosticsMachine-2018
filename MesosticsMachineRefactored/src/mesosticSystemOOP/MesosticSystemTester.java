@@ -32,7 +32,7 @@ public class MesosticSystemTester {
 				NextItemAbstract.Mesostics, nw);
 		NextChapterFiltered ncf = new NextChapterFiltered(NextWord.RowAddress, NextWord.ChapterAddress, 
 				NextItemAbstract.Mesostics, nm);
-/*
+
 		//Using NextWord to get one word at a time (three here)
 		for (int i = 0; i < 3; i++) { 
 			 NextItemAbstract.Output = nw.Item();
@@ -40,9 +40,9 @@ public class MesosticSystemTester {
 			 nw.AdvanceChapterWord(NextItemAbstract.Output.get(0)[0]);
 			 nw.AdvanceMesosticLetter(NextItemAbstract.Output.get(0)[0]);
 		 }
-*/
-		
 
+		
+/*
 		//Using NextMesostic to get one mesostic at a time (two here)
 		for (int i = 0; i < 3; i++) { 
 			NextItemAbstract.OutputList = nm.Item();
@@ -52,7 +52,7 @@ public class MesosticSystemTester {
 			
 		}
 		nm.Write(NextItemAbstract.OutputList);
-
+*/
 		
 
 /*
