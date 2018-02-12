@@ -4,4 +4,4 @@ The .java files in this repository comprise a MesosticsMachine, a software syste
 
 Further background documentation is held in the MesosticsMachine-Archive repository on this GitHub site.  
 
-As of 1 February 2018, classes in the NextItem hierarchy and the NextItemFiltered hierarchy in this repository are complete.  Classes dealing with sounds and finishing, and the GUI, are incomplete and require refactoring and testing.  
+As of 12 February 2018, classes in the NextItem hierarchy and the NextItemFiltered hierarchy in this repository are complete.  Classes dealing with sounds and finishing, and the GUI, are incomplete and require refactoring and testing.  
