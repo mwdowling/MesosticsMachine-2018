@@ -13,6 +13,7 @@ public class Sentence {
 	//input variables for target chapter
 	private String ChapterAddress;
 	private  String[] ChapterArray;
+	
 	// variables for output files
 	private String SoundWords;
     private String SoundSentences;

@@ -20,32 +20,30 @@ public final class NextChapter extends NextItemAbstract {
 	@Override
 	public final ArrayList<String[]> Item() throws IOException, InterruptedException {
 		
-		NextItemAbstract.OutputList.clear(); 
+		ArrayList<String[]> output = new ArrayList<String[]>();
+		ArrayList<String[]> outputList = new ArrayList<String[]>();
+		outputList.clear(); 
 		
-		/* 
-		 * A while loop marking the index of the target word
-		 * and repeating the loop through the row
-		 * until the end of the chapter is nearly reached
-		 */
-		
-		int counter = 0;
-		while (counter < ChapterArray.length - 100) {
+		//traverse chapter adding words to the output list
+		//stop before the end of the chapter (here 100 words before)
+		int index = 0;
+		while (index < ChapterArray.length - 100) {
 				
 			//write a mesostic to ArrayList
-			Output.clear();
-			Output = Nw.Item();
-			OutputList.addAll(Output);
-			System.out.println(OutputList.size());
+			output.clear();
+			output = Nw.Item();
+			outputList.addAll(output);
+			System.out.println(outputList.size());
 			
 			//advance to next word in chapter
-			AdvanceChapterWord(OutputList.get(OutputList.size()-1)[0]);			
+			AdvanceChapterWord(outputList.get(outputList.size()-1)[0]);			
 			
 			//advance counter			
-			counter = Integer.parseInt(OutputList.get(OutputList.size()-1)[0]);
+			index = Integer.parseInt(outputList.get(outputList.size()-1)[0]);
 			
 		}//end of while loop
 	
-		return OutputList;
+		return outputList;
 	}
 
 	@Override
@@ -58,14 +56,4 @@ public final class NextChapter extends NextItemAbstract {
 		super.AdvanceChapterWord(index);
 	}
 
-	@Override
-	public void AdvanceMesosticLetter(String index) {
-		
-		/*
-		 *  No need for implementation 
-		 *  as the Item() method iterates once 
-		 *  through the mesostic row array
-		 */
-		
-	}
 }

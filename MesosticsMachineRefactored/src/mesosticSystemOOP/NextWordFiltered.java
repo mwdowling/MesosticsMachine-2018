@@ -48,22 +48,23 @@ public class NextWordFiltered extends NextItemFiltered {
 	public ArrayList<String[]> Item() throws IOException, InterruptedException {
 		
 		//get the target word and its index from the decorated NextItem's method 
-		Output = super.Item();
+		ArrayList<String[]> output = new ArrayList<String[]>();
+		output = super.Item();
 		
 		//filter the output through the syllable checking objects
-		String SavedSyllable = S.SyllableSaved(Output.get(0)[1]);
+		String SavedSyllable = S.SyllableSaved(output.get(0)[1]);
 		String Repository = Sr.Repository();
 		Boolean RepoHasSyllable = Sr.RepositoryHasSyllable(Repository, SavedSyllable);
 		if (RepoHasSyllable) {
 			
 			System.out.println("Continuing with the current row index: " + RowArrayIndex);
-			Output.get(0)[0] = "-1";
-			Output.get(0)[1] = "zero";
-			return Output;
+			output.get(0)[0] = "-1";
+			output.get(0)[1] = "zero";
+			return output;
 			
 		} else
 
-		return Output;
+		return output;
 	}
 
 	@Override
@@ -98,7 +99,7 @@ public class NextWordFiltered extends NextItemFiltered {
 		
 	}
 
-	@Override
+
 	public final void AdvanceMesosticLetter(String index) {
 		
 		//format the inputs for updating

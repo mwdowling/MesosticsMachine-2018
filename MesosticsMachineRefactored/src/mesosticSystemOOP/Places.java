@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
+//TODO integrate into NextItem hierarchy
+
 public class Places {
 
 	// input variables for target chapter

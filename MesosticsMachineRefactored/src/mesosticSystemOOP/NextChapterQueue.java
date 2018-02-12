@@ -7,7 +7,7 @@ import javax.swing.JFileChooser;
 
 public class NextChapterQueue {
 	
-	/* Integrate into GUI, 
+	/* TODO Integrate into GUI, 
 	 * then use the ArrayList of Chapters
 	 * in NextChapter to progress from one chapter to the next
 	 * and one final class that rips through all chapters in one go.

@@ -1,6 +1,7 @@
 package mesosticSystemOOP;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MesosticSystemTester {
 
@@ -22,6 +23,9 @@ public class MesosticSystemTester {
 		NextItemAbstract.Mesostics = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\Mesostics.txt";
 		NextItemAbstract.Directory = "C:\\Users\\Martin\\Documents\\MesosticsMachine";
 		
+		//local variable for output
+		ArrayList<String[]> outputList = new ArrayList<String[]>();
+		
 		// NextItem objects
 		NextWord nw = new NextWord(NextItemAbstract.RowAddress, NextItemAbstract.ChapterAddress, NextItemAbstract.Mesostics);
 		NextMesostic nm = new NextMesostic(NextItemAbstract.RowAddress, NextItemAbstract.ChapterAddress, NextItemAbstract.Mesostics);
@@ -33,54 +37,48 @@ public class MesosticSystemTester {
 		NextChapterFiltered ncf = new NextChapterFiltered(NextWord.RowAddress, NextWord.ChapterAddress, 
 				NextItemAbstract.Mesostics, nm);
 
+/*
 		//Using NextWord to get one word at a time (three here)
-		for (int i = 0; i < 3; i++) { 
-			 NextItemAbstract.Output = nw.Item();
-			 nw.Write(NextItemAbstract.Output);
-			 nw.AdvanceChapterWord(NextItemAbstract.Output.get(0)[0]);
-			 nw.AdvanceMesosticLetter(NextItemAbstract.Output.get(0)[0]);
+		for (int i = 0; i < 3; i++) { 	
+			 outputList = nw.Item();
+			 nw.Write(outputList);
+			 nw.AdvanceChapterWord(outputList.get(0)[0]);
+			 nw.AdvanceMesosticLetter(outputList.get(0)[0]);
 		 }
 
-		
-/*
-		//Using NextMesostic to get one mesostic at a time (two here)
-		for (int i = 0; i < 3; i++) { 
-			NextItemAbstract.OutputList = nm.Item();
-			//write first mesostic to file
-			//advance to next word in chapter
-			nm.AdvanceChapterWord(NextItemAbstract.OutputList.get(NextItemAbstract.OutputList.size()-1)[0]);
-			
-		}
-		nm.Write(NextItemAbstract.OutputList);
 */
-		
+
+/*
+		//Using NextMesostic to get one mesostic at a time (two here)			
+		for (int i = 0; i < 3; i++) { 
+			outputList = nm.Item();
+			nm.Write(outputList);
+			nm.AdvanceChapterWord(outputList.get(outputList.size()-1)[0]);		
+		}
+*/		
 
 /*
 		//Using NextChapter to get a whole chapter
-		NextItemAbstract.OutputList = nc.Item();
-		nc.Write(NextItemAbstract.OutputList);
-*/	
+		outputList = nc.Item();
+		nc.Write(outputList);
+*/
 		
 /*
 		//Using NextWordFiltered to get words (searching the first 5 words in the chapter here)
 		for (int i = 0; i < 5; i++) { 
-			NextItemAbstract.Output = nwf.Item();
-			//write first mesostic to file
-			nwf.Write(NextItemAbstract.Output); 
-			//advance to next word in chapter
-			nwf.AdvanceChapterWord(NextItemAbstract.Output.get(0)[0]);
-			//advance to next letter of mesostic row
-			nwf.AdvanceMesosticLetter(NextItemAbstract.Output.get(0)[0]);
+			
+			outputList = nwf.Item();
+			nwf.Write(outputList); 
+			nwf.AdvanceChapterWord(outputList.get(0)[0]);
+			nwf.AdvanceMesosticLetter(outputList.get(0)[0]);
+		
 		}
 */
-		
-
+		//TODO This test failing
 		//Tackling the problem one mesostic at a time with syllable filter 
-		NextItemAbstract.OutputList = nmf.Item();
-		//write first mesostic to file
-		//nmf.Write(NextItemAbstract.OutputList);
-		//advance to next word in chapter
-		nmf.AdvanceChapterWord(NextItemAbstract.OutputList.get(NextItemAbstract.OutputList.size()-1)[0]);
-		
+		outputList = nmf.Item();
+		nmf.Write(outputList);
+		nmf.AdvanceChapterWord(outputList.get(outputList.size()-1)[0]);
+	
 	}	
 }

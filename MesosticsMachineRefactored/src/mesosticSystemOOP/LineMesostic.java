@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * output[1] = "END"
  * 
  */
-public class LineMesostic implements Line {
+public class LineMesostic {
 
 	private String File;
 	
@@ -29,8 +29,6 @@ public class LineMesostic implements Line {
 		File = file;		
 	}
 	
-
-	@Override
 	public final void WriteLine(ArrayList<String[]> output) throws IOException {
 		BufferedWriter bw = new BufferedWriter(new FileWriter(new File(File), true));
 		bw.newLine();
@@ -38,7 +36,6 @@ public class LineMesostic implements Line {
 		bw.close();
 	}
 
-	@Override
 	public void WriteMesostic(ArrayList<String[]> outputList) throws IOException {
 		BufferedWriter bw = new BufferedWriter(new FileWriter(new File(File), true));
 		
@@ -52,7 +49,6 @@ public class LineMesostic implements Line {
 		bw.close();	
 	}
 	
-	@Override
 	public void WriteChapter(ArrayList<String[]> outputList) throws IOException {	
 		BufferedWriter bw = new BufferedWriter(new FileWriter(new File(File), true));
 			

@@ -20,34 +20,25 @@ public final class NextMesostic extends NextItemAbstract {
 	public final ArrayList<String[]> Item() throws IOException, InterruptedException {
 
 		// input and output variables
-		String startIndex = ChapterArrayIndex;
+		String startIndex = ChapterArrayIndex;		
+		ArrayList<String[]> output = new ArrayList<String[]>();
+		ArrayList<String[]> outputList = new ArrayList<String[]>();
+		
+		// verify new startIndex on console
 		System.out.println("Chapter Index: " + startIndex);
-		Integer integer = new Integer(0);
-
-		// A for loop to traverse the mesostic row
+		
+		// A for loop to traverse the mesostic row using NextWord
 		for (int i = 0; i < RowArray.length; i++) {
 			
 			RowArrayIndex = i;
-
-			/*
-			 * for this mesostic letter = i, 
-			 * use NextWord to find target word with its index in ChapterArray
-			 */
-			Output.clear();
-			Output = Nw.Item();
-			OutputList.add(Output.get(0));
+			output.clear();
+			output = Nw.Item();
+			outputList.add(output.get(0));
+			AdvanceChapterWord(output.get(0)[0]);
 			
-			// advance and reformat the startIndex to test the next word
-			//integer = new Integer(Output.get(0)[0]) + 1;
-			//startIndex = integer.toString();
-			//ChapterArrayIndex = String.valueOf(startIndex);
-			AdvanceChapterWord(Output.get(0)[0]);
-		} // end of for loop
+		} 
 		
-		integer = new Integer(Output.get(0)[0]) + 1;
-		startIndex = integer.toString();
-		
-		return OutputList;
+		return outputList;	
 		
 	}
 	
@@ -61,12 +52,4 @@ public final class NextMesostic extends NextItemAbstract {
 		super.AdvanceChapterWord(index);
 	}
 
-	@Override
-	public void AdvanceMesosticLetter(String index) {	
-		/*
-		 *  No need for implementation 
-		 *  as the Item() method iterates once 
-		 *  through the mesostic row array
-		 */
-	}
 }

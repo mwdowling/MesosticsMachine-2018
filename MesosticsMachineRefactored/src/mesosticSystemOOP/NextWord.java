@@ -21,13 +21,13 @@ public class NextWord extends NextItemAbstract {
 	public final ArrayList<String[]> Item() throws IOException, InterruptedException {
 		
 		// variables for the mesostic row targets
-		String Letter = RowArray[RowArrayIndex];// The target letter in the row
-		String NextLetter;// The letter in the row following the target letter
+		String TargetLetter = RowArray[RowArrayIndex];
+		String NextLetter;
 
 		// reformatted variables for the words in the chapter
-		int wordIndex = new Integer(ChapterArrayIndex).intValue();									
-		String wordIndexAsString = String.valueOf(wordIndex);
-		String word = ChapterArray[wordIndex];// the target word
+		int startIndexInt = new Integer(ChapterArrayIndex).intValue();									
+		String startIndex = String.valueOf(startIndexInt);
+		String word = ChapterArray[startIndexInt];// the target word
 
 		// variables for searching and reformatting target word
 		String letter = "";
@@ -39,19 +39,19 @@ public class NextWord extends NextItemAbstract {
 		 * A loop to find, reformat, split, and recombine the next word
 		 * following the starting index word that contains Letter
 		 */	
-		for (int i = 0 + wordIndex; i < ChapterArray.length; i++) {
+		for (int i = 0 + startIndexInt; i < ChapterArray.length; i++) {
 
-			if (ChapterArray[i].toLowerCase().contains(Letter)) {
+			if (ChapterArray[i].toLowerCase().contains(TargetLetter)) {
 				// assign and reformat wordIndex
-				wordIndex = i;
-				wordIndexAsString = String.valueOf(i);
+				startIndexInt = i;
+				startIndex = String.valueOf(i);
 				
 				// assign word, change to lower case, and remove all non-words
 				word = ChapterArray[i].toLowerCase().replaceAll("\\W", "").trim();
 				// split word at thisMesosticLetter
 				for (int j = 0; j < word.length(); j++) {
 					letter = String.valueOf(word.charAt(j));
-					if (letter.equals(Letter)) {
+					if (letter.equals(TargetLetter)) {
 						letterIndex = word.indexOf(letter);
 						wordSegment = word.substring(letterIndex);
 						break;
@@ -85,9 +85,9 @@ public class NextWord extends NextItemAbstract {
 					word = word.substring(0, letterIndex) + letter + word.substring(letterIndex + 1);
 					break;
 				} else
-					wordIndex = wordIndex + 1;
+					startIndexInt = startIndexInt + 1;
 				//move to next word in chapter
-				word = ChapterArray[wordIndex];
+				word = ChapterArray[startIndexInt];
 
 			} else
 				/*
@@ -96,15 +96,14 @@ public class NextWord extends NextItemAbstract {
 				word = ChapterArray[i];
 		} // end of for loop
 
-		// declare a two-element string array of the found word and its index
-		String[] output = { wordIndexAsString, word };
-		
-		//clear OutputList and add fresh output 
-		Output.clear();
-		Output.add(output);
+		// return a two-element string array of the found word and its index
+		String[] output = { startIndex, word };
+		ArrayList<String[]> outputList = new ArrayList<String[]>();
+		outputList.clear();
+		outputList.add(output);
 
 		// return the output
-		return Output;
+		return outputList;
 		
 	}
 	
@@ -118,8 +117,7 @@ public class NextWord extends NextItemAbstract {
 		super.AdvanceChapterWord(index);
 	}
 
-	@Override
-	public void AdvanceMesosticLetter(String index) {
+	public void AdvanceMesosticLetter() {
 		
 		//advance the array index or continue from the beginning
 		if (RowArrayIndex + 1 < RowArray.length) {

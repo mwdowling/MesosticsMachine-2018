@@ -3,41 +3,36 @@ package mesosticSystemOOP;
 
 /**
  * @author Martin Dowling
-
- * 
- * 
+ *
  * Within a JFrame lies a navigable hierarchy of JPanel "panels":
  * 
  *         (1) A Welcome panel with links to setup, run, and view cards 
- *         
  *         (2) A Setup panel for choosing the project directory, mesostic row, 
  *         		and target chapters 
- *         
  *         (3) Run panel to call methods in the system's core objects 
  *         		to create mesostics with and without syllable filtering 
- *         
  *         (4) A panel card to view files produced by the run functions
  * 
- * Prefixes used: 
+ * Please note the following:
+ * 
+ * (1) The following Prefixes used for panel and filechooser objects: 
  * JPxxx = a JPanel object xxx 
  * JFCxxx = a JFileChooser xxx
  *         
- * Comments below include TEMPORAL COUPLING WARNINGS 
- * because this GUI will only function properly if:
+ * (2) There are TEMPORAL COUPLING WARNINGS in the code generated because 
+ * this GUI will only function properly under these conditions (see guidance notes):
  * 
- *         (1) The user must choose the project directory first
- *         
+ *         (1) The user must choose the project directory first        
  *         (2) The user must choose the target chapter(s) after the project directory is set
- *         
- *         (3) The user must establish the mesostic row must after the project directory is set
- *         
+ *         (3) The user must establish the mesostic row after the project directory is set
  *         (4) The project directory, target chapter(s) and mesostic row must be set 
  *         	   before the user engages the functions on the Run panel and its sub-panels 
  *         
- * The location notepad.exe is hard coded in this GUI at VVVVV
+ * (3) The location notepad.exe is hard coded in this GUI. 
+ * If the user of the GUI stores notepad.exe in another location
+ * or prefers to use another program to open .txt files, this code must be changed
  * 
- * The user of the GUI may keep notepad.exe in another location
- * or prefer to use another program to open .txt files
+ * @TODO As of 12 February 2018 this refactored class has not been tested.
  */
 
 import java.awt.EventQueue;
@@ -60,7 +55,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import mesosticSystem.MesosticMakerLonger;
 import java.awt.Font;
 import javax.swing.JTextArea;
 import java.awt.Color;
@@ -82,28 +76,25 @@ public class MesosticGUIOOP {
 	private JPanel JPFinish;// the finish panel
 	private JPanel JPView;// the view panel
 
-	// FileChoosers to set the project directory and target chapter
-	//private JFileChooser JFCDirectory;
-	static String Directory = "C:\\Users\\";// default directory for JFCDirectory
-	//private JFileChooser JFCChapter;
+	// Default directory for the GUI
+	static String Directory = "C:\\Users\\";
+	private JFileChooser JFCDirectory;
 	
-	//Static variables for the target chapters
-	static String ChapterAddress;// target chapter set with Select Single Chapter Button
+	//Static variables for constructors requiring the target chapters
+	static String ChapterAddress;
 	static String[] ChapterArray;
 	static String ChapterArrayIndex;
 	private ArrayList<String> ChapterQueue = new ArrayList<String>();
 
-	// Static variables for the mesostic row
-	private JTextField RowtextField;// field for user input of the row
+	// field for user input of the mesostic row in GUI
+	private JTextField RowtextField;
+	// Static variables for constructors requiring the mesostic row
 	static String RowAddress;
 	static String[] RowArray;
 	static int RowArrayIndex;
 
-	// mesostics output files:
+	// mesostics output file:
 	static String Mesostics = Directory + "\\Mesostics.txt";
-	private String MesosticsPlusAdjacent = Directory + "\\Mesostics Plus Adjacent.txt";
-	private String MesosticsCentered = Directory + "\\Mesostics Centred.txt";
-	private String MesosticsCollated = Directory + "\\Mesostics Collated.txt";
 
 	// sounds files:
 	private String OEDSounds = Directory + "\\Sounds and Places\\OEDSounds.txt";
@@ -115,9 +106,7 @@ public class MesosticGUIOOP {
 	private String Places = Directory + "\\Sounds and Places\\Chapter Places.txt";
 	private String PlacesSentences = Directory + "\\Sounds and Places\\Chapter Places Sentences.txt";
 
-	/**
-	 * Launch the application.
-	 */
+	//Launch the application.
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -131,14 +120,12 @@ public class MesosticGUIOOP {
 		});
 	}
 
-	/**
-	 * Application constructor with its huge initialize method.
-	 */
+	// Application constructor with its huge initialize method.
 	public MesosticGUIOOP() {
 		initialize();
 	}
 
-	/**
+	/*
 	 * This method initializes the contents of the frame by:
 	 * 
 	 * (1) initializing the frame 
@@ -308,9 +295,6 @@ public class MesosticGUIOOP {
 					// assign the file paths for row and mesostics output files
 					RowAddress = Directory + "\\Mesotic Row.txt";
 					Mesostics = Directory + "\\Mesostics.txt";
-					MesosticsPlusAdjacent = Directory + "\\Mesostics Plus Adjacent.txt";
-					MesosticsCentered = Directory + "\\Mesostics Centered.txt";
-					MesosticsCollated = Directory + "\\Mesostics Collated.txt";
 
 					// assign the file paths for the sounds and places files
 					OEDSounds = Directory + "\\Sounds and Places\\OEDSounds Final.txt";
@@ -567,14 +551,14 @@ public class MesosticGUIOOP {
 		btnMakeMesosticsLonger.setBounds(154, 187, 581, 62);
 		JPRun.add(btnMakeMesosticsLonger);
 
-		// The MakeMesostics Longer sub-panel and its label
+		// The MakeMesostics (Longer) sub-panel and its label
 		JPMesosticsLonger.setLayout(null);
 		JLabel lblMakeMesosticsLonger = new JLabel("Make Longer Mesostics");
 		lblMakeMesosticsLonger.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		lblMakeMesosticsLonger.setBounds(215, 12, 459, 69);
 		JPMesosticsLonger.add(lblMakeMesosticsLonger);
 
-		// The Next Word button
+		// The Next Word (Longer) button
 		JButton btnNextWordLonger = new JButton("Next Word");
 		btnNextWordLonger.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		btnNextWordLonger.setBounds(278, 130, 307, 74);
@@ -585,20 +569,20 @@ public class MesosticGUIOOP {
 				
 				try {
 					//instantiate NextWord and call its methods
-					NextWord nw = new NextWord(RowAddress, ChapterAddress);
-					String[] output = nw.Item();
-					nw.Write(Mesostics, output);
-					nw.Advance(output[0]);
-					
+					NextWord nw = new NextWord(RowAddress, ChapterAddress, Mesostics);
+					ArrayList<String[]> output = nw.Item();
+					nw.Write(output);
+					nw.AdvanceChapterWord(output.get(0)[0]);
+					nw.AdvanceMesosticLetter();
+				
+				// catches redirect user to the setup window
 				} catch (IOException e1) {
 					e1.printStackTrace();
-					//redirect user to the setup window
 					JOptionPane.showMessageDialog(null, "An error has occurred."
 							+ "\nSetup may be incorrect."
 							+ "\nClose programme and return to Setup");
 
 				} catch (InterruptedException e1) {
-					// redirect user to the setup window
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, "An error has occurred."
 							+ "\nSetup may be incorrect."
@@ -609,7 +593,7 @@ public class MesosticGUIOOP {
 		});
 		JPMesosticsLonger.add(btnNextWordLonger);
 
-		// The Next Mesostic button
+		// The Next Mesostic (Longer) button
 		JButton btnNextMesosticLonger = new JButton("Next Mesostic");
 		btnNextMesosticLonger.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		btnNextMesosticLonger.setBounds(278, 216, 307, 74);
@@ -620,23 +604,22 @@ public class MesosticGUIOOP {
 				
 				try {
 					//instantiate NextMesostic and Item() and Advance() methods
-					 NextMesostic nm = new NextMesostic(NextWord.RowAddress, NextWord.ChapterAddress);
-					 String[] output = nm.Item();
-					 nm.Advance(output[0]);
+					 NextMesostic nm = new NextMesostic(RowAddress, ChapterAddress, Mesostics);
+					 ArrayList<String[]> output = nm.Item();
+					 nm.AdvanceChapterWord(output.get(0)[0]);
 					 
+				//catch redirects user to the setup window	 
 				} catch (IOException | InterruptedException e1) {
 					e1.printStackTrace();
-					//redirect user to the setup window
 					JOptionPane.showMessageDialog(null, "An error has occurred."
 							+ "\nSetup may be incorrect."
 							+ "\nClose programme and return to Setup");
-
 				} 
 			}
 		});
 		JPMesosticsLonger.add(btnNextMesosticLonger);
 	
-		// The Next Chapter button
+		// The Next Chapter (Longer) button
 		JButton btnNextChapterLonger = new JButton("Next Chapter");
 		btnNextChapterLonger.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		btnNextChapterLonger.setBounds(278, 302, 307, 74);
@@ -647,23 +630,20 @@ public class MesosticGUIOOP {
 				
 				try {
 					//instantiate NextChapter and call Item() and Advance() methods
-					 NextChapter nc = new NextChapter(RowAddress, ChapterAddress); 
+					 NextChapter nc = new NextChapter(RowAddress, ChapterAddress, Mesostics); 
 					 nc.Item();
-					
+				//redirect user to the setup window	
 				} catch (IOException | InterruptedException e1) {
-					e1.printStackTrace();
-					//redirect user to the setup window
+					e1.printStackTrace();			
 					JOptionPane.showMessageDialog(null, "An error has occurred."
 							+ "\nSetup may be incorrect."
 							+ "\nClose programme and return to Setup");
-
-				} 
-				
+				} 			
 			}
 		});
 		JPMesosticsLonger.add(btnNextChapterLonger);
 	
-		// The All Chapters button
+		// The All Chapters (Longer) button
 		JButton btnAllChaptersLonger = new JButton("All Chapters");
 		btnAllChaptersLonger.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		btnAllChaptersLonger.setBounds(278, 388, 307, 74);
@@ -671,8 +651,8 @@ public class MesosticGUIOOP {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-					
-/*				try {
+				//TODO this action requires a collection of chapters to traverse				
+				/*try {
 					//instantiate AllChapters
 					//call Item() and Advance() methods
 					
@@ -688,7 +668,7 @@ public class MesosticGUIOOP {
 		});
 		JPMesosticsLonger.add(btnAllChaptersLonger);
 		
-		//The Done button 
+		//The Done (with Mesostics Longer) button 
 		JButton btnMesosticLongerDone = new JButton("Done");
 		btnMesosticLongerDone.setFont(new Font("Tahoma", Font.PLAIN, 21));
 		btnMesosticLongerDone.setBounds(736, 485, 141, 35);
@@ -714,14 +694,14 @@ public class MesosticGUIOOP {
 		});
 		JPRun.add(btnMakeMesosticsShorter);
 		
-		// The Make Mesostics Shorter sub-panel and its label
+		// The Make Mesostics (Shorter) sub-panel and its label
 		JPMesosticsShorter.setLayout(null);
 		JLabel lblMakeMesosticsShorter = new JLabel("Make Shorter Mesostics");
 		lblMakeMesosticsShorter.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		lblMakeMesosticsShorter.setBounds(228, 31, 435, 51);
 		JPMesosticsShorter.add(lblMakeMesosticsShorter);
 
-		// The Next Word button
+		// The Next Word (Shorter) button
 		JButton btnNextWordShorter = new JButton("Next Word");
 		btnNextWordShorter.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		btnNextWordShorter.setBounds(300, 125, 290, 61);
@@ -732,19 +712,18 @@ public class MesosticGUIOOP {
 		
 				try {
 					//Instantiate NextWord, its Decorator, and call Item() and Advance() methods
-					NextWord nw = new NextWord(RowAddress, ChapterAddress);
+					NextWord nw = new NextWord(RowAddress, ChapterAddress, Mesostics);
 					NextItemFiltered nwf = new NextWordFiltered(nw, Directory);
-					String[] output = nwf.Item();
-					nwf.Write(Mesostics,output); 
-							
+					ArrayList<String[]> output = nwf.Item();
+					nwf.Write(output); 
+				
+				// catches redirect user to the setup window			
 				} catch (IOException e1) {
 					e1.printStackTrace();
-					// redirect user to the setup window
 					JOptionPane.showMessageDialog(null, "An error has occurred." + "\nSetup may be incorrect."
 							+ "\nClose programme and return to Setup");
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
-					//redirect user to Setup window
 					JOptionPane.showMessageDialog(null,
 							"Internet connection interrupted" + "\nClose programme and start over");
 				}
@@ -753,8 +732,7 @@ public class MesosticGUIOOP {
 		});
 		JPMesosticsShorter.add(btnNextWordShorter);
 	
-	
-		// The Next Mesostic button
+		// The Next Mesostic (Shorter) button
 		JButton btnNextMesosticShorter = new JButton("Next Mesostic");
 		btnNextMesosticShorter.setBounds(300, 221, 290, 61);
 		btnNextMesosticShorter.setFont(new Font("Tahoma", Font.PLAIN, 42));
@@ -764,15 +742,15 @@ public class MesosticGUIOOP {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
-					//Instantiate NextMesosticFiltered and call Item() and Advance() methods
-					 NextMesosticFiltered nm = new NextMesosticFiltered(NextWord.RowAddress, NextWord.ChapterAddress, Directory);
-					 String[] output = nm.Item();
-					 nm.Write(Mesostics, output);
-					 nm.Advance(output[0]);
-					 
+					NextWord nw = new NextWord(RowAddress, ChapterAddress, Mesostics);
+					NextMesosticFiltered nmf = new NextMesosticFiltered(RowAddress, ChapterAddress, Mesostics, nw);
+					ArrayList<String[]> output = nmf.Item();
+					nmf.Write(output);
+					nmf.AdvanceChapterWord(output.get(output.size()-1)[0]);
+					
+				// catches redirect user to the setup window	 
 				} catch (IOException e1) {
 					e1.printStackTrace();
-					// redirect user to the setup window
 					JOptionPane.showMessageDialog(null, "An error has occurred." + "\nSetup may be incorrect."
 							+ "\nClose programme and return to Setup");
 				} catch (InterruptedException e1) {
@@ -784,7 +762,7 @@ public class MesosticGUIOOP {
 		});
 		JPMesosticsShorter.add(btnNextMesosticShorter);
 		
-	
+		// TODO this requires testing
 		// The Next Chapter button
 		JButton btnNextChapterShorter = new JButton("Next Chapter");
 		btnNextChapterShorter.setBounds(300, 313, 290, 61);
@@ -794,15 +772,17 @@ public class MesosticGUIOOP {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					//Instantiate NextChapterFiltered and call Item() and Advance() methods
-					NextChapterFiltered nc = new NextChapterFiltered(RowAddress, ChapterAddress, Directory); 
-					String[] output = nc.Item();
-					nc.Write(Mesostics, output);
-					nc.Advance(output[0]);
-					
+					NextWord nw = new NextWord(RowAddress, ChapterAddress, Mesostics);
+					NextMesosticFiltered nmf = new NextMesosticFiltered(RowAddress, ChapterAddress, Mesostics, nw);
+					NextChapterFiltered ncf = new NextChapterFiltered(NextWord.RowAddress, NextWord.ChapterAddress, 
+							NextItemAbstract.Mesostics, nmf); 
+					ArrayList<String[]> output = ncf.Item();
+					ncf.Write(output);
+					ncf.AdvanceChapterWord(output.get(0)[0]);
+				
+				// catches redirect user to the setup window
 				} catch (IOException e1) {
-					e1.printStackTrace();
-					// redirect user to the setup window
+					e1.printStackTrace();				
 					JOptionPane.showMessageDialog(null, "An error has occurred." + "\nSetup may be incorrect."
 							+ "\nClose programme and return to Setup");
 				} catch (InterruptedException e1) {
@@ -814,7 +794,7 @@ public class MesosticGUIOOP {
 		});
 		JPMesosticsShorter.add(btnNextChapterShorter);
 		
-		
+		//TODO requires a collection of chapters
 		// The All Chapters button
 		JButton btnAllChaptersShorter = new JButton("All Chapters");
 		btnAllChaptersShorter.setBounds(300, 404, 290, 61);
@@ -823,7 +803,7 @@ public class MesosticGUIOOP {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-/*				try {
+				/*try {
 					//Instantiate AllChaptersFiltered
 					//call Item() and Advance() methods
 				} catch (IOException e1) {
@@ -843,7 +823,7 @@ public class MesosticGUIOOP {
 		JPMesosticsShorter.add(btnAllChaptersShorter);
 		
 
-		// The Done button 
+		// The Done (Mesostics Shorter) button 
 		JButton btnMesosticsShorterDone = new JButton("Done");
 		btnMesosticsShorterDone.setBounds(782, 474, 82, 36);
 		btnMesosticsShorterDone.setFont(new Font("Tahoma", Font.PLAIN, 21));
@@ -866,9 +846,10 @@ public class MesosticGUIOOP {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					Sounds s = new Sounds(ChapterAddress, OEDSounds, Sounds, SoundsSentences);
-					s.SoundWord();
-					//s.sentenceGetter(); Removed this method to its own class. REFACTOR
+					Sounds sound = new Sounds();
+					Sentence sentence = new Sentence(ChapterArray, Sounds, SoundsSentences);
+					sound.SoundWord();
+					sentence.WriteSentence(); 
 
 				} catch (IOException e1) {
 					e1.printStackTrace();
@@ -889,12 +870,12 @@ public class MesosticGUIOOP {
 
 				try {
 					Places p = new Places(ChapterAddress, NotPlaces, Places, PlacesSentences);
-					p.wordGetter();
-					//p.sentenceGetter(); //why have I left this method out of Places?
-
+					Sentence sentence = new Sentence(ChapterArray, Places, PlacesSentences);
+					p.PlaceWord();
+					sentence.WriteSentence();
+				// catch redirects user to the setup window
 				} catch (IOException e1) {
-					e1.printStackTrace();
-					// redirect user to the setup window
+					e1.printStackTrace();				
 					JOptionPane.showMessageDialog(null, "An error has occurred." + "\nSetup may be incorrect."
 							+ "\nClose programme and return to Setup");
 				}
@@ -917,6 +898,8 @@ public class MesosticGUIOOP {
 		btnRunDone.setBounds(744, 478, 123, 42);
 		JPRun.add(btnRunDone);
 
+		//TODO Finish the finisher objects
+	
 		// END OF RUN PANELS CODE; BEGINNING OF FINISH PANEL CODE
 
 		// the Finish panel and its label
@@ -932,21 +915,14 @@ public class MesosticGUIOOP {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					MesosticFinisherAdjacentWordAdder mawa = new MesosticFinisherAdjacentWordAdder(ChapterAddress, Mesostics,
-							MesosticsPlusAdjacent);
-					mawa.runMaker();
+					MesosticsFinished mf = new MesosticsFinished (Mesostics, ChapterArray);
+					mf.WithAdjacentWords();
 				} catch (IOException e1) {
 					e1.printStackTrace();
 					// redirect user to the setup window
 					JOptionPane.showMessageDialog(null, "An error has occurred." + "\nSetup may be incorrect."
 							+ "\nClose programme and return to Setup");
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-					// redirect user to the setup window
-					JOptionPane.showMessageDialog(null,
-							"The programme has been interrupted." + "\nClose programme and return to Setup");
-				}
+				} 
 
 			}
 		});
@@ -960,20 +936,16 @@ public class MesosticGUIOOP {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					MesosticFinisherCentered mfc = new MesosticFinisherCentered(MesosticsPlusAdjacent,
-							MesosticsCentered);
-					mfc.runMaker();
+					MesosticsFinished mf = new MesosticsFinished(Mesostics, ChapterArray);
+					mf.WithCentredLines();
+				
+				// catches redirect user to the setup window	
 				} catch (IOException e1) {
 					e1.printStackTrace();
-					// redirect user to the setup window
+					
 					JOptionPane.showMessageDialog(null, "An error has occurred." + "\nSetup may be incorrect."
 							+ "\nClose programme and return to Setup");
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-					// redirect user to the setup window
-					JOptionPane.showMessageDialog(null, "An error has occurred." + "\nSetup may be incorrect."
-							+ "\nClose programme and return to Setup");
-				}
+				} 
 			}
 		});
 		btnCentreMesosticLines.setBounds(228, 307, 434, 61);
@@ -985,11 +957,11 @@ public class MesosticGUIOOP {
 		btnCollate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				MesosticFinisherCollated mmc = new MesosticFinisherCollated(Mesostics, Sounds, Places,
-						MesosticsCollated);
+				MesosticsFinished mf = new MesosticsFinished (Mesostics, ChapterArray);
 				try {
-					mmc.runMaker();
-				} catch (IOException | InterruptedException e1) {
+					mf.WithItemsCollated(Sounds);
+					mf.WithItemsCollated(Places);
+				} catch (IOException e1) {
 					// redirect user to the setup window
 					JOptionPane.showMessageDialog(null, "An error has occurred." + "\nSetup may be incorrect."
 							+ "\nClose programme and return to Setup");
@@ -1044,6 +1016,7 @@ public class MesosticGUIOOP {
 			public void actionPerformed(ActionEvent e) {
 
 				JPView.setVisible(false);
+				JFileChooser JFCChapter = new JFileChooser();
 				JFileChooser fileChooserOpen = new JFileChooser();
 				fileChooserOpen.setBounds(0, 0, 438, 241);
 				fileChooserOpen.setCurrentDirectory(new File(Directory));

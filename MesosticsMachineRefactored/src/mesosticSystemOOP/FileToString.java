@@ -13,9 +13,6 @@ public class FileToString {
 	}
 	
 	public String output() throws IOException {
-		
 		return new String(Files.readAllBytes(Paths.get(FileName)));
-	
-	
 	}
 }

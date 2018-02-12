@@ -22,7 +22,9 @@ public final class NextChapterFiltered extends NextItemFiltered {
 	@Override
 	public ArrayList<String[]> Item() throws IOException, InterruptedException {
 		
-		NextItemAbstract.OutputList.clear(); 
+		ArrayList<String[]> output = new ArrayList<String[]>();
+		ArrayList<String[]> outputList = new ArrayList<String[]>();
+		outputList.clear(); 
 		
 		/* 
 		 * A while loop marking the index of the target word
@@ -35,24 +37,23 @@ public final class NextChapterFiltered extends NextItemFiltered {
 			for (int i = 0; i < RowArray.length; i++) {
 				
 				//write a mesostic to ArrayList
-				NextItemAbstract.Output.clear();
-				NextItemAbstract.Output = Nwf.Item();
-				NextItemAbstract.OutputList.addAll(NextItemAbstract.Output);
-				System.out.println(NextItemAbstract.OutputList.size());
+				output.clear();
+				output = Nwf.Item();
+				outputList.addAll(output);
+				System.out.println(outputList.size());
 				
 				//advance to next word in chapter
-				AdvanceChapterWord(NextItemAbstract.OutputList.get(NextItemAbstract.OutputList.size()-1)[0]);			
+				AdvanceChapterWord(outputList.get(outputList.size()-1)[0]);			
 				
 				//advance counter			
-				counter = Integer.parseInt(NextItemAbstract.OutputList.get(NextItemAbstract.OutputList.size()-1)[0]);
+				counter = Integer.parseInt(outputList.get(outputList.size()-1)[0]);
 				
 			} // end of for loop
 		}//end of while loop
 			
-		return NextItemAbstract.OutputList;
+		return outputList;
 		 
-	}//end of method
-
+	}
 
 	@Override
 	public void Write(ArrayList<String[]> outputList) throws IOException, InterruptedException {
@@ -64,9 +65,5 @@ public final class NextChapterFiltered extends NextItemFiltered {
 			super.AdvanceChapterWord(index);
 	}
 
-	@Override
-	public void AdvanceMesosticLetter(String index) {
-		super.AdvanceMesosticLetter(index);
-	}
 }
 

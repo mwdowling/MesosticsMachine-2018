@@ -32,12 +32,6 @@ public interface NextItem {
 	
 	void AdvanceChapterWord(String index);
 	
-	void AdvanceMesosticLetter(String index);
+	//void AdvanceMesosticLetter(String index);
 	
-	/* 
-	 * possible additional method:
-	 * void AdvanceNewChapter(File[]);
-	 * queue up multiple chapters in an Array of files
-	 * to process a succession of chapters at runtime
-	 */
 }

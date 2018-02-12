@@ -8,7 +8,7 @@ package mesosticSystemOOP;
  * and appends those words with its array index value to
  * the "sound" word repository 
  * 
- * NEEDS WORK!!
+ * TODO needs a constructor
  * 
  */
 

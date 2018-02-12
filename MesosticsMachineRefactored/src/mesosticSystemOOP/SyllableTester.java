@@ -1,6 +1,7 @@
 package mesosticSystemOOP;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class SyllableTester {
 
@@ -19,23 +20,23 @@ public class SyllableTester {
 		NextItemAbstract.Directory = "C:\\Users\\Martin\\Documents\\MesosticsMachine";
 		NextWord nw = new NextWord(NextWord.RowAddress, NextWord.ChapterAddress, NextItemAbstract.Mesostics);
 		
-
+		ArrayList<String[]> output = new ArrayList<String[]>();
 		for (int i = 0; i < 4; i++) {
 
-			NextItemAbstract.Output  = nw.Item();
-			String SavedSyllable = new Syllable().SyllableSaved(NextItemAbstract.Output.get(0)[1]);
+			output  = nw.Item();
+			String SavedSyllable = new Syllable().SyllableSaved(output.get(0)[1]);
 			SyllableRecord sr = new SyllableRecord();
 			String Repository = sr.Repository();
 			Boolean RepoHasSyllable = sr.RepositoryHasSyllable(Repository, SavedSyllable);
 			
 			if (RepoHasSyllable) {
-				nw.AdvanceChapterWord(NextItemAbstract.Output.get(0)[0]);
+				nw.AdvanceChapterWord(output.get(0)[0]);
 				NextWord.RowArrayIndex--;
 
 			} else
 
 			{
-				nw.Write(NextItemAbstract.Output);
+				nw.Write(output);
 				sr.WriteSyllableToRepository(Repository, SavedSyllable);
 				nw.AdvanceChapterWord(nw.Item().get(0)[0]);
 			}

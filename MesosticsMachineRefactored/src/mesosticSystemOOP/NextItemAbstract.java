@@ -5,11 +5,20 @@ import java.util.ArrayList;
 
 /**
  * 
- * @author Martin 
- * This abstract class contains all needed variables and constructors. 
- * for the three "NextX" concrete classes which extend it,
- * and the NextWordItemFiltered abstract decorator class
+ * @author Martin Dowling
+ * 
+ * This abstract class contains all needed variables and constructors
+ * for the concrete classes which make mesostics or portions thereof. 
+ * At present these are:
+ * 
+ * @see NextWord which creates the next word in a mesostic
+ * @see NextMesostic  which creates the next whole mesostic
+ * @see NextChapter which creates all the successive mesositics in a chapter 
+ * 
+ * @see NextItemFiltered an abstract decorator class 
+ * which is extended by corresponding syllable filtering classes
  */
+
 public abstract class NextItemAbstract implements NextItem {
 
 	// reference classes
@@ -28,11 +37,9 @@ public abstract class NextItemAbstract implements NextItem {
 	static String ChapterAddress;
 	static String[] ChapterArray;
 	static String ChapterArrayIndex;
-
-	// output variables for mesostics files
-	static ArrayList<String[]> Output = new ArrayList<String[]>();
-	static ArrayList<String[]> OutputList = new ArrayList<String[]>();
-	static String Mesostics; //output for writing to Mesostics file
+	
+	// location variables for mesostics files
+	static String Mesostics; //location of Mesostics file
 	static String Directory;// location of syllable repositories
 
 	/* 
@@ -65,6 +72,8 @@ public abstract class NextItemAbstract implements NextItem {
 	 * This method inherited as is in the non-filtered objects
 	 * and refined in the filtered objects 
 	 */
+	
+	//TODO Same story for Write(), should be implemented here and use super where appropriate below
 	@Override
 	public void AdvanceChapterWord(String index) {	
 		

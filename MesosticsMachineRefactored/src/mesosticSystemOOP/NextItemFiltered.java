@@ -5,19 +5,16 @@ import java.util.ArrayList;
 
 /**
  * 
- * @author Martin
+ * @author Martin Dowling
  * 
- * This class is an abstract decorator 
- * in keeping with the GOF Decorator Design pattern.
+ * This class is an abstract decorator following the GOF Decorator Design pattern.
  * 
- * It extends the abstract NextITem by 
- * adding a decorated NextITem to the appropriate constructors
+ * It extends the NextITem class by adding a decorated NextITem to appropriate constructors
  * 
- * It overrides the NextItem interface methods 
- * with methods that call the corresponding methods in the decorated NextItem,
+ * It overrides the NextItem interface methods with methods that call the corresponding methods in the decorated NextItem,
  * which will have new functionality added in the concrete decorated NextITem. 
  * 
- * NOT SURE ALL THESE CONSTRUCTORS ARE NEEDED HERE.
+ * CHECK: Are both constructors needed?
  */
 
 public abstract class NextItemFiltered extends NextItemAbstract {
@@ -30,8 +27,7 @@ public abstract class NextItemFiltered extends NextItemAbstract {
 							String mesostics, LineMesostic lm, NextItem decoratedNextItem, String directory) {
 		super(row, chapter, rowArrayIndex, chapterArrayIndex, mesostics, lm);
 		Directory = directory; 
-		DecoratedNextItem = decoratedNextItem;
-		
+		DecoratedNextItem = decoratedNextItem;		
 	}
 	
 	//NextMesosticFiltered and NextChapterFiltered primary constructor
@@ -40,11 +36,10 @@ public abstract class NextItemFiltered extends NextItemAbstract {
 		super(row, chapter, mesostics, lm, nw);
 		Directory = directory; 
 		DecoratedNextItem = decoratedNextItem;
-		
-		
+			
 	}
 	
-	//The abstract decorator calls all the methods of the decorated object
+	//The abstract decorator calls all the methods of the decorated object:
 	@Override
 	public ArrayList<String[]> Item() throws IOException, InterruptedException {
 		return DecoratedNextItem.Item();
@@ -61,9 +56,4 @@ public abstract class NextItemFiltered extends NextItemAbstract {
 		
 	}
 
-	@Override
-	public void AdvanceMesosticLetter(String index) {
-		DecoratedNextItem.AdvanceMesosticLetter(index);
-		
-	}
 }
