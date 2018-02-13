@@ -64,21 +64,21 @@ public class NextWordFiltered extends NextItemFiltered {
 			return output;
 			
 		} else
-
+			
+		Ls.WriteSyllable(output);	
 		return output;
 	}
 
 	@Override
 	public void Write(ArrayList<String[]> output) throws IOException, InterruptedException {
 		
-		//if Repository has syllable, do not write to mesostic file or syllable repository
+		//if Repository has syllable, do not write to mesostic file
 		if(output.get(0)[1] != "don't write it"){
 			
-			//add to the mesostics
 			super.Write(output);
 			System.out.println("Adding to mesostics: " + output.get(0)[1]);
-			//add to the appropriate syllable repository
-			Ls.WriteSyllable(output);	
+
+				
 		}
 	}
 	

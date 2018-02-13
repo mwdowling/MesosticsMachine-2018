@@ -60,7 +60,7 @@ public class MesosticSystemTester {
 			nm.Write(outputList);
 			nm.AdvanceChapterWord(outputList.get(outputList.size()-1)[0]);		
 		}
-*/		
+*/
 
 /*
 		//Using NextChapter to get a whole chapter
@@ -79,12 +79,18 @@ public class MesosticSystemTester {
 		}
 */
 
-/*
-		//Tackling the problem one mesostic at a time with syllable filter 
-		outputList = nmf.Item();
-		nmf.Write(outputList);
-		nmf.AdvanceChapterWord(outputList.get(outputList.size()-1)[0]);
-*/
+
+		/* Tackling the problem one mesostic at a time with syllable filter
+		 * This works but not a properly structured object because
+		 * the returned ArrayList is never used
+		 * Webdriver to fragile to accumulate data in an Arraylist of arrays
+		 * as happens with NextMesostic object above
+		 * 
+		 * Better to use NextWordFiltered inside a for loop in the GUI
+		 */
+		nmf.Item();
+		
+
 
 /*
 		//Gathering all sounds from chapter

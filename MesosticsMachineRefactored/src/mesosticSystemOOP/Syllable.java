@@ -52,7 +52,7 @@ public class Syllable {
 		Driver.get("http://www.howmanysyllables.com/");
 
 		// Get word divided into syllables from website
-		Driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);//helps!
+		Driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);//helps!
 		WebElement input = Driver.findElement(By.name("SearchQuery_FromUser"));
 		input.sendKeys(word);
 		WebElement submit = Driver.findElement(By.id("SearchDictionary_Button"));
@@ -90,14 +90,6 @@ public class Syllable {
 			if (wordAsSyllables[i].contains(Letter)) {
 				savedSyllable = wordAsSyllables[i].trim();
 			}
-		}
-		try        
-		{
-		    Thread.sleep(5000);
-		} 
-		catch(InterruptedException ex) 
-		{
-		    Thread.currentThread().interrupt();
 		}
 		Driver.quit();
 		return savedSyllable;
