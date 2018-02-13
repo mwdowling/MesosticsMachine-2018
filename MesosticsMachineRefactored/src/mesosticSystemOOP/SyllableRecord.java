@@ -2,6 +2,7 @@ package mesosticSystemOOP;
 
 /**
  * @author Martin Dowling
+
  * 
  * This class allows for the creation of an object that does the following:
  * 
@@ -42,6 +43,7 @@ import java.util.Map;
 public class SyllableRecord {
 
 	//don't I need rowarray variable here to feed first method?
+	
 	// constructor
 	public SyllableRecord() {
 
@@ -94,7 +96,7 @@ public class SyllableRecord {
 
 		for (String line = br.readLine(); line != null; line = br.readLine()) {
 			if (line.equals(savedSyllable)) {
-				System.out.println("Repository has Syllable.");
+				
 				RepositoryHas = true;
 				break;
 			} else

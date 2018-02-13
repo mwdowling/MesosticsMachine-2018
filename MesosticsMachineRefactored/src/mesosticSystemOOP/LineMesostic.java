@@ -59,7 +59,9 @@ public class LineMesostic {
 		//traverse the Arraylist of String[2]'s of index/word pairs and write them to file 
 		bw.newLine();
 		for(String[] s : outputList){
-			bw.write(s[0] + "\t" + s[1]);
+			for(int i = 0; i < s.length; i ++){
+				bw.write(s[i] + "\t");
+			}
 			bw.newLine();
 		}
 		

@@ -1,6 +1,7 @@
 package mesosticSystemOOP;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Martin Dowling 
@@ -21,7 +22,9 @@ import java.io.IOException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+
 
 public class Syllable {
 
@@ -35,16 +38,21 @@ public class Syllable {
 		String Letter = NextWord.RowArray[NextWord.RowArrayIndex];
 
 		/*
-		 * Set the "geckodriver.exe", the engine linking Selenium and Firefox,
-		 * create a new instance of the Firefox driver, and get the syllable
-		 * website
+		 * the "geckodriver.exe", the engine linking Selenium and Firefox,
+		 * has not been working Feb 2018
+		 * //System.setProperty("webdriver.gecko.driver", "C:\\Users\\Martin\\Documents\\Java Libraries\\geckodriver-v0.19.1-win64\\geckodriver.exe");
+		 * //WebDriver Driver = new FirefoxDriver();
+		 * 
+		 * Instead use a ChromeDriver to get the syllable website:
 		 */
-		System.setProperty("webdriver.gecko.driver",
-				"C:\\Users\\Martin\\Documents\\Java Libraries\\geckodriver-v0.19.1-win64\\geckodriver.exe");
-		WebDriver Driver = new FirefoxDriver();
+		
+		System.setProperty("webdriver.chrome.driver", "C:\\Users\\Martin\\Documents\\Java Libraries\\chromedriver_win32\\chromedriver.exe");
+		WebDriver Driver = new ChromeDriver();
+		
 		Driver.get("http://www.howmanysyllables.com/");
 
 		// Get word divided into syllables from website
+		Driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);//helps!
 		WebElement input = Driver.findElement(By.name("SearchQuery_FromUser"));
 		input.sendKeys(word);
 		WebElement submit = Driver.findElement(By.id("SearchDictionary_Button"));
@@ -83,8 +91,17 @@ public class Syllable {
 				savedSyllable = wordAsSyllables[i].trim();
 			}
 		}
-
+		try        
+		{
+		    Thread.sleep(5000);
+		} 
+		catch(InterruptedException ex) 
+		{
+		    Thread.currentThread().interrupt();
+		}
 		Driver.quit();
 		return savedSyllable;
+		
+		
 	}
 }

@@ -57,9 +57,10 @@ public class NextWordFiltered extends NextItemFiltered {
 		Boolean RepoHasSyllable = Sr.RepositoryHasSyllable(Repository, SavedSyllable);
 		if (RepoHasSyllable) {
 			
+			System.out.println("Repository has Syllable.");
 			System.out.println("Continuing with the current row index: " + RowArrayIndex);
-			output.get(0)[0] = "-1";
-			output.get(0)[1] = "zero";
+			
+			output.get(0)[1] = "don't write it";
 			return output;
 			
 		} else
@@ -71,7 +72,7 @@ public class NextWordFiltered extends NextItemFiltered {
 	public void Write(ArrayList<String[]> output) throws IOException, InterruptedException {
 		
 		//if Repository has syllable, do not write to mesostic file or syllable repository
-		if(output.get(0)[0] != "-1" && output.get(0)[1] != "zero"){
+		if(output.get(0)[1] != "don't write it"){
 			
 			//add to the mesostics
 			super.Write(output);
@@ -80,25 +81,13 @@ public class NextWordFiltered extends NextItemFiltered {
 			Ls.WriteSyllable(output);	
 		}
 	}
+	
 	@Override
 	public final void AdvanceChapterWord(String index) {
 		
-		//format the inputs for updating
-		int currentIndex = new Integer(ChapterArrayIndex).intValue();
-		int wordIndex = new Integer(index).intValue();
-		
-		if(wordIndex != -1){	
-			//advance the word index
-			ChapterArrayIndex = String.valueOf(wordIndex + 1);
-			System.out.println("Advancing to new chapter index: " + ChapterArrayIndex);
-		
-		} else
-			//move forward one chapter word
-			ChapterArrayIndex = String.valueOf(currentIndex + 1);
-			System.out.println("Advancing to new chapter index: " + ChapterArrayIndex);
+		super.AdvanceChapterWord(index);
 		
 	}
-
 
 	public final void AdvanceMesosticLetter(String index) {
 		

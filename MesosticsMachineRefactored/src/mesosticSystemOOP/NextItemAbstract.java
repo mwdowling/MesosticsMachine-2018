@@ -41,6 +41,11 @@ public abstract class NextItemAbstract implements NextItem {
 	// location variables for mesostics files
 	static String Mesostics; //location of Mesostics file
 	static String Directory;// location of syllable repositories
+	
+	//variables for sounds and places
+	static String OEDSounds;
+	static String[] OEDSoundsArray;
+	static String SoundWords;
 
 	/* 
 	 * Constructors needed for each of the concrete "Next" classes
@@ -68,12 +73,23 @@ public abstract class NextItemAbstract implements NextItem {
 		Lm = lm;
 	}
 	
+	//Sounds primary constructor 
+	public NextItemAbstract(String oedSounds, String chapter, String soundWords, LineMesostic lm) {
+		OEDSounds = oedSounds;
+		OEDSoundsArray = oedSounds.split("\t");
+		Chapter = chapter;
+		ChapterArray = chapter.split("\\s+");
+		SoundWords = soundWords;
+		Lm = lm;
+	}
+	
+	//TODO add constructor places
+	
 	/*
 	 * This method inherited as is in the non-filtered objects
 	 * and refined in the filtered objects 
 	 */
 	
-	//TODO Same story for Write(), should be implemented here and use super where appropriate below
 	@Override
 	public void AdvanceChapterWord(String index) {	
 		

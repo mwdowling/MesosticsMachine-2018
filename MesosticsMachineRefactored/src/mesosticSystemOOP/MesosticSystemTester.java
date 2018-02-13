@@ -23,6 +23,10 @@ public class MesosticSystemTester {
 		NextItemAbstract.Mesostics = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\Mesostics.txt";
 		NextItemAbstract.Directory = "C:\\Users\\Martin\\Documents\\MesosticsMachine";
 		
+		//variables for sounds and places
+		NextItemAbstract.OEDSounds = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\Sounds and Places\\OEDSounds Final.txt";
+		NextItemAbstract.SoundWords = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\Sounds and Places\\Chapter Sounds.txt";
+		
 		//local variable for output
 		ArrayList<String[]> outputList = new ArrayList<String[]>();
 		
@@ -36,6 +40,7 @@ public class MesosticSystemTester {
 				NextItemAbstract.Mesostics, nw);
 		NextChapterFiltered ncf = new NextChapterFiltered(NextWord.RowAddress, NextWord.ChapterAddress, 
 				NextItemAbstract.Mesostics, nm);
+		Sounds s = new Sounds(NextItemAbstract.OEDSounds, NextItemAbstract.ChapterAddress, NextItemAbstract.SoundWords);
 
 /*
 		//Using NextWord to get one word at a time (three here)
@@ -43,10 +48,10 @@ public class MesosticSystemTester {
 			 outputList = nw.Item();
 			 nw.Write(outputList);
 			 nw.AdvanceChapterWord(outputList.get(0)[0]);
-			 nw.AdvanceMesosticLetter(outputList.get(0)[0]);
+			 nw.AdvanceMesosticLetter();
 		 }
-
 */
+
 
 /*
 		//Using NextMesostic to get one mesostic at a time (two here)			
@@ -64,21 +69,27 @@ public class MesosticSystemTester {
 */
 		
 /*
-		//Using NextWordFiltered to get words (searching the first 5 words in the chapter here)
-		for (int i = 0; i < 5; i++) { 
-			
+		//Using NextWordFiltered to get words (searching the first mesostic of words in the chapter here)
+		//This works with a ChromeDriver in Syllable, but not a FireFoxFriver, 13 Feb 2018
+		for(int i = 0; i<14; i++){	
 			outputList = nwf.Item();
 			nwf.Write(outputList); 
 			nwf.AdvanceChapterWord(outputList.get(0)[0]);
 			nwf.AdvanceMesosticLetter(outputList.get(0)[0]);
-		
 		}
 */
-		//TODO This test failing
+
+/*
 		//Tackling the problem one mesostic at a time with syllable filter 
 		outputList = nmf.Item();
 		nmf.Write(outputList);
 		nmf.AdvanceChapterWord(outputList.get(outputList.size()-1)[0]);
-	
+*/
+
+/*
+		//Gathering all sounds from chapter
+		outputList = s.Item();
+		s.Write(outputList);
+*/		
 	}	
 }

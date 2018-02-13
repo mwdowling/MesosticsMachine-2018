@@ -846,9 +846,13 @@ public class MesosticGUIOOP {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					Sounds sound = new Sounds();
+					Sounds sound = new Sounds(OEDSounds, ChapterAddress, Sounds);
+					ArrayList<String[]> outputList = new ArrayList<String[]>();
+					outputList = sound.Item();
+					sound.Write(outputList);
+					
 					Sentence sentence = new Sentence(ChapterArray, Sounds, SoundsSentences);
-					sound.SoundWord();
+					
 					sentence.WriteSentence(); 
 
 				} catch (IOException e1) {
@@ -856,6 +860,9 @@ public class MesosticGUIOOP {
 					// redirect user to the setup window
 					JOptionPane.showMessageDialog(null, "An error has occurred." + "\nSetup may be incorrect."
 							+ "\nClose programme and return to Setup");
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 		});

@@ -12,7 +12,7 @@ public final class NextMesostic extends NextItemAbstract {
 	}
 
 	//primary constructor
-	public NextMesostic(String row, String chapter, String mesostics, LineMesostic lm,NextWord nw) {
+	public NextMesostic(String row, String chapter, String mesostics, LineMesostic lm, NextWord nw) {
 		super(row, chapter, mesostics, lm, nw);			
 	}
 

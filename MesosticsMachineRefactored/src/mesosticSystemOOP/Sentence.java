@@ -18,8 +18,6 @@ public class Sentence {
 	private String SoundWords;
     private String SoundSentences;
     
-	
-    
     public Sentence(String[] chapterArray, String soundWords, String soundSentences) {
 		ChapterArray = chapterArray;
 		SoundWords = soundWords;

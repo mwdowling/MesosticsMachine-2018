@@ -4,11 +4,10 @@ package mesosticSystemOOP;
  * @author Martin Dowling
  * 
  * This object extracts words from the target chapter 
- * that match words in a sound repository
- * and appends those words with its array index value to
- * the "sound" word repository 
+ * that match words in a OED sound repository
+ * and appends those words with the approriate array index value to
+ * the "Chapter Sounds" file  
  * 
- * TODO needs a constructor
  * 
  */
 
@@ -16,51 +15,57 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
+public class Sounds extends NextItemAbstract{
 
-public class Sounds {
-
-	//input variables for target chapter
-	private String ChapterAddress;
-	private String[] ChapterArray;
-
-	// variables for sounds repository
-	private String OEDSounds;
-	private String[] SoundRepositoryArray;
-
-	// variables for output files
-	private String SoundWords;
-
-
-
-	// constructor
-    
+	// secondary constructor
+	public Sounds(String oedSounds, String chapter, String soundWords) throws IOException {
+		this(new FileToString(OEDSounds).output(), new FileToString(ChapterAddress).output(), 
+				new FileToString(SoundWords).output(), new LineMesostic(soundWords));
+	}
 	
-	// overridden method to find words matching a word in the sound repository
-	public void SoundWord() throws IOException {
-	
+	// primary constructor
+	public Sounds(String oedSounds, String chapter, String soundWords, LineMesostic lm) {
+		super(oedSounds, chapter, soundWords, lm); 		
+	}
+
+	@Override
+	public ArrayList<String[]> Item() throws IOException, InterruptedException {
+		
+		ArrayList<String[]> output = new ArrayList<String[]>();
+		ArrayList<String[]> outputList = new ArrayList<String[]>();
+		outputList.clear(); 
+
 		// for loop to get chapter words that match a sound repository word
 		for (int i = 0; i < ChapterArray.length; i++) {
-
-			String wordChapter = ChapterArray[i].toLowerCase().replaceAll("\\W", "").trim();
-
-			for (int j = 0; j < SoundRepositoryArray.length; j++) {
-
-				String wordSound = SoundRepositoryArray[j];
-
-				if (wordChapter.startsWith(wordSound)) {
+				
+			String wordInChapter = ChapterArray[i].toLowerCase().replaceAll("\\W", "").trim();
+				
+			for (int j = 0; j < OEDSoundsArray.length; j++) {
+				
+				String wordInOEDSounds = OEDSoundsArray[j];
+				if (wordInChapter.startsWith(wordInOEDSounds)) {
 					
-					// check validity of wordSound
-					System.out.println(i + "\t" + wordChapter + "\t" + wordSound);
-					BufferedWriter bw = new BufferedWriter(new FileWriter(new File(SoundWords), true));
-					bw.write(i + "\t" + wordChapter + "\t" + wordSound);
-					// adding "\r" to this string gets rid of the exception but puts in miles of whitespace
-					// need to write a file with just the found word and its index also 
-					bw.newLine();
-					bw.close();
-
+					String index = String.valueOf(i);
+					String[] wordIsSound = {index, wordInChapter, wordInOEDSounds};
+					output.clear();
+					output.add(wordIsSound);
+					outputList.addAll(output);
+					
 				}
-			} // end of soundArray loop
-		} // end of chapterArray loop
+			}				
+		}
+		return outputList;
+	}
+
+	@Override
+	public void Write(ArrayList<String[]> outputList) throws IOException, InterruptedException {
+		Lm.WriteChapter(outputList);		
+	}
+
+	@Override
+	public void AdvanceChapterWord(String index) {
+		// no implementation required		
 	}
 }

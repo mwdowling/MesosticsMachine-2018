@@ -37,7 +37,7 @@ public final class NextChapter extends NextItemAbstract {
 			
 			//advance to next word in chapter
 			AdvanceChapterWord(outputList.get(outputList.size()-1)[0]);			
-			
+			Nw.AdvanceMesosticLetter();
 			//advance counter			
 			index = Integer.parseInt(outputList.get(outputList.size()-1)[0]);
 			

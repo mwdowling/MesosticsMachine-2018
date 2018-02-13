@@ -60,7 +60,7 @@ public class NextWord extends NextItemAbstract {
 
 				/*
 				 * Following the requirements, format the word variable for
-				 * output with only Letter capitalised.
+				 * output with only TargetLetter capitalised.
 				 * 
 				 * Do so only if the substring following the target letter does
 				 * not contain the next mesostic letter,
@@ -79,14 +79,15 @@ public class NextWord extends NextItemAbstract {
 				} else
 					NextLetter = RowArray[0];
 				
-				// format the word
+				// format the word and advance to next mesostic letter
 				if (!wordSegment.contains(NextLetter)) {
 					letter = letter.toUpperCase();
 					word = word.substring(0, letterIndex) + letter + word.substring(letterIndex + 1);
+					TargetLetter = NextLetter;
 					break;
 				} else
 					startIndexInt = startIndexInt + 1;
-				//move to next word in chapter
+				
 				word = ChapterArray[startIndexInt];
 
 			} else
