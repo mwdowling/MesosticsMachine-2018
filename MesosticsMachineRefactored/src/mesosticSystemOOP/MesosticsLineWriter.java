@@ -8,24 +8,29 @@ import java.util.ArrayList;
 
 /**
  * 
- * @author Martin
+ * @author Martin Dowling
  * 
+ * A class for the creation of objects with methods 
+ * that take the outputs from NextTIem methods 
+ * (ArrayLists of two-element Arrays of Strings 
+ * which contain the output words paired with their indexes)
+ * and write them to the Mesostics output file 
  * 
- * To write the top line:
- * output[0] = "0"
- * output[1] = "BEGIN"
+ * Each NextItem has a reference to an object of this class
+ * and uses its methods in the NextItem.Write(ArrayList<String[]> outputList) method 
  * 
- * To write the bottom line:
- * output[0] = ChapterArray.length
- * output[1] = "END"
- * 
+ * There are three methods corresponding to the three concrete NextItems:
+ * 	(1) write one line at a time
+ * 	(2) write all the lines of one mesostic
+ *  (3) write all the lines of all the mesostics in a chapter,
+ *  	adding a top and a tail 
  */
-public class LineMesostic {
+
+public class MesosticsLineWriter {
 
 	private String File;
 	
-	//constructor for unfiltered NextTem objects
-	public LineMesostic(String file) {	
+	public MesosticsLineWriter(String file) {	
 		File = file;		
 	}
 	
@@ -39,7 +44,7 @@ public class LineMesostic {
 	public void WriteMesostic(ArrayList<String[]> outputList) throws IOException {
 		BufferedWriter bw = new BufferedWriter(new FileWriter(new File(File), true));
 		
-		//traverse the Arraylist of String[2]'s of index/word pairs and write them to file 
+		//traverse the Arraylist of index/word pairs and write them to file 
 		bw.newLine();
 		for(String[] s : outputList){
 			bw.write(s[0] + "\t" + s[1]);
@@ -56,7 +61,7 @@ public class LineMesostic {
 		String[] topline = {"0", "BEGIN"};
 		bw.write(topline[0] + "\t" + topline[1]);
 		
-		//traverse the Arraylist of String[2]'s of index/word pairs and write them to file 
+		//traverse the Arraylist of index/word pairs and write them to file 
 		bw.newLine();
 		for(String[] s : outputList){
 			for(int i = 0; i < s.length; i ++){

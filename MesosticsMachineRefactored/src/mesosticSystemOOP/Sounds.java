@@ -8,26 +8,24 @@ package mesosticSystemOOP;
  * and appends those words with the approriate array index value to
  * the "Chapter Sounds" file  
  * 
- * 
  */
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class Sounds extends NextItemAbstract{
 
 	// secondary constructor
-	public Sounds(String oedSounds, String chapter, String soundWords) throws IOException {
+	public Sounds(String comparator, String chapter, String outputFile) throws IOException {
 		this(new FileToString(OEDSounds).output(), new FileToString(ChapterAddress).output(), 
-				new FileToString(SoundWords).output(), new LineMesostic(soundWords));
+				new FileToString(SoundWords).output(), new MesosticsLineWriter(outputFile));
 	}
 	
 	// primary constructor
-	public Sounds(String oedSounds, String chapter, String soundWords, LineMesostic lm) {
-		super(oedSounds, chapter, soundWords, lm); 		
+	public Sounds(String comparator, String chapter, String outputFile, MesosticsLineWriter lm) {
+		super(comparator, chapter, outputFile, lm); 	
+		OEDSoundsArray = comparator.split("\t");
+		
 	}
 
 	@Override
@@ -66,6 +64,7 @@ public class Sounds extends NextItemAbstract{
 
 	@Override
 	public void AdvanceChapterWord(String index) {
-		// no implementation required		
+		// no implementation required
+		System.out.println("This method does nothing");
 	}
 }

@@ -14,33 +14,44 @@ public class MesosticSystemTester {
 		 */
 		
 		//static variables for inputs
-		NextItemAbstract.RowAddress = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\Mesostics Row.txt";
+		MesosticsGUIOOP.RowAddress = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\Mesostics Row.txt";
 		NextItemAbstract.RowArrayIndex = 0;
 		NextItemAbstract.ChapterAddress = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\01 RAGLAN STREET.txt";
 		NextItemAbstract.ChapterArrayIndex = "0";
 
 		// Static variables for the output files
 		NextItemAbstract.Mesostics = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\Mesostics.txt";
+		NextItemAbstract.MesosticsFinished = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\MesosticsFinished.txt";
 		NextItemAbstract.Directory = "C:\\Users\\Martin\\Documents\\MesosticsMachine";
 		
-		//variables for sounds and places
+		//variables for sounds
 		NextItemAbstract.OEDSounds = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\Sounds and Places\\OEDSounds Final.txt";
 		NextItemAbstract.SoundWords = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\Sounds and Places\\Chapter Sounds.txt";
+		NextItemAbstract.SoundSentences = NextItemAbstract.Directory + "\\Sounds and Places\\ChapterSoundsSentences.txt";
 		
+		//variables for places
+		NextItemAbstract.NotPlace = NextItemAbstract.Directory + "\\Sounds and Places\\Not A Place.txt";
+		NextItemAbstract.PlaceWords = NextItemAbstract.Directory + "\\Sounds and Places\\ChapterPlaces.txt";
+		NextItemAbstract.PlaceSentences = NextItemAbstract.Directory + "\\Sounds and Places\\ChapterPlacesSentences.txt";
+				
+				
 		//local variable for output
 		ArrayList<String[]> outputList = new ArrayList<String[]>();
 		
 		// NextItem objects
 		NextWord nw = new NextWord(NextItemAbstract.RowAddress, NextItemAbstract.ChapterAddress, NextItemAbstract.Mesostics);
 		NextMesostic nm = new NextMesostic(NextItemAbstract.RowAddress, NextItemAbstract.ChapterAddress, NextItemAbstract.Mesostics);
-		NextChapter nc = new NextChapter(NextItemAbstract.RowAddress, NextItemAbstract.ChapterAddress, NextItemAbstract.Mesostics); 
-		
+		NextChapter nc = new NextChapter(NextItemAbstract.RowAddress, NextItemAbstract.ChapterAddress, NextItemAbstract.Mesostics); 		
 		NextWordFiltered nwf = new NextWordFiltered(nw, NextItemAbstract.Mesostics);
-		NextMesosticFiltered nmf = new NextMesosticFiltered(NextWord.RowAddress, NextWord.ChapterAddress, 
+		NextMesosticFiltered nmf = new NextMesosticFiltered(NextItemAbstract.RowAddress, NextItemAbstract.ChapterAddress, 
 				NextItemAbstract.Mesostics, nw);
 		NextChapterFiltered ncf = new NextChapterFiltered(NextWord.RowAddress, NextWord.ChapterAddress, 
 				NextItemAbstract.Mesostics, nm);
 		Sounds s = new Sounds(NextItemAbstract.OEDSounds, NextItemAbstract.ChapterAddress, NextItemAbstract.SoundWords);
+		Places p = new Places(NextItemAbstract.NotPlace, NextItemAbstract.ChapterAddress, NextItemAbstract.PlaceWords);
+		Sentences soundSentences = new Sentences(NextItemAbstract.SoundWords, NextItemAbstract.ChapterAddress, NextItemAbstract.SoundSentences); 
+		Sentences placeSentences = new Sentences(NextItemAbstract.PlaceWords, NextItemAbstract.ChapterAddress, NextItemAbstract.PlaceSentences);
+		MesosticsFinished mf = new MesosticsFinished(NextItemAbstract.Mesostics, NextItemAbstract.MesosticsFinished, NextItemAbstract.ChapterAddress);
 
 /*
 		//Using NextWord to get one word at a time (three here)
@@ -50,8 +61,7 @@ public class MesosticSystemTester {
 			 nw.AdvanceChapterWord(outputList.get(0)[0]);
 			 nw.AdvanceMesosticLetter();
 		 }
-*/
-
+*/	
 
 /*
 		//Using NextMesostic to get one mesostic at a time (two here)			
@@ -67,6 +77,24 @@ public class MesosticSystemTester {
 		outputList = nc.Item();
 		nc.Write(outputList);
 */
+	
+/*		
+		//Using NextChapterQueue to get multiple chapters (here, the first one twice)
+		ArrayList<String> ChapterQueue = new ArrayList<String>();
+		ChapterQueue.add(NextItemAbstract.ChapterAddress);
+		ChapterQueue.add(NextItemAbstract.ChapterAddress);
+		
+		for(String chapter : ChapterQueue){
+			//reset indexes for each chapter
+			NextItemAbstract.RowArrayIndex = 0;
+			NextItemAbstract.ChapterArrayIndex = "0";
+			//initialize and run separate NextChapter object for each chapter
+			NextChapter ncq = new NextChapter(NextItemAbstract.RowAddress, chapter, NextItemAbstract.Mesostics);
+			outputList.clear();
+			outputList = ncq.Item();
+			nc.Write(outputList);
+		}
+*/		
 		
 /*
 		//Using NextWordFiltered to get words (searching the first mesostic of words in the chapter here)
@@ -74,8 +102,6 @@ public class MesosticSystemTester {
 		for(int i = 0; i<14; i++){	
 			outputList = nwf.Item();
 			nwf.Write(outputList); 
-			nwf.AdvanceChapterWord(outputList.get(0)[0]);
-			nwf.AdvanceMesosticLetter(outputList.get(0)[0]);
 		}
 */
 
@@ -86,16 +112,57 @@ public class MesosticSystemTester {
 		 * Webdriver to fragile to accumulate data in an Arraylist of arrays
 		 * as happens with NextMesostic object above
 		 * 
-		 * Better to use NextWordFiltered inside a for loop in the GUI
+		 * Better to use NextWordFiltered inside a for loop in the GUI,
+		 * and same for nextChapter,
+		 * but the process is so slow 
+		 * there is no point in loading more than one mesostic at a time
 		 */
-		nmf.Item();
 		
-
+		//nmf.Item();   
 
 /*
-		//Gathering all sounds from chapter
+		//Gathering sounds from chapter
 		outputList = s.Item();
 		s.Write(outputList);
 */		
+
+/*
+		//Gathering places from chapter
+		outputList = p.Item();
+		p.Write(outputList);
+*/
+	
+/*		
+		//creating sentences of sound and place words
+		//placeSentences.WriteSentence();
+		//soundSentences.WriteSentence();
+		
+*/
+
+/*
+ 		//print a target sentence to console (edge case is first/last sentences in chapter
+		Sentence sentence = new Sentence(1390, NextItemAbstract.Mesostics, NextItemAbstract.ChapterAddress);
+		ArrayList<String[]> outputList2 = new ArrayList<String[]>();
+		outputList2 = sentence.Item();
+		sentence.Write(outputList2);
+*/
+		
+/*
+		//Adding adjacent words to mesostic lines
+		mf.WithAdjacentWords();
+*/
+		
+/*
+		//Centring lines in mesostics file
+		mf.WithCentredLines();
+*/
+
+/*
+		//Collating sounds into mesostics file
+		mf.WithItemsCollated(NextItemAbstract.SoundWords);
+*/		
+		//(Also can test collation of any two other indexed output files)
+		
+		
 	}	
 }

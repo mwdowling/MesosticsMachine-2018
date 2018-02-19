@@ -1,5 +1,22 @@
 package mesosticSystemOOP;
 
+/**
+ * @author Martin Dowling
+
+ * 
+ * A concrete decorator that traverses a chapter 
+ * creating all the mesostics of that chapter while 
+ * filtering to select words whose appropriate syllable 
+ * is not yet in its corresponding syllable repository
+ * and maintaining the syllable repositories 
+ * for each letter of the mesostic row.
+ * 
+ * This is not currently in the GUI because the webdriver functionality
+ * is variable and unstable. Better to use the NextWordFiltered object
+ * inside a small loop.  
+ *   
+ */
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -8,12 +25,12 @@ public final class NextChapterFiltered extends NextItemFiltered {
 	//secondary constructor throws exception
 	public NextChapterFiltered(String row, String chapter, String mesostics, NextItem decoratedNextItem) throws IOException {
 		this(new FileToString(RowAddress).output(), new FileToString(ChapterAddress).output(), 
-				Mesostics, new LineMesostic(mesostics), new NextWord(row, chapter, mesostics), decoratedNextItem, Directory);
+				Mesostics, new MesosticsLineWriter(mesostics), new NextWord(row, chapter, mesostics), decoratedNextItem, Directory);
 		Nwf = new NextWordFiltered(decoratedNextItem, mesostics);
 	}
 		
 	//primary constructor
-	public NextChapterFiltered(String row, String chapter, String mesostics, LineMesostic lm, NextWord nw,
+	public NextChapterFiltered(String row, String chapter, String mesostics, MesosticsLineWriter lm, NextWord nw,
 			NextItem decoratedNextItem, String directory) throws IOException {
 		super(row, chapter, mesostics, lm, nw, decoratedNextItem, directory);
 

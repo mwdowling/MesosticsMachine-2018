@@ -1,5 +1,17 @@
 package mesosticSystemOOP;
 
+/**
+ * @author Martin Dowling
+ * 
+ * A concrete implementation of NextItem 
+ * which produces all the mesostics in a chapter
+ * stopping at a hard-coded number of words before 
+ * the last word in the chapter
+ * 
+ * @see NextWord to which is delegated the task of finding successive words
+ * @see MesosticsLineWriter to which is delegated the task of writing lines to a file
+ * 
+ */
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -7,13 +19,12 @@ public final class NextChapter extends NextItemAbstract {
 	
 	//secondary constructor throws exception
 	public NextChapter(String row, String chapter, String mesostics) throws IOException {
-		this(new FileToString(RowAddress).output(), new FileToString(ChapterAddress).output(), 
-				Mesostics, new LineMesostic(mesostics), new NextWord(row, chapter, mesostics));
-
-		}
+		this(new FileToString(MesosticsGUIOOP.RowAddress).output(), new FileToString(ChapterAddress).output(), 
+				Mesostics, new MesosticsLineWriter(mesostics), new NextWord(row, chapter, mesostics));
+	}
 
 	//primary constructor
-	public NextChapter(String row, String chapter, String mesostics, LineMesostic lm, NextWord nw) throws IOException {
+	public NextChapter(String row, String chapter, String mesostics, MesosticsLineWriter lm, NextWord nw) throws IOException {
 		super(row, chapter, mesostics, lm, nw);
 	}
 
@@ -24,8 +35,10 @@ public final class NextChapter extends NextItemAbstract {
 		ArrayList<String[]> outputList = new ArrayList<String[]>();
 		outputList.clear(); 
 		
-		//traverse chapter adding words to the output list
-		//stop before the end of the chapter (here 100 words before)
+		
+		/* traverse chapter populating outputList
+		 * stopping before the end of the chapter (here 100 words before)
+		 */
 		int index = 0;
 		while (index < ChapterArray.length - 100) {
 				
@@ -33,27 +46,26 @@ public final class NextChapter extends NextItemAbstract {
 			output.clear();
 			output = Nw.Item();
 			outputList.addAll(output);
-			System.out.println(outputList.size());
 			
 			//advance to next word in chapter
 			AdvanceChapterWord(outputList.get(outputList.size()-1)[0]);			
 			Nw.AdvanceMesosticLetter();
+			
 			//advance counter			
 			index = Integer.parseInt(outputList.get(outputList.size()-1)[0]);
 			
-		}//end of while loop
+		}
 	
 		return outputList;
 	}
 
 	@Override
-	public void Write(ArrayList<String[]> outputList) throws IOException, InterruptedException {
+	public final void Write(ArrayList<String[]> outputList) throws IOException, InterruptedException {
 		Lm.WriteChapter(outputList);
 	}
 
 	@Override
-	public void AdvanceChapterWord(String index) {
+	public final void AdvanceChapterWord(String index) {
 		super.AdvanceChapterWord(index);
 	}
-
 }

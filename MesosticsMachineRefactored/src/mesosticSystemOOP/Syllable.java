@@ -1,23 +1,27 @@
 package mesosticSystemOOP;
 
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-
 /**
  * @author Martin Dowling 
-
  * 
  * Information for writing this class taken from: 
  * http://toolsqa.com/selenium-webdriver/webelement-commands/
  * 
  * This class permits the creation of an object that: 
- * 
  * (1) takes a word from target text produced by the method NextWord.Item
  * (2) searches the web site HowManySyllables.com to find the syllabic division of the word
  * (3) identifies and returns the appropriate syllable in the word
  * (4) if the web site does not provide a syllable division, 
  * 	   saves the whole word and prints a warning message
+ * 
+ * This functionality is unstable,
+ * subject to unpredictable changes to systems outside the user's control, 
+ * including the target website, and updated versions of selenium, webdrivers, and browsers 
+ * In February 2018, Chrome worked better than Firefox
+ * 
  */
+
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -25,27 +29,21 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-
-public class Syllable {
+public final class Syllable {
 
 	public Syllable() {		
 	}
 
 	// a method to return a syllable saved from www.howmanysyllables.com
-	public String SyllableSaved(String word) throws InterruptedException, IOException {
+	public final String SyllableSaved(String word) throws InterruptedException, IOException {
 
 		// The target letter in the row
 		String Letter = NextWord.RowArray[NextWord.RowArrayIndex];
-
-		/*
-		 * the "geckodriver.exe", the engine linking Selenium and Firefox,
-		 * has not been working Feb 2018
-		 * //System.setProperty("webdriver.gecko.driver", "C:\\Users\\Martin\\Documents\\Java Libraries\\geckodriver-v0.19.1-win64\\geckodriver.exe");
-		 * //WebDriver Driver = new FirefoxDriver();
-		 * 
-		 * Instead use a ChromeDriver to get the syllable website:
-		 */
-		
+	
+		//Firefox not working well
+		//System.setProperty("webdriver.gecko.driver", "C:\\Users\\Martin\\Documents\\Java Libraries\\geckodriver-v0.19.1-win64\\geckodriver.exe");
+		//WebDriver Driver = new FirefoxDriver();
+		//Use a ChromeDriver instead 		
 		System.setProperty("webdriver.chrome.driver", "C:\\Users\\Martin\\Documents\\Java Libraries\\chromedriver_win32\\chromedriver.exe");
 		WebDriver Driver = new ChromeDriver();
 		
@@ -92,8 +90,6 @@ public class Syllable {
 			}
 		}
 		Driver.quit();
-		return savedSyllable;
-		
-		
+		return savedSyllable;	
 	}
 }

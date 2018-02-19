@@ -1,30 +1,28 @@
 package mesosticSystemOOP;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
 /**
- * 
  * @author Martin Dowling
  * 
  * This abstract class contains all needed variables and constructors
  * for the concrete classes which make mesostics or portions thereof. 
- * At present these are:
  * 
  * @see NextWord which creates the next word in a mesostic
  * @see NextMesostic  which creates the next whole mesostic
  * @see NextChapter which creates all the successive mesositics in a chapter 
- * 
  * @see NextItemFiltered an abstract decorator class 
  * which is extended by corresponding syllable filtering classes
+ * 
+ * TODO none of these static variables integrate with the GUI. What is the point??
+ * 
  */
 
 public abstract class NextItemAbstract implements NextItem {
 
 	// reference classes
-	protected LineMesostic Lm;
-	protected LineSyllable Ls;
-	static NextWord Nw;
+	protected MesosticsLineWriter Lm;
+	protected SyllableLineWriter Ls;
+	protected NextWord Nw;
+	protected FileToString Fs;
 	
 	// input variables for the mesostic row
 	static String Row;
@@ -40,31 +38,36 @@ public abstract class NextItemAbstract implements NextItem {
 	
 	// location variables for mesostics files
 	static String Mesostics; //location of Mesostics file
+	static String MesosticsFinished;//output of finishing methods
 	static String Directory;// location of syllable repositories
 	
-	//variables for sounds and places
+	//variables for sounds 
 	static String OEDSounds;
 	static String[] OEDSoundsArray;
 	static String SoundWords;
-
-	/* 
-	 * Constructors needed for each of the concrete "Next" classes
-	 * Secondary constructor uses FileToString to interact with files on disk
-	 */
+	static String SoundSentences;
+	
+	//variables for places
+	static String NotPlace;
+	static String NotPlaceArray[];
+	static String PlaceWords;
+	static String PlaceSentences;
+	
+	// Primary constructors for each of the concrete "NextX" classes
 	
 	// NextWord primary constructor
 	public NextItemAbstract(String row, String chapter, int rowArrayIndex, 
-							String chapterArrayIndex, String mesostics, LineMesostic lm) {
+							String chapterArrayIndex, String mesostics, MesosticsLineWriter lm) {
 		RowArray = row.split("");
 		RowArrayIndex = rowArrayIndex;
 		ChapterArray = chapter.split("\\s+");
 		ChapterArrayIndex = chapterArrayIndex;
 		Mesostics = mesostics;
-		Lm = lm;
+		Lm = lm; 
 	}
 	
 	// nextMesostic and NextChapter primary constructor 
-	public NextItemAbstract(String row, String chapter, String mesostics, LineMesostic lm, NextWord nw) {
+	public NextItemAbstract(String row, String chapter, String mesostics, MesosticsLineWriter lm, NextWord nw) {
 		Row = row;
 		Chapter = chapter;
 		RowArray = row.split("");
@@ -73,30 +76,25 @@ public abstract class NextItemAbstract implements NextItem {
 		Lm = lm;
 	}
 	
-	//Sounds primary constructor 
-	public NextItemAbstract(String oedSounds, String chapter, String soundWords, LineMesostic lm) {
-		OEDSounds = oedSounds;
-		OEDSoundsArray = oedSounds.split("\t");
+	//Sounds, Places and Sentences primary constructor 
+	public NextItemAbstract(String comparator, String chapter, String outputFile, MesosticsLineWriter lm) {	
 		Chapter = chapter;
 		ChapterArray = chapter.split("\\s+");
-		SoundWords = soundWords;
 		Lm = lm;
 	}
-	
-	//TODO add constructor places
-	
-	/*
-	 * This method inherited as is in the non-filtered objects
-	 * and refined in the filtered objects 
-	 */
-	
+		
+	//Sentence primary constructor
+	public NextItemAbstract(int wordIndex, String chapter) {
+		Chapter = chapter;
+		ChapterArray = chapter.split("\\s+");
+	}
+
+	//further refinement of this in the NextITemFiltered objects
 	@Override
 	public void AdvanceChapterWord(String index) {	
 		
-		//advance the word index
 		int wordIndex = new Integer(index).intValue();	
 		ChapterArrayIndex = String.valueOf(wordIndex + 1);
 		System.out.println("Advancing to new Chapter Index: " + ChapterArrayIndex);
-
-	}
+	}	
 }

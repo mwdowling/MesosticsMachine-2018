@@ -3,18 +3,15 @@ package mesosticSystemOOP;
 /**
  * @author Martin Dowling
  * 
- * This class contains three methods for properly 
- * formatting the files produced by the NextItem objects in the system
+ * This class contains three methods for properly formatting 
+ * the files produced by the NextItem objects 
  * according to the requirements specification by:
  * 
- * (1) adding adjacent words from the text to each side
- * 	of the words in the mesostics 
- * 	to allow the user to create poems "according to taste"
- * 
+ * (1) adding adjacent words from the text to each side of the words in the mesostics 
+ *		to allow the user to create poems "according to taste"
  * (2) centring each line on the capitalised letter of the mesostic row
- * 
  * (3) collating into the mesostics text the sound and place words
- * 	appropriately according to their index value in the target chapter
+ * 		appropriately according to their index value
  * 
  * TODO this is a first pass at refactoring 12 February 2018 and requires testing
  */
@@ -29,22 +26,25 @@ import java.io.IOException;
 public class MesosticsFinished {
 
 	private String Mesostics;
+	private String MesosticsFinished;
+	private String Chapter;
 	private String[] ChapterArray;
 
-	public MesosticsFinished(String mesostics, String[] chapterArray) {
+	public MesosticsFinished(String mesostics, String mesosticsFinished, String chapterAddress) throws IOException {
 		Mesostics = mesostics;
-		ChapterArray = chapterArray;
+		MesosticsFinished = mesosticsFinished;
+		Chapter = new FileToString(chapterAddress).output();
+		ChapterArray = Chapter.split("\\s+");
 	}
 
 	public final void WithAdjacentWords() throws IOException {
 
 		// file reader with identifiers for lines in mesostics file
 		BufferedReader br = new BufferedReader(new FileReader(new File(Mesostics)));
-		String previousLine = br.readLine();
+
 		String line = br.readLine();
 		br.mark(1000);
 		String nextLine = br.readLine();
-		String lastLine = br.readLine();
 		br.reset();
 
 		/*
@@ -54,28 +54,84 @@ public class MesosticsFinished {
 		 */
 		Integer lastWord = new Integer(-1);
 
-		// while the buffer line has not been reached
+		// edge case: first line in target file
+		// two-element arrays for the three mesostic words and indexes
+		String[] lineContent = line.split("\\t");
+		String[] nextLineContent = nextLine.split("\\t");
+
+		// the indexes as Integers
+		Integer indexPrevious = 0;
+		Integer index = new Integer(lineContent[0]);
+		Integer indexNext = new Integer(nextLineContent[0]);
+
+		// variables for adding adjacent words before the mesostic word
+		String wordsToAddBefore = "";
+		int length = 0;
+
+		while (length <= 43 && (index - indexPrevious) > 1 && index > lastWord + 1) {
+
+			wordsToAddBefore = ChapterArray[index - 1].toLowerCase().replaceAll("\\W", "").trim() + " "
+					+ wordsToAddBefore;
+			index--;
+			length = wordsToAddBefore.length();
+
+		}
+		/*
+		 * Add words after the mesostic word, ensuring that the process stops
+		 * when (1) 43 characters have been added (2) the mesostic word from the
+		 * next line has been reached
+		 */
+		String wordsToAddAfter = "";
+		length = 0;
+		index = new Integer(lineContent[0]);
+		while (length <= 43 && (indexNext - index) > 1) {
+
+			wordsToAddAfter = wordsToAddAfter + " "
+					+ ChapterArray[index + 1].toLowerCase().replaceAll("\\W", "").trim();
+			index++;
+			length = wordsToAddAfter.length();
+
+		}
+
+		// save the index of the last word in this line
+		lastWord = index;
+
+		// combine BEFORE and AFTER to create full mesostic line with
+		// original index
+		String mesosticLine = lineContent[0] + "\t" + wordsToAddBefore + lineContent[1] + wordsToAddAfter;
+
+		// write line to new line in file
+		BufferedWriter bw = new BufferedWriter(new FileWriter(new File(MesosticsFinished), true));
+		bw.write(mesosticLine);
+		bw.newLine();
+		bw.close();
+
+		// prepare while loop for next mesostic line
+		String previousLine = line;
+		line = br.readLine();
+		br.mark(1000);
+		nextLine = br.readLine();
+		br.reset();
+
+		// complete for all other cases while the buffer line has not been
+		// reached
 		while (nextLine != null) {
 
 			// two-element arrays for the three mesostic words and indexes
 			String[] previousLineContent = previousLine.split("\\t");
-			String[] lineContent = line.split("\\t");
-			String[] nextLineContent = nextLine.split("\\t");
+			lineContent = line.split("\\t");
+			nextLineContent = nextLine.split("\\t");
 
 			// the indexes as Integers
-			Integer indexPrevious = new Integer(previousLineContent[0]);
-			Integer index = new Integer(lineContent[0]);
-			Integer indexNext = new Integer(nextLineContent[0]);
+			indexPrevious = new Integer(previousLineContent[0]);
+			index = new Integer(lineContent[0]);
+			indexNext = new Integer(nextLineContent[0]);
 
 			// variables for adding adjacent words before the mesostic word
-			String wordsToAddBefore = "";
-			int length = 0;
+			wordsToAddBefore = "";
+			length = 0;
 
-			/*
-			 * TODO: This fails to give words before "Street" (i.e. the first
-			 * extracted word) DO-WHILE SOLVES THIS BUT CREATES NEW INDEX
-			 * PROBLEMS
-			 */
+			// add words before
 			while (length <= 43 && (index - indexPrevious) > 1 && index > lastWord + 1) {
 
 				wordsToAddBefore = ChapterArray[index - 1].toLowerCase().replaceAll("\\W", "").trim() + " "
@@ -85,12 +141,8 @@ public class MesosticsFinished {
 
 			}
 
-			/*
-			 * Add words after the mesostic word, ensuring that the process
-			 * stops when (1) 43 characters have been added (2) the mesostic
-			 * word from the next line has been reached
-			 */
-			String wordsToAddAfter = "";
+			// add words after
+			wordsToAddAfter = "";
 			length = 0;
 			index = new Integer(lineContent[0]);
 			while (length <= 43 && (indexNext - index) > 1) {
@@ -105,26 +157,23 @@ public class MesosticsFinished {
 			// save the index of the last word in this line
 			lastWord = index;
 
-			// combine BEFORE and AFTER to create full mesostic line with
-			// original index
-			String mesosticLine = lineContent[0] + "\t" + wordsToAddBefore + lineContent[1] + wordsToAddAfter;
+			// combine BEFORE and AFTER to create full mesostic line
+			mesosticLine = lineContent[0] + "\t" + wordsToAddBefore + lineContent[1] + wordsToAddAfter;
 
 			// write line to new line in file
-			BufferedWriter bw = new BufferedWriter(new FileWriter(new File(Mesostics), true));
-			bw.write(mesosticLine);
-			bw.newLine();
-			bw.close();
+			BufferedWriter bw2 = new BufferedWriter(new FileWriter(new File(MesosticsFinished), true));
+			bw2.write(mesosticLine);
+			bw2.newLine();
+			bw2.close();
 
 			// prepare while loop for next mesostic line
 			previousLine = line;
 			line = br.readLine();
 			br.mark(1000);
 			nextLine = br.readLine();
-			lastLine = br.readLine();
 			br.reset();
 		}
-		br.close();// close reader
-
+		br.close();
 	}
 
 	public final void WithCentredLines() throws IOException {
@@ -168,7 +217,7 @@ public class MesosticsFinished {
 			}
 
 			// write the newly spaced line to the output file
-			BufferedWriter bw = new BufferedWriter(new FileWriter(new File(Mesostics), true));
+			BufferedWriter bw = new BufferedWriter(new FileWriter(new File(MesosticsFinished), true));
 			bw.newLine();
 			bw.write(lineContent[0] + "\t" + lineContent[1]);
 			bw.close();
@@ -182,7 +231,7 @@ public class MesosticsFinished {
 
 	}
 
-	public final void WithItemsCollated(String FiletoCollate) throws IOException {
+	public final void WithItemsCollated(String filetoCollate) throws IOException {
 
 		// Reader of Mesostics file reader
 		BufferedReader br1 = new BufferedReader(new FileReader(new File(Mesostics)));
@@ -191,7 +240,7 @@ public class MesosticsFinished {
 		Integer line1Index = new Integer(line1Array[0]);
 
 		// Reader of file to collate with Mesostics file
-		BufferedReader br2 = new BufferedReader(new FileReader(new File(FiletoCollate)));
+		BufferedReader br2 = new BufferedReader(new FileReader(new File(filetoCollate)));
 		String line2 = br2.readLine();
 		String[] line2Array = line2.split("\t");
 		Integer line2Index = new Integer(line2Array[0]);
@@ -201,8 +250,8 @@ public class MesosticsFinished {
 			// If Line1 is smaller clause
 			if (line1Index < line2Index) {
 				// write line1 to file
-				System.out.println(line1);
-				BufferedWriter bw = new BufferedWriter(new FileWriter(new File(Mesostics), true));
+				System.out.println("Printing Line 1: " + line1);
+				BufferedWriter bw = new BufferedWriter(new FileWriter(new File(MesosticsFinished), true));
 				bw.write(line1);
 				bw.newLine();
 				bw.close();
@@ -213,20 +262,15 @@ public class MesosticsFinished {
 					line1 = br1.readLine();
 					line1Array = line1.split("\t");
 					line1Index = new Integer(line1Array[0]);
+					System.out.println("Advance Line 1 to: " + line1Array[0] + " " + line1Array[1]);
 
 				} catch (NullPointerException e) {
 
-					/*
-					 * TODO if no more of line1, continue with line2
-					 * Note: his exception should never occur 
-					 * because the index of the last line of the 
-					 * Mesostics file has beenset at 10000
-					 */
-
+					System.out.println("No more of line 1, finish writing line 2");
 					while (line2 != null) {
 
 						System.out.println(line2);
-						BufferedWriter bw2 = new BufferedWriter(new FileWriter(new File(Mesostics), true));
+						BufferedWriter bw2 = new BufferedWriter(new FileWriter(new File(MesosticsFinished), true));
 						bw2.write(line2);
 						bw2.newLine();
 						bw2.close();
@@ -237,49 +281,46 @@ public class MesosticsFinished {
 							line2 = br1.readLine();
 							line2Array = line2.split("\t");
 							line2Index = new Integer(line2Array[0]);
+							System.out.println("Advance Line 2 to: " + line2Array[0] + " " + line2Array[1]);
 
 						} catch (NullPointerException e1) {
 
-							/*
-							 * TODO if no more line1 AND line2 END
-							 */
+							// if no more line1 AND line2 END
+							break;
 						}
 					} // end of try/catch writing line2 to finish
 				} // end of try/catch writing line1
-			} // end of IF CLAUSE
+			} // end of IF clause
 
-			// Else line2 is smaller clause
-			else
+			// ELSE line2 is smaller clause
+			else {
 
-			// write line2 to MesosticsCollated
-			System.out.println(line2);
-			BufferedWriter bw2 = new BufferedWriter(new FileWriter(new File(Mesostics), true));
-			bw2.write(line2);
-			bw2.newLine();
-			bw2.close();
+				// write line2 to MesosticsCollated
+				BufferedWriter bw3 = new BufferedWriter(new FileWriter(new File(MesosticsFinished), true));
+				bw3.write(line2);
+				bw3.newLine();
+				bw3.close();
 
-			// advance line2 to next line and reformat
-			try {
-				line2 = br2.readLine();
-				line2Array = line2.split("\t");
-				line2Index = new Integer(line2Array[0]);
+				// advance line2 to next line and reformat
+				try {
+					line2 = br2.readLine();
+					line2Array = line2.split("\t");
+					line2Index = new Integer(line2Array[0]);
 
-			} catch (NullPointerException e1) {
+				} catch (NullPointerException e1) {
 
-				// if no more of line2 write line1 to finish
+					System.out.println("No more line 2. Print line 1 to finish.");
+					while (line1 != null) {
 
-				while (line1 != null) {
-
-					System.out.println(line1);
-					BufferedWriter bw1 = new BufferedWriter(new FileWriter(new File(Mesostics), true));
-					bw1.write(line1);
-					bw1.newLine();
-					bw1.close();
-				}
-			} // end of try/catch writing line 2
-		} // end of else clause writing line2
-		// close resources
+						BufferedWriter bw1 = new BufferedWriter(new FileWriter(new File(MesosticsFinished), true));
+						bw1.write(line1);
+						bw1.newLine();
+						bw1.close();
+					}
+				}//end of try/catch 
+			}//end of ELSE clausee
+		}//end of WHILE statement
 		br1.close();
 		br2.close();
-	} 
+	}
 }

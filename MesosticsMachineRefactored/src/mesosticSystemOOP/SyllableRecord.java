@@ -2,7 +2,6 @@ package mesosticSystemOOP;
 
 /**
  * @author Martin Dowling
-
  * 
  * This class allows for the creation of an object that does the following:
  * 
@@ -16,16 +15,15 @@ package mesosticSystemOOP;
  *     (b) if (4)(a) is true, returns true
  *     (c) if (4)(a) is false, writes the syllable to the last line of the repository and returns false 
  *     
- * This class requires the user to have previously established the syllable repositories
- * These are text files in a target folder
- * There is one file for each letter of the mesostic row, named "MesosticLetterX.txt"
- * Where X = the index number of the letter in the mesostic row.
- * The first line of this text has the characters XY
- * where X = the index number of the letter in the mesostic row
- * and Y = the letter so indexed.
+ * This class requires the user to have previously used the MesosticMachine GUI 
+ * to create the syllable repository files in their own directory,
+ * one file for each letter of the mesostic row, 
+ * named "MesosticLetterX.txt", 
+ * where X = the index number of the letter in the mesostic row.
  * 
- * In a future version of the software this target folder will be populated
- * in the Setup routine of the GUI
+ * The first line of each file has the characters XY such that:
+ * X = the index number of the letter in the mesostic row
+ * Y = the letter so indexed.
  * 
  */
 
@@ -38,19 +36,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-
-
-public class SyllableRecord {
-
-	//don't I need rowarray variable here to feed first method?
+public final class SyllableRecord {
 	
-	// constructor
 	public SyllableRecord() {
-
 	}
 
 	// a method to return the correct syllable repository
-	public String Repository() throws IOException {
+	public final String Repository() throws IOException {
 		
 		// The target letter in the row
 		String Letter = NextItemAbstract.RowArray[NextItemAbstract.RowArrayIndex];
@@ -80,18 +72,15 @@ public class SyllableRecord {
 				break;
 			}
 			br.close();
-
 		}
 
 		return Repository;
-
 	}
 
 	// a method to confirm whether the repository has the target syllable
-	public boolean RepositoryHasSyllable(String repository, String savedSyllable) throws IOException {
+	public final boolean RepositoryHasSyllable(String repository, String savedSyllable) throws IOException {
 
 		BufferedReader br = new BufferedReader(new FileReader(new File(repository)));
-
 		boolean RepositoryHas = true;
 
 		for (String line = br.readLine(); line != null; line = br.readLine()) {
@@ -99,6 +88,7 @@ public class SyllableRecord {
 				
 				RepositoryHas = true;
 				break;
+				
 			} else
 				RepositoryHas = false;
 		}
@@ -108,7 +98,7 @@ public class SyllableRecord {
 	}
 
 	//a method to write the saved syllable to the repository
-	public void WriteSyllableToRepository(String repository, String savedSyllable) throws IOException {
+	public final void WriteSyllableToRepository(String repository, String savedSyllable) throws IOException {
 
 		BufferedWriter bw = new BufferedWriter(new FileWriter(new File(repository), true));
 		System.out.println("Syllable not in Repository.");

@@ -1,21 +1,20 @@
 package mesosticSystemOOP;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
 /**
  * 
  * @author Martin Dowling
  * 
- * This class is an abstract decorator following the GOF Decorator Design pattern.
- * 
- * It extends the NextITem class by adding a decorated NextITem to appropriate constructors
- * 
- * It overrides the NextItem interface methods with methods that call the corresponding methods in the decorated NextItem,
+ * This class is an abstract decorator in the GOF Decorator Design pattern,
+ * adding a decorated NextITem to appropriate constructors.
+ * It overrides the NextItem interface methods 
+ * with methods that call the corresponding methods in the decorated NextItem,
  * which will have new functionality added in the concrete decorated NextITem. 
  * 
- * CHECK: Are both constructors needed?
+ * TODO: Are both constructors needed?
  */
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public abstract class NextItemFiltered extends NextItemAbstract {
 
@@ -24,14 +23,14 @@ public abstract class NextItemFiltered extends NextItemAbstract {
 	
 	// NextWordFiltered primary constructor
 	public NextItemFiltered(String row, String chapter, int rowArrayIndex, String chapterArrayIndex, 
-							String mesostics, LineMesostic lm, NextItem decoratedNextItem, String directory) {
+							String mesostics, MesosticsLineWriter lm, NextItem decoratedNextItem, String directory) {
 		super(row, chapter, rowArrayIndex, chapterArrayIndex, mesostics, lm);
 		Directory = directory; 
 		DecoratedNextItem = decoratedNextItem;		
 	}
 	
 	//NextMesosticFiltered and NextChapterFiltered primary constructor
-	public NextItemFiltered(String row, String chapter, String mesostics, LineMesostic lm,
+	public NextItemFiltered(String row, String chapter, String mesostics, MesosticsLineWriter lm,
 							NextWord nw, NextItem decoratedNextItem, String directory) {
 		super(row, chapter, mesostics, lm, nw);
 		Directory = directory; 
@@ -55,5 +54,4 @@ public abstract class NextItemFiltered extends NextItemAbstract {
 		DecoratedNextItem.AdvanceChapterWord(index);
 		
 	}
-
 }

@@ -20,7 +20,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SyllableRepository {
+public final class SyllableRepository {
 
 	private String Row;
 	private String Directory;
@@ -30,7 +30,7 @@ public class SyllableRepository {
 		Directory = directory;
 	}
 
-	public void RepositoryWriter() {
+	public final void RepositoryWriter() {
 
 		// convert the row to array of letters
 		String[] RowArray = Row.split("");

@@ -1,99 +1,88 @@
 package mesosticSystemOOP;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
+/**
+ * @author Martin Dowling
+
+ * 
+ * This class returns an object which allows the user
+ * to select a word from the target chapter using its 
+ * ChapterArray index as a reference,
+ * to return the entire sentence in which that word sits 
+ * to see its semantic context.
+ * 
+ * For example, the user will want to know: 
+ * Is this word a sound? What kind of sound?
+ * The answer lies in the sentnece in which the word is used.
+ * 
+ * @see Sentences to write all target sentences to a file
+ */
+
 import java.io.IOException;
 
-public class Sentence {
+import java.util.ArrayList;
+
+public final class Sentence extends NextItemAbstract{
+
+	int WordIndex;
 	
-	//input variables for target chapter
-	private String ChapterAddress;
-	private  String[] ChapterArray;
-	
-	// variables for output files
-	private String SoundWords;
-    private String SoundSentences;
-    
-    public Sentence(String[] chapterArray, String soundWords, String soundSentences) {
-		ChapterArray = chapterArray;
-		SoundWords = soundWords;
-		SoundSentences = soundSentences;
+	//primary constructor 
+	public Sentence(int wordIndex, String comparator, String chapter) throws IOException {
+		super(wordIndex, new FileToString(ChapterAddress).output());
+		WordIndex = wordIndex; 	
 	}
 
-	public void WriteSentence() throws IOException{
-		
-		// read and reformat the first line of the target file
-		BufferedReader br = new BufferedReader(new FileReader(new File(SoundWords)));
-		String line = br.readLine();//the first line
-		String[] lineArray = line.split("\t");//the first line as array {index, word}
-		Integer lineArrayInt = new Integer(lineArray[0]);//the index as an Integer
 
-		// for loop to get sentences
-		for (int i = 0; i < ChapterArray.length; i++) {
+	public final ArrayList<String[]> Item() throws IOException, InterruptedException {		
+		
+		ArrayList<String[]> outputList = new ArrayList<String[]>();
+		outputList.clear();
+		
+		// variables to identify the boundaries of the sentence
+		String fullStop = ".";
+		int sentenceStart = 0;
+		int sentenceEnd = 0;
+		
+		// loop to find the end of the chapter sentence
+		for (int i = WordIndex; i < ChapterArray.length; i++) {
 			
-			// variables to identify the boundaries of a sentence
-			String fullStop = ".";
-			int sentenceStart = 0;
-			int sentenceEnd = 0;
+			if (ChapterArray[i].contains(fullStop)) {
+				sentenceEnd = i;	
+				break;
+			}else
+				sentenceEnd = ChapterArray.length -1;//edge case: last sentence of chapter
+			
+		}
 		
-			// read each line of the target file 
-			System.out.println(lineArrayInt);
-			for (line = br.readLine(); line != null; line = br.readLine()) {
+		// loop to find the beginning of the chapter sentence
+		for (int i = WordIndex; i > 0; i--) {
+		
+			 if (ChapterArray[i].contains(fullStop)) {
+				sentenceStart = i + 1;
+				break;
+			}
+			 else sentenceStart = 0;//edge case: first sentence of chapter
+			
+		}
 
-				// loop to find the end of the chapter sentence
-				for (int i1 = lineArrayInt; i1 < ChapterArray.length; i1++) {
+		//collect all the words into the sentence array
+		String[] sentence = new String[sentenceEnd+1 - sentenceStart];
+		for (int i = sentenceStart; i <= sentenceEnd; i++) {
+			sentence[i- sentenceStart] = ChapterArray[i].trim();
+		} 
+		
+		//return sentence Array
+		outputList.add(sentence);
+		return outputList;
+	}
 
-					if (ChapterArray[i1].contains(fullStop)) {
-						sentenceEnd = i1;
-						break;
-					}
-				}
-
-				// loop to find the beginning of the chapter sentence
-				for (int i1 = lineArrayInt; i1 >= 0; i1--) {
-
-					if (ChapterArray[i1].contains(fullStop)) {
-						sentenceStart = i1 + 1;
-						break;
-					}
-				}
-
-				// Combine words in the sentence into a String
-				String sentencetoFind = "";
-				for (int i1 = sentenceStart; i1 <= sentenceEnd; i1++) {
-
-					sentencetoFind = sentencetoFind + " " + ChapterArray[i1].trim();
-				}
-				
-				//write the sentence to the target file
-				if (sentencetoFind != "") {
-					System.out.println(sentencetoFind.trim());
-				
-					BufferedWriter bw = new BufferedWriter(
-						new FileWriter(new File(SoundSentences), true));
-
-					bw.newLine();
-					bw.write(lineArray[0]);
-					bw.newLine();
-					bw.write(sentencetoFind.trim());
-					bw.newLine();
-					bw.close();
-				}
-				
-				//Advance to the next line and format its index value 
-				line = br.readLine();			
-				lineArray = line.split("\t");
-				lineArrayInt = new Integer(lineArray[0]);
-				
-				if (lineArrayInt < sentenceEnd) {
-					lineArrayInt = sentenceEnd;
-
-				}
-			} 
-		}br.close();
+	@Override
+	public final void Write(ArrayList<String[]> outputList) throws IOException, InterruptedException {
+		
+		String[] sentenceArray = outputList.get(0);
+		String sentence = sentenceArray[0];
+		for(int i = 1; i < sentenceArray.length; i ++){
+			sentence = sentence + " " + sentenceArray[i] ;
+		}	
+		System.out.println(sentence);
 	}
 }

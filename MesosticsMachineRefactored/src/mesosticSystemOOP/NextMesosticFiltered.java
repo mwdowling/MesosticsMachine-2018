@@ -3,7 +3,7 @@ package mesosticSystemOOP;
 /**
  * @author Martin Dowling
  * 
- * A concrete decorator class that creates one full mesostic poem
+ * A concrete decorator that creates one full mesostic poem
  * filtering to select words whose appropriate syllable 
  * is not yet in its corresponding syllable repository
  * while maintaining the syllable repositories 
@@ -19,24 +19,23 @@ public final class NextMesosticFiltered extends NextItemFiltered {
 	public NextMesosticFiltered (String row, String chapter, String mesostics, NextItem decoratedNextItem) throws IOException {
 		
 		this(new FileToString(RowAddress).output(), new FileToString(ChapterAddress).output(), 
-					Mesostics, new LineMesostic(mesostics), new NextWord(row, chapter, mesostics), decoratedNextItem, Directory);
+					Mesostics, new MesosticsLineWriter(mesostics), new NextWord(row, chapter, mesostics), decoratedNextItem, Directory);
 		//The NextMesostic object creates and uses a NextWord object
 		Nwf = new NextWordFiltered(decoratedNextItem, mesostics);
 	}
 	
 	//primary constructor
-	public NextMesosticFiltered(String row, String chapter, String mesostics, LineMesostic lm, NextWord nw, NextItem decoratedNextItem,
+	public NextMesosticFiltered(String row, String chapter, String mesostics, MesosticsLineWriter lm, NextWord nw, NextItem decoratedNextItem,
 			String directory) {
 		super(row, chapter, mesostics, lm, nw, decoratedNextItem, directory);		
 	}
 
 	
 	@Override
-	public ArrayList<String[]> Item() throws IOException, InterruptedException {
+	public final ArrayList<String[]> Item() throws IOException, InterruptedException {
 		
 		// input and output variables
 		String startIndex = ChapterArrayIndex;
-		ArrayList<String[]> output = new ArrayList<String[]>();
 		ArrayList<String[]> outputList = new ArrayList<String[]>();
 		
 		// verify new startIndex on console
@@ -60,7 +59,7 @@ public final class NextMesosticFiltered extends NextItemFiltered {
 	}
 	
 	@Override
-	public void Write(ArrayList<String[]> outputList) throws IOException, InterruptedException {	
+	public final void Write(ArrayList<String[]> outputList) throws IOException, InterruptedException {	
 		Lm.WriteMesostic(outputList);
 	}
 }

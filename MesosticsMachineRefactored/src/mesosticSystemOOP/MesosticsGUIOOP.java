@@ -6,33 +6,32 @@ package mesosticSystemOOP;
  *
  * Within a JFrame lies a navigable hierarchy of JPanel "panels":
  * 
- *         (1) A Welcome panel with links to setup, run, and view cards 
- *         (2) A Setup panel for choosing the project directory, mesostic row, 
- *         		and target chapters 
- *         (3) Run panel to call methods in the system's core objects 
- *         		to create mesostics with and without syllable filtering 
- *         (4) A panel card to view files produced by the run functions
+ *		(1) Welcome panel with links to setup, run, and view cards 
+ *		(2) Setup panel for choosing the project directory, mesostic row, 
+ *         	and target chapters (with linked FileChoosers and text fields)
+ *		(3) Run panel to call methods in the system's core objects 
+ *         	to create mesostics with and without syllable filtering 
+ *		(4) View panel to view output files in directory
  * 
  * Please note the following:
  * 
- * (1) The following Prefixes used for panel and filechooser objects: 
- * JPxxx = a JPanel object xxx 
- * JFCxxx = a JFileChooser xxx
+ * 		(1) The following Prefixes used for panel and filechooser objects: 
+ * 			JPxxx = a JPanel object xxx 
+ * 			JFCxxx = a JFileChooser xxx
  *         
- * (2) There are TEMPORAL COUPLING WARNINGS in the code generated because 
- * this GUI will only function properly under these conditions (see guidance notes):
+ * 		(2) There are TEMPORAL COUPLING WARNINGS in the code generated because 
+ * 			this GUI will only function properly under these conditions (see guidance notes):
  * 
- *         (1) The user must choose the project directory first        
- *         (2) The user must choose the target chapter(s) after the project directory is set
- *         (3) The user must establish the mesostic row after the project directory is set
- *         (4) The project directory, target chapter(s) and mesostic row must be set 
+ *         	(a) The user must choose the project directory first        
+ *         	(b) The user must choose the target chapter(s) after the project directory is set
+ *         	(c) The user must establish the mesostic row after the project directory is set
+ *         	(d) The project directory, target chapter(s) and mesostic row must be set 
  *         	   before the user engages the functions on the Run panel and its sub-panels 
  *         
- * (3) The location notepad.exe is hard coded in this GUI. 
- * If the user of the GUI stores notepad.exe in another location
- * or prefers to use another program to open .txt files, this code must be changed
+ * 		(3) The location notepad.exe is hard coded in this GUI. 
+ * 			If the user of the GUI stores notepad.exe in another location
+ * 			or prefers to use another program to open .txt files, this code must be changed
  * 
- * @TODO As of 12 February 2018 this refactored class has not been tested.
  */
 
 import java.awt.EventQueue;
@@ -47,19 +46,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.awt.event.ActionEvent;
 import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Font;
 import javax.swing.JTextArea;
-import java.awt.Color;
 
-public class MesosticGUIOOP {
+public class MesosticsGUIOOP {
 
 	// the frame within which all panels are placed
 	private JFrame frame;
@@ -83,11 +78,12 @@ public class MesosticGUIOOP {
 	//Static variables for constructors requiring the target chapters
 	static String ChapterAddress;
 	static String[] ChapterArray;
-	static String ChapterArrayIndex;
+	static String ChapterArrayIndex = "0";
 	private ArrayList<String> ChapterQueue = new ArrayList<String>();
 
 	// field for user input of the mesostic row in GUI
 	private JTextField RowtextField;
+		
 	// Static variables for constructors requiring the mesostic row
 	static String RowAddress;
 	static String[] RowArray;
@@ -95,7 +91,8 @@ public class MesosticGUIOOP {
 
 	// mesostics output file:
 	static String Mesostics = Directory + "\\Mesostics.txt";
-
+	static String MesosticsFinished = Directory + "\\MesosticsFinished.txt";
+	
 	// sounds files:
 	private String OEDSounds = Directory + "\\Sounds and Places\\OEDSounds.txt";
 	private String Sounds = Directory + "\\Sounds and Places\\Chapter Sounds.txt";
@@ -106,12 +103,17 @@ public class MesosticGUIOOP {
 	private String Places = Directory + "\\Sounds and Places\\Chapter Places.txt";
 	private String PlacesSentences = Directory + "\\Sounds and Places\\Chapter Places Sentences.txt";
 
+	// Application constructor with its huge initialize method.
+	public MesosticsGUIOOP() {
+		initialize();
+	}
+	
 	//Launch the application.
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MesosticGUIOOP window = new MesosticGUIOOP();
+					MesosticsGUIOOP window = new MesosticsGUIOOP();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -120,20 +122,15 @@ public class MesosticGUIOOP {
 		});
 	}
 
-	// Application constructor with its huge initialize method.
-	public MesosticGUIOOP() {
-		initialize();
-	}
+
 
 	/*
 	 * This method initializes the contents of the frame by:
-	 * 
 	 * (1) initializing the frame 
 	 * (2) initializing the panels for the frame 
 	 * (3) placing the panels in the frame 
 	 * (4) initializing buttons and labels on the panels 
-	 * (5) setting the visibility sequence 
-	 * 	   for navigating between the panels
+	 * (5) setting the visibility of panels
 	 */
 	private void initialize() {
 
@@ -168,13 +165,8 @@ public class MesosticGUIOOP {
 		frame.getContentPane().add(JPView);
 
 //START OF WELCOME PANEL CODE
-		
-		/*
-		 * Welcome panel is the GUI home 
-		 * All "done" buttons return here
-		 */
 
-		// the Welcome panel layout, label and buttons
+		// Welcome panel layout, label and buttons
 		JPWelcome.setLayout(null);
 		JPWelcome.setVisible(true);// default state has this panel visible
 		JLabel lblWelcome = new JLabel("Welcome to the MesosticMachine");
@@ -182,7 +174,7 @@ public class MesosticGUIOOP {
 		lblWelcome.setBounds(133, 12, 638, 64);
 		JPWelcome.add(lblWelcome);
 
-		// the Setup button on Welcome panel makes the Setup panel visible
+		// Setup button on Welcome panel makes Setup panel visible
 		JButton btnWelcomeSetup = new JButton("Setup");
 		btnWelcomeSetup.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		btnWelcomeSetup.addActionListener(new ActionListener() {
@@ -194,7 +186,7 @@ public class MesosticGUIOOP {
 		btnWelcomeSetup.setBounds(365, 110, 160, 64);
 		JPWelcome.add(btnWelcomeSetup);
 
-		// the Run button on Welcome panel makes the Run panel visible
+		// Run button on Welcome panel makes Run panel visible
 		JButton btnWelcomeRun = new JButton("Run");
 		btnWelcomeRun.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		btnWelcomeRun.addActionListener(new ActionListener() {
@@ -206,7 +198,7 @@ public class MesosticGUIOOP {
 		btnWelcomeRun.setBounds(365, 205, 160, 64);
 		JPWelcome.add(btnWelcomeRun);
 
-		// The View button on Welcome panel makes the View panel visible
+		// View button on Welcome panel makes View panel visible
 		JButton btnWelcomeView = new JButton("View");
 		btnWelcomeView.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		btnWelcomeView.addActionListener(new ActionListener() {
@@ -218,7 +210,7 @@ public class MesosticGUIOOP {
 		btnWelcomeView.setBounds(365, 392, 161, 64);
 		JPWelcome.add(btnWelcomeView);
 
-		// The Finish button on Welcome panel makes the Finish panel visible
+		// Finish button on Welcome panel makes Finish panel visible
 		JButton btnWelcomeFinish = new JButton("Finish");
 		btnWelcomeFinish.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		btnWelcomeFinish.addActionListener(new ActionListener() {
@@ -230,30 +222,31 @@ public class MesosticGUIOOP {
 		btnWelcomeFinish.setBounds(365, 297, 161, 64);
 		JPWelcome.add(btnWelcomeFinish);
 
-// END OF WELCOME PANEL CODE; START OF SETUP PANEL CODE
+// END OF WELCOME PANEL CODE
+// START OF SETUP PANEL CODE
 
 		/*
 		 * The Setup panel assigns the project file directory, the mesostic row,
-		 * the target chapter file, and the output files. These assignments are 
-		 * required for the Run and Finish panel functions
+		 * the target chapter file, and the output files. 
+		 * These assignments are required for the Run and Finish panel functions
 		 */
 
-		// the Setup panel layout, label, and buttons
+		// Setup panel layout, label, and buttons
 		JPSetup.setLayout(null);
 		JPSetup.setVisible(false);// default = not visible
 		JLabel lblSetup = new JLabel("Setup Your Project");
 		lblSetup.setFont(new Font("Tahoma", Font.PLAIN, 42));
-		lblSetup.setBounds(267, 21, 353, 56);
+		lblSetup.setBounds(268, 21, 353, 56);
 		JPSetup.add(lblSetup);
 
-		// the SetupInfo sub-panel layout and label
+		// SetupInfo sub-panel layout and label
 		JPInfo.setLayout(null);
 		JLabel lblSetupInfo = new JLabel("Your Setup Info");
 		lblSetupInfo.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		lblSetupInfo.setBounds(278, 51, 291, 51);
 		JPInfo.add(lblSetupInfo);
 
-		// A text area in the the SetupInfo panel
+		// Text area in the the SetupInfo panel
 		JTextArea textArea = new JTextArea();
 		textArea.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		textArea.setRows(3);
@@ -298,7 +291,7 @@ public class MesosticGUIOOP {
 
 					// assign the file paths for the sounds and places files
 					OEDSounds = Directory + "\\Sounds and Places\\OEDSounds Final.txt";
-					Sounds = Directory + "\\Sounds and Places\\ChapterSounds.txt";
+					Sounds = Directory + "\\Sounds and Places\\Chapter Sounds.txt";
 					SoundsSentences = Directory + "\\Sounds and Places\\ChapterSoundsSentences.txt";
 					NotPlaces = Directory + "\\Sounds and Places\\Not A Place.txt";
 					Places = Directory + "\\Sounds and Places\\ChapterPlaces.txt";
@@ -315,10 +308,10 @@ public class MesosticGUIOOP {
 				}
 			}
 		});
-		btnSetProjectFolder.setBounds(239, 98, 409, 74);
+		btnSetProjectFolder.setBounds(191, 98, 508, 74);
 		JPSetup.add(btnSetProjectFolder);
 
-		// the Set Mesostic Row Button makes the SetMesosticRow panel visible
+		// Set Mesostic Row Button makes SetMesosticRow panel visible
 		JButton btnSetMesosticRow = new JButton("Step 2: Set Mesostic Row");
 		btnSetMesosticRow.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		btnSetMesosticRow.addActionListener(new ActionListener() {
@@ -327,10 +320,10 @@ public class MesosticGUIOOP {
 				JPSetup.setVisible(false);
 			}
 		});
-		btnSetMesosticRow.setBounds(239, 205, 409, 80);
+		btnSetMesosticRow.setBounds(191, 205, 508, 80);
 		JPSetup.add(btnSetMesosticRow);
 
-		// the SetMesosticRow panel and its label
+		// SetMesosticRow panel and its label
 		JPMesosticRow.setLayout(null);
 		JPMesosticRow.setVisible(false);// default = not visible
 		JLabel lblTypeYourMesostic = new JLabel("Type your mesostic row in the box:");
@@ -338,7 +331,7 @@ public class MesosticGUIOOP {
 		lblTypeYourMesostic.setBounds(88, 84, 712, 59);
 		JPMesosticRow.add(lblTypeYourMesostic);
 
-		// add a text field for entering the mesostic row
+		// Text field for entering the mesostic row
 		RowtextField = new JTextField();
 		RowtextField.setFont(new Font("Tahoma", Font.PLAIN, 21));
 		RowtextField.setColumns(10);
@@ -350,7 +343,8 @@ public class MesosticGUIOOP {
 		 * 
 		 * (1) Assigns the properly formatted user input to a variable 
 		 * (2) Writes the formatted row to a text file in the project directory
-		 * Then, calling the RepositoryWriter() method of a Repository object:
+		 * 
+		 *  Then, calling the RepositoryWriter() method of a Repository object:
 		 * (3) Creates a syllable repository file for each letter of the row 
 		 *     adding an identifying string to the first line of each file
 		 *     
@@ -388,7 +382,7 @@ public class MesosticGUIOOP {
 		btnMesosticRowSubmit.setBounds(352, 312, 183, 59);
 		JPMesosticRow.add(btnMesosticRowSubmit);
 
-		// The Set Chapter Files button makes the Chapter Setup panel visible
+		// Set Chapter Files button makes Chapter Setup panel visible
 		JButton btnSetChapterFile = new JButton("Step 3: Set Chapter Files");
 		btnSetChapterFile.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		btnSetChapterFile.addActionListener(new ActionListener() {
@@ -398,10 +392,10 @@ public class MesosticGUIOOP {
 
 			}
 		});
-		btnSetChapterFile.setBounds(239, 306, 409, 80);
+		btnSetChapterFile.setBounds(191, 306, 508, 80);
 		JPSetup.add(btnSetChapterFile);
 
-		// The Chapter Setup Panel layout and label
+		// Chapter Setup Panel layout and label
 		JPChapters.setLayout(null);
 		JLabel lblChapters = new JLabel("Chapter Setup");
 		lblChapters.setFont(new Font("Tahoma", Font.PLAIN, 42));
@@ -409,7 +403,7 @@ public class MesosticGUIOOP {
 		JPChapters.add(lblChapters);
 
 		/*
-		 * The Set Single Chapter button on the Chapter Setup Panel 
+		 * Set Single Chapter button on Chapter Setup Panel 
 		 * opens up a "txt file only" JFileChooser
 		 * which opens the directory set by JFCDirectory above
 		 * 
@@ -436,11 +430,12 @@ public class MesosticGUIOOP {
 					textArea.append("Chapter file: " + ChapterAddress + "\n\n");
 					JPSetup.setVisible(true);
 					JPWelcome.setVisible(false);
-
+					JPChapters.setVisible(false);
 				}
 
 				else if (JFCChapter.showOpenDialog(null) == JFileChooser.CANCEL_OPTION) {
 					JFCChapter.setVisible(false);
+					JPChapters.setVisible(false);
 					JPSetup.setVisible(false);
 					JPWelcome.setVisible(true);
 				}
@@ -449,7 +444,7 @@ public class MesosticGUIOOP {
 		JPChapters.add(btnSelectSingleChapter);
 
 		/*
-		 * The Set Chapter Queue button uses filechooser to populate an array of
+		 * Set Chapter Queue button uses filechooser to populate an array of
 		 * chapters
 		 * 
 		 * TEMPORAL COUPLING WARNING: This button uses the Directory variable,
@@ -475,20 +470,17 @@ public class MesosticGUIOOP {
 					textArea.append("Chapter added to Queue: " + ChapterQueue.get(ChapterQueue.size()- 1) + "\n\n");
 					JPSetup.setVisible(true);
 					JPWelcome.setVisible(false);
-
 				}
-
 				else if (JFCChapter.showOpenDialog(null) == JFileChooser.CANCEL_OPTION) {
 					JFCChapter.setVisible(false);
 					JPSetup.setVisible(false);
 					JPWelcome.setVisible(true);
-				}
-				
+				}			
 			}
 		});
 		JPChapters.add(btnSetChapterQueue);
 
-		// The SetupInfo button makes the SetUpInfo sub-panel visible
+		// SetupInfo button makes SetUpInfo sub-panel visible
 		JButton btnSetupInfo = new JButton("Your Setup Info");
 		btnSetupInfo.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		btnSetupInfo.addActionListener(new ActionListener() {
@@ -497,10 +489,10 @@ public class MesosticGUIOOP {
 				JPSetup.setVisible(false);
 			}
 		});
-		btnSetupInfo.setBounds(239, 398, 409, 74);
+		btnSetupInfo.setBounds(191, 398, 508, 74);
 		JPSetup.add(btnSetupInfo);
 
-		// The "ok" button on the SetupInfo panel returns to the Welcome panel
+		// "ok" button on SetupInfo panel returns to the Welcome panel
 		JButton btnpanelSetupOK = new JButton("ok");
 		btnpanelSetupOK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -512,7 +504,7 @@ public class MesosticGUIOOP {
 		btnpanelSetupOK.setBounds(384, 444, 78, 61);
 		JPInfo.add(btnpanelSetupOK);
 
-		// all the done buttons make the Welcome panel visible
+		// all the done buttons make Welcome panel visible
 		JButton btnSetupDone = new JButton("Done");
 		btnSetupDone.setFont(new Font("Tahoma", Font.PLAIN, 21));
 		btnSetupDone.addActionListener(new ActionListener() {
@@ -531,7 +523,7 @@ public class MesosticGUIOOP {
 		 * which must be previously set by the user with the Set Project Folder button  
 		 */
 
-		// the run panel and its label
+		// run panel and its label
 		JPRun.setLayout(null);
 		JPRun.setVisible(false);// default = not visible
 		JLabel lblWelcomeToRun = new JLabel("Run Your Project");
@@ -539,7 +531,7 @@ public class MesosticGUIOOP {
 		lblWelcomeToRun.setBounds(285, 21, 319, 62);
 		JPRun.add(lblWelcomeToRun);
 
-		// the Make Mesostics (Longer) button makes the MesosticsLonger sub-panel visible
+		// Make Mesostics (Longer) button makes MesosticsLonger sub-panel visible
 		JButton btnMakeMesosticsLonger = new JButton("Make Mesostics (Longer)");
 		btnMakeMesosticsLonger.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		btnMakeMesosticsLonger.addActionListener(new ActionListener() {
@@ -551,14 +543,14 @@ public class MesosticGUIOOP {
 		btnMakeMesosticsLonger.setBounds(154, 187, 581, 62);
 		JPRun.add(btnMakeMesosticsLonger);
 
-		// The MakeMesostics (Longer) sub-panel and its label
+		// MakeMesostics (Longer) sub-panel and its label
 		JPMesosticsLonger.setLayout(null);
 		JLabel lblMakeMesosticsLonger = new JLabel("Make Longer Mesostics");
 		lblMakeMesosticsLonger.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		lblMakeMesosticsLonger.setBounds(215, 12, 459, 69);
 		JPMesosticsLonger.add(lblMakeMesosticsLonger);
 
-		// The Next Word (Longer) button
+		// Next Word (Longer) button
 		JButton btnNextWordLonger = new JButton("Next Word");
 		btnNextWordLonger.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		btnNextWordLonger.setBounds(278, 130, 307, 74);
@@ -576,24 +568,17 @@ public class MesosticGUIOOP {
 					nw.AdvanceMesosticLetter();
 				
 				// catches redirect user to the setup window
-				} catch (IOException e1) {
+				} catch (IOException | InterruptedException e1) {
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, "An error has occurred."
 							+ "\nSetup may be incorrect."
 							+ "\nClose programme and return to Setup");
-
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-					JOptionPane.showMessageDialog(null, "An error has occurred."
-							+ "\nSetup may be incorrect."
-							+ "\nClose programme and return to Setup");
-
 				} 
 			}
 		});
 		JPMesosticsLonger.add(btnNextWordLonger);
 
-		// The Next Mesostic (Longer) button
+		// Next Mesostic (Longer) button
 		JButton btnNextMesosticLonger = new JButton("Next Mesostic");
 		btnNextMesosticLonger.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		btnNextMesosticLonger.setBounds(278, 216, 307, 74);
@@ -607,8 +592,7 @@ public class MesosticGUIOOP {
 					 NextMesostic nm = new NextMesostic(RowAddress, ChapterAddress, Mesostics);
 					 ArrayList<String[]> output = nm.Item();
 					 nm.AdvanceChapterWord(output.get(0)[0]);
-					 
-				//catch redirects user to the setup window	 
+			
 				} catch (IOException | InterruptedException e1) {
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, "An error has occurred."
@@ -632,7 +616,7 @@ public class MesosticGUIOOP {
 					//instantiate NextChapter and call Item() and Advance() methods
 					 NextChapter nc = new NextChapter(RowAddress, ChapterAddress, Mesostics); 
 					 nc.Item();
-				//redirect user to the setup window	
+					 
 				} catch (IOException | InterruptedException e1) {
 					e1.printStackTrace();			
 					JOptionPane.showMessageDialog(null, "An error has occurred."
@@ -643,32 +627,31 @@ public class MesosticGUIOOP {
 		});
 		JPMesosticsLonger.add(btnNextChapterLonger);
 	
-		// The All Chapters (Longer) button
-		JButton btnAllChaptersLonger = new JButton("All Chapters");
+		// The Multiple Chapters (Longer) button
+		JButton btnAllChaptersLonger = new JButton("Multiple Chapters");
 		btnAllChaptersLonger.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		btnAllChaptersLonger.setBounds(278, 388, 307, 74);
 		btnAllChaptersLonger.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				//TODO this action requires a collection of chapters to traverse				
-				/*try {
-					//instantiate AllChapters
-					//call Item() and Advance() methods
-					
-				} catch (IOException e1) {
+			public void actionPerformed(ActionEvent e) {	
+				try {
+					for(String chapter : ChapterQueue){
+						NextChapter nc = new NextChapter(RowAddress, chapter, Mesostics);
+						nc.Item();
+					}
+		
+				} catch (IOException | InterruptedException e1) {
 					e1.printStackTrace();
-					//redirect user to the setup window
 					JOptionPane.showMessageDialog(null, "An error has occurred."
 							+ "\nSetup may be incorrect."
 							+ "\nClose programme and return to Setup");
-
-			} */
+				} 
 			}
 		});
 		JPMesosticsLonger.add(btnAllChaptersLonger);
 		
-		//The Done (with Mesostics Longer) button 
+		//Done (with Mesostics Longer) button 
 		JButton btnMesosticLongerDone = new JButton("Done");
 		btnMesosticLongerDone.setFont(new Font("Tahoma", Font.PLAIN, 21));
 		btnMesosticLongerDone.setBounds(736, 485, 141, 35);
@@ -682,7 +665,7 @@ public class MesosticGUIOOP {
 		});
 		JPMesosticsLonger.add(btnMesosticLongerDone);
 			
-		// the Make Mesostics (Shorter) button makes the MesosticsShorter sub-panel visible
+		// Make Mesostics (Shorter) button makes MesosticsShorter sub-panel visible
 		JButton btnMakeMesosticsShorter = new JButton("Make Mesostics (Shorter)");
 		btnMakeMesosticsShorter.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		btnMakeMesosticsShorter.setBounds(154, 104, 581, 62);
@@ -694,14 +677,14 @@ public class MesosticGUIOOP {
 		});
 		JPRun.add(btnMakeMesosticsShorter);
 		
-		// The Make Mesostics (Shorter) sub-panel and its label
+		// Make Mesostics (Shorter) sub-panel and its label
 		JPMesosticsShorter.setLayout(null);
 		JLabel lblMakeMesosticsShorter = new JLabel("Make Shorter Mesostics");
 		lblMakeMesosticsShorter.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		lblMakeMesosticsShorter.setBounds(228, 31, 435, 51);
 		JPMesosticsShorter.add(lblMakeMesosticsShorter);
 
-		// The Next Word (Shorter) button
+		// Next Word (Shorter) button
 		JButton btnNextWordShorter = new JButton("Next Word");
 		btnNextWordShorter.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		btnNextWordShorter.setBounds(300, 125, 290, 61);
@@ -716,8 +699,7 @@ public class MesosticGUIOOP {
 					NextItemFiltered nwf = new NextWordFiltered(nw, Directory);
 					ArrayList<String[]> output = nwf.Item();
 					nwf.Write(output); 
-				
-				// catches redirect user to the setup window			
+						
 				} catch (IOException e1) {
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, "An error has occurred." + "\nSetup may be incorrect."
@@ -726,8 +708,7 @@ public class MesosticGUIOOP {
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null,
 							"Internet connection interrupted" + "\nClose programme and start over");
-				}
-				
+				}				
 			}
 		});
 		JPMesosticsShorter.add(btnNextWordShorter);
@@ -742,11 +723,13 @@ public class MesosticGUIOOP {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
-					NextWord nw = new NextWord(RowAddress, ChapterAddress, Mesostics);
+					
+					NextItem nw = new NextWord(RowAddress, ChapterAddress, Mesostics);
 					NextMesosticFiltered nmf = new NextMesosticFiltered(RowAddress, ChapterAddress, Mesostics, nw);
-					ArrayList<String[]> output = nmf.Item();
-					nmf.Write(output);
-					nmf.AdvanceChapterWord(output.get(output.size()-1)[0]);
+					for (int i = 0; i < RowArray.length; i ++){
+						ArrayList<String[]> output = nmf.Item();
+						nmf.Write(output);
+					}
 					
 				// catches redirect user to the setup window	 
 				} catch (IOException e1) {
@@ -761,8 +744,6 @@ public class MesosticGUIOOP {
 			}
 		});
 		JPMesosticsShorter.add(btnNextMesosticShorter);
-		
-		// TODO this requires testing
 		// The Next Chapter button
 		JButton btnNextChapterShorter = new JButton("Next Chapter");
 		btnNextChapterShorter.setBounds(300, 313, 290, 61);
@@ -771,25 +752,9 @@ public class MesosticGUIOOP {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					NextWord nw = new NextWord(RowAddress, ChapterAddress, Mesostics);
-					NextMesosticFiltered nmf = new NextMesosticFiltered(RowAddress, ChapterAddress, Mesostics, nw);
-					NextChapterFiltered ncf = new NextChapterFiltered(NextWord.RowAddress, NextWord.ChapterAddress, 
-							NextItemAbstract.Mesostics, nmf); 
-					ArrayList<String[]> output = ncf.Item();
-					ncf.Write(output);
-					ncf.AdvanceChapterWord(output.get(0)[0]);
-				
-				// catches redirect user to the setup window
-				} catch (IOException e1) {
-					e1.printStackTrace();				
-					JOptionPane.showMessageDialog(null, "An error has occurred." + "\nSetup may be incorrect."
-							+ "\nClose programme and return to Setup");
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-					JOptionPane.showMessageDialog(null,
-							"Internet connection interrupted" + "\nClose programme and start over");
-				}				
+					
+					JOptionPane.showMessageDialog(null, "This function not advised." 
+							+ "\nBetter to make one mesostic at a time.");	
 			}
 		});
 		JPMesosticsShorter.add(btnNextChapterShorter);
@@ -837,9 +802,7 @@ public class MesosticGUIOOP {
 			}
 		});
 		JPMesosticsShorter.add(btnMesosticsShorterDone);
-		
-
-		
+			
 		// this button calls the getSounds object
 		JButton btnGetSounds = new JButton("Get Sounds");
 		btnGetSounds.addActionListener(new ActionListener() {
@@ -850,10 +813,6 @@ public class MesosticGUIOOP {
 					ArrayList<String[]> outputList = new ArrayList<String[]>();
 					outputList = sound.Item();
 					sound.Write(outputList);
-					
-					Sentence sentence = new Sentence(ChapterArray, Sounds, SoundsSentences);
-					
-					sentence.WriteSentence(); 
 
 				} catch (IOException e1) {
 					e1.printStackTrace();
@@ -861,7 +820,6 @@ public class MesosticGUIOOP {
 					JOptionPane.showMessageDialog(null, "An error has occurred." + "\nSetup may be incorrect."
 							+ "\nClose programme and return to Setup");
 				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -876,15 +834,18 @@ public class MesosticGUIOOP {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					Places p = new Places(ChapterAddress, NotPlaces, Places, PlacesSentences);
-					Sentence sentence = new Sentence(ChapterArray, Places, PlacesSentences);
-					p.PlaceWord();
-					sentence.WriteSentence();
+					Places p = new Places(ChapterAddress, NotPlaces, Places);
+					ArrayList<String[]> outputList = new ArrayList<String[]>();
+					outputList = p.Item();
+					p.Write(outputList);
+					
 				// catch redirects user to the setup window
 				} catch (IOException e1) {
 					e1.printStackTrace();				
 					JOptionPane.showMessageDialog(null, "An error has occurred." + "\nSetup may be incorrect."
 							+ "\nClose programme and return to Setup");
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
 				}
 
 			}
@@ -904,15 +865,13 @@ public class MesosticGUIOOP {
 		});
 		btnRunDone.setBounds(744, 478, 123, 42);
 		JPRun.add(btnRunDone);
-
-		//TODO Finish the finisher objects
 	
 		// END OF RUN PANELS CODE; BEGINNING OF FINISH PANEL CODE
 
 		// the Finish panel and its label
 		JPFinish.setLayout(null);
 		JLabel lblWelcomeToFinish = new JLabel("Finish Your Project Files");
-		lblWelcomeToFinish.setBounds(224, 65, 442, 51);
+		lblWelcomeToFinish.setBounds(220, 32, 442, 51);
 		lblWelcomeToFinish.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		JPFinish.add(lblWelcomeToFinish);
 
@@ -922,7 +881,7 @@ public class MesosticGUIOOP {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					MesosticsFinished mf = new MesosticsFinished (Mesostics, ChapterArray);
+					MesosticsFinished mf = new MesosticsFinished (Mesostics, MesosticsFinished, ChapterAddress);
 					mf.WithAdjacentWords();
 				} catch (IOException e1) {
 					e1.printStackTrace();
@@ -933,7 +892,7 @@ public class MesosticGUIOOP {
 
 			}
 		});
-		btnAddWords.setBounds(240, 181, 409, 61);
+		btnAddWords.setBounds(240, 108, 409, 61);
 		btnAddWords.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		JPFinish.add(btnAddWords);
 
@@ -943,7 +902,7 @@ public class MesosticGUIOOP {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					MesosticsFinished mf = new MesosticsFinished(Mesostics, ChapterArray);
+					MesosticsFinished mf = new MesosticsFinished(Mesostics, MesosticsFinished, ChapterAddress);
 					mf.WithCentredLines();
 				
 				// catches redirect user to the setup window	
@@ -955,21 +914,20 @@ public class MesosticGUIOOP {
 				} 
 			}
 		});
-		btnCentreMesosticLines.setBounds(228, 307, 434, 61);
+		btnCentreMesosticLines.setBounds(228, 208, 434, 61);
 		btnCentreMesosticLines.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		JPFinish.add(btnCentreMesosticLines);
 
-		// this button calls the Collation object
-		JButton btnCollate = new JButton("Collate Sounds and Places");
+		// this button calls the Collation object for sounds
+		JButton btnCollate = new JButton("Collate Sounds");
 		btnCollate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				MesosticsFinished mf = new MesosticsFinished (Mesostics, ChapterArray);
+				
 				try {
+					MesosticsFinished mf = new MesosticsFinished (Mesostics, MesosticsFinished, ChapterAddress);
 					mf.WithItemsCollated(Sounds);
-					mf.WithItemsCollated(Places);
 				} catch (IOException e1) {
-					// redirect user to the setup window
 					JOptionPane.showMessageDialog(null, "An error has occurred." + "\nSetup may be incorrect."
 							+ "\nClose programme and return to Setup");
 					e1.printStackTrace();
@@ -978,9 +936,28 @@ public class MesosticGUIOOP {
 			}
 		});
 		btnCollate.setFont(new Font("Tahoma", Font.PLAIN, 42));
-		btnCollate.setBounds(187, 433, 516, 61);
+		btnCollate.setBounds(257, 300, 375, 61);
 		JPFinish.add(btnCollate);
-
+		
+		// this button calls the Collation object for places 
+		JButton button = new JButton("Collate Places");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+		
+				try {
+					MesosticsFinished mf = new MesosticsFinished (Mesostics, MesosticsFinished, ChapterAddress);
+					mf.WithItemsCollated(Places);
+				} catch (IOException e1) {
+					JOptionPane.showMessageDialog(null, "An error has occurred." + "\nSetup may be incorrect."
+							+ "\nClose programme and return to Setup");
+					e1.printStackTrace();
+				}
+			}
+		});
+		button.setFont(new Font("Tahoma", Font.PLAIN, 42));
+		button.setBounds(257, 392, 375, 61);
+		JPFinish.add(button);
+		
 		// all done buttons return to Welcome panel
 		JButton btnFinishDone = new JButton("Done");
 		btnFinishDone.addActionListener(new ActionListener() {
@@ -1067,6 +1044,5 @@ public class MesosticGUIOOP {
 		});
 		btnViewDone.setBounds(651, 485, 143, 35);
 		JPView.add(btnViewDone);
-
 	}
 }

@@ -1,18 +1,30 @@
 package mesosticSystemOOP;
 
+/**
+ * @author Martin Dowling
+ * 
+ * A concrete implementation of NextItem 
+ * which produces one full mesostics poem in a chapter
+ * 
+ * @see NextWord to which is delegated the task of finding successive words
+ * @see MesosticsLineWriter to which is delegated the task of writing lines to a file
+ * 
+ */
+
 import java.io.IOException;
 import java.util.ArrayList;
 
 public final class NextMesostic extends NextItemAbstract {
 
+	//TODO CREATE A COMPLETE COPY OF THE SYSTEM SPECIFICALLY FOR THE GUI WITH THESE INPUTS??
 	//secondary constructor throws exception
 	public NextMesostic(String row, String chapter, String mesostics) throws IOException {
-		this(new FileToString(RowAddress).output(), new FileToString(ChapterAddress).output(), 
-					Mesostics, new LineMesostic(mesostics), new NextWord(row, chapter, mesostics));
+		this(new FileToString(MesosticsGUIOOP.RowAddress).output(), new FileToString(ChapterAddress).output(), 
+					Mesostics, new MesosticsLineWriter(mesostics), new NextWord(row, chapter, mesostics));
 	}
 
 	//primary constructor
-	public NextMesostic(String row, String chapter, String mesostics, LineMesostic lm, NextWord nw) {
+	public NextMesostic(String row, String chapter, String mesostics, MesosticsLineWriter lm, NextWord nw) {
 		super(row, chapter, mesostics, lm, nw);			
 	}
 
@@ -39,11 +51,10 @@ public final class NextMesostic extends NextItemAbstract {
 		} 
 		
 		return outputList;	
-		
 	}
 	
 	@Override
-	public void Write(ArrayList<String[]> outputList) throws IOException, InterruptedException {
+	public final void Write(ArrayList<String[]> outputList) throws IOException, InterruptedException {
 		Lm.WriteMesostic(outputList);
 	}
 
