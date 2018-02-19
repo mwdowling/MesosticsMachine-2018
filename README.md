@@ -4,14 +4,14 @@ The .java files in this repository comprise a MesosticsMachine, a software syste
 
 Further background documentation is held in the MesosticsMachine-Archive repository on this GitHub site.  
 
-As of 13 February 2018:
+As of 19 February 2018:
 
-Classes in the NextItem and the NextItemFiltered hierarchies are complete.
+Classes in the NextItem and the NextItemFiltered hierarchies are complete and tested.
 
-The functioning of the syllable filter object, which now uses a ChromeDriver downloaded on 13 February 2018 with  Selenium 3.9.1 for Java, remains unstable, although the introduction of a timeout statement has helped.
+Syllable filter objects, which now uses a ChromeDriver downloaded on 13 February 2018 with  Selenium 3.9.1 for Java, complete and tested.
   
-The Sound class dealing with sounds has been refactored and needs some more testing. This class uses a OEDSounds file with words scraped from the Online Oxford English Dictionary and produces many flase positives.  
+The Sound, Place, and Sentence classes complete and tested.   
 
-Classes dealing with places and mesostic formatting require further refactoring and testing.
+The Finishing classes dealing mesostic formatting are complete and tested.  
  
-The GUI is appropriately structured but each actionPerformed() method needs to be tested. 
+The GUI requires further refactoring and testing. Almost ready! 
