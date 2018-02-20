@@ -78,8 +78,8 @@ public final class NextChapterFiltered extends NextItemFiltered {
 	}
 
 	@Override
-	public void AdvanceChapterWord(String index) {
-			super.AdvanceChapterWord(index);
+	public String AdvanceChapterWord(String index) {
+			return super.AdvanceChapterWord(index);
 	}
 
 }

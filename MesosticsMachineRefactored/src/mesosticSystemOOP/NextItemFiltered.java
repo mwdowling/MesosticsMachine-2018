@@ -20,6 +20,7 @@ public abstract class NextItemFiltered extends NextItemAbstract {
 
 	protected NextItem DecoratedNextItem;
 	protected NextWordFiltered Nwf; //for use by NextMesosticFiltered and NextChapterFiltered
+	static String Directory;
 	
 	// NextWordFiltered primary constructor
 	public NextItemFiltered(String row, String chapter, int rowArrayIndex, String chapterArrayIndex, 
@@ -50,8 +51,8 @@ public abstract class NextItemFiltered extends NextItemAbstract {
 	}
 	
 	@Override
-	public void AdvanceChapterWord(String index) {
-		DecoratedNextItem.AdvanceChapterWord(index);
+	public String AdvanceChapterWord(String index) {
+		return DecoratedNextItem.AdvanceChapterWord(index);
 		
 	}
 }

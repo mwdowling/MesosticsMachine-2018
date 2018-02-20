@@ -25,21 +25,18 @@ public abstract class NextItemAbstract implements NextItem {
 	protected FileToString Fs;
 	
 	// input variables for the mesostic row
-	static String Row;
-	static String RowAddress;
-	static String[] RowArray;
-	static int RowArrayIndex;
+	static String RowAddress;// = MesosticsGUIOOP.RowAddress;
+	static String[] RowArray;// = MesosticsGUIOOP.RowArray;
+	static int RowArrayIndex;// = MesosticsGUIOOP.RowArrayIndex;
 
 	// input variables for the chapter
-	static String Chapter;
-	static String ChapterAddress;
-	static String[] ChapterArray;
-	static String ChapterArrayIndex;
+	static String ChapterAddress;// = MesosticsGUIOOP.ChapterAddress;
+	static String[] ChapterArray;// = MesosticsGUIOOP.ChapterArray;
+	static String ChapterArrayIndex;// = MesosticsGUIOOP.ChapterArrayIndex;
 	
 	// location variables for mesostics files
-	static String Mesostics; //location of Mesostics file
+	static String Mesostics;// = MesosticsGUIOOP.Mesostics; //location of Mesostics file
 	static String MesosticsFinished;//output of finishing methods
-	static String Directory;// location of syllable repositories
 	
 	//variables for sounds 
 	static String OEDSounds;
@@ -68,9 +65,7 @@ public abstract class NextItemAbstract implements NextItem {
 	
 	// nextMesostic and NextChapter primary constructor 
 	public NextItemAbstract(String row, String chapter, String mesostics, MesosticsLineWriter lm, NextWord nw) {
-		Row = row;
-		Chapter = chapter;
-		RowArray = row.split("");
+		MesosticsGUIOOP.RowArray = row.split("");//TODO Don't understand why this prefix is needed here, but not above
 		Mesostics = mesostics;
 		Nw = nw;
 		Lm = lm;
@@ -78,23 +73,23 @@ public abstract class NextItemAbstract implements NextItem {
 	
 	//Sounds, Places and Sentences primary constructor 
 	public NextItemAbstract(String comparator, String chapter, String outputFile, MesosticsLineWriter lm) {	
-		Chapter = chapter;
 		ChapterArray = chapter.split("\\s+");
 		Lm = lm;
 	}
 		
 	//Sentence primary constructor
 	public NextItemAbstract(int wordIndex, String chapter) {
-		Chapter = chapter;
 		ChapterArray = chapter.split("\\s+");
 	}
 
-	//further refinement of this in the NextITemFiltered objects
+	//further refinement of this in the NextItemFiltered objects
 	@Override
-	public void AdvanceChapterWord(String index) {	
+	public String AdvanceChapterWord(String index) {	
 		
 		int wordIndex = new Integer(index).intValue();	
 		ChapterArrayIndex = String.valueOf(wordIndex + 1);
 		System.out.println("Advancing to new Chapter Index: " + ChapterArrayIndex);
+		return ChapterArrayIndex;
+		
 	}	
 }

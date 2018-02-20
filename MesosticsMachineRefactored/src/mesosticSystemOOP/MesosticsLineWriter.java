@@ -45,10 +45,11 @@ public class MesosticsLineWriter {
 		BufferedWriter bw = new BufferedWriter(new FileWriter(new File(File), true));
 		
 		//traverse the Arraylist of index/word pairs and write them to file 
-		bw.newLine();
-		for(String[] s : outputList){
-			bw.write(s[0] + "\t" + s[1]);
+		//bw.newLine();
+		for(String[] s : outputList){	
 			bw.newLine();
+			bw.write(s[0] + "\t" + s[1]);	
+			//bw.newLine();
 		}
 		
 		bw.close();	
@@ -73,7 +74,7 @@ public class MesosticsLineWriter {
 		// write a generic buffering last line to the Mesostics file
 		String[] bottomLine = {String.valueOf(NextItemAbstract.ChapterArray.length), "END"};
 		bw.write(bottomLine[0] + "\t" + bottomLine[1]);
-		
+		bw.newLine();
 		bw.close();
 		
 	}

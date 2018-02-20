@@ -11,8 +11,8 @@ import java.util.ArrayList;
 public class Places extends NextItemAbstract {
 
 	public Places(String comparator, String chapter, String outputFile) throws IOException {
-		this(new FileToString(NotPlace).output(), new FileToString(ChapterAddress).output(),
-				new FileToString(PlaceWords).output(), new MesosticsLineWriter(outputFile));
+		this(new FileToString(MesosticsGUIOOP.NotPlaces).output(), new FileToString(MesosticsGUIOOP.ChapterAddress).output(),
+				new FileToString(MesosticsGUIOOP.Places).output(), new MesosticsLineWriter(outputFile));
 	}
 
 	public Places(String comparator, String chapter, String outputFile, MesosticsLineWriter lm) {

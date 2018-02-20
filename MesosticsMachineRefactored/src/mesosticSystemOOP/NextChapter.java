@@ -17,10 +17,10 @@ import java.util.ArrayList;
 
 public final class NextChapter extends NextItemAbstract {
 	
-	//secondary constructor throws exception
+	//secondary constructor takes arguments from GUI and throws exception
 	public NextChapter(String row, String chapter, String mesostics) throws IOException {
-		this(new FileToString(MesosticsGUIOOP.RowAddress).output(), new FileToString(ChapterAddress).output(), 
-				Mesostics, new MesosticsLineWriter(mesostics), new NextWord(row, chapter, mesostics));
+		this(new FileToString(MesosticsGUIOOP.RowAddress).output(), new FileToString(MesosticsGUIOOP.ChapterAddress).output(), 
+				MesosticsGUIOOP.Mesostics, new MesosticsLineWriter(mesostics), new NextWord(row, chapter, mesostics));
 	}
 
 	//primary constructor
@@ -47,7 +47,7 @@ public final class NextChapter extends NextItemAbstract {
 			output = Nw.Item();
 			outputList.addAll(output);
 			
-			//advance to next word in chapter
+			//advance to next word in chapter and next row of mesostics
 			AdvanceChapterWord(outputList.get(outputList.size()-1)[0]);			
 			Nw.AdvanceMesosticLetter();
 			
@@ -65,7 +65,7 @@ public final class NextChapter extends NextItemAbstract {
 	}
 
 	@Override
-	public final void AdvanceChapterWord(String index) {
-		super.AdvanceChapterWord(index);
+	public final String AdvanceChapterWord(String index) {
+		return super.AdvanceChapterWord(index);
 	}
 }

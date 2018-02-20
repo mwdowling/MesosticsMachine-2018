@@ -38,7 +38,11 @@ import java.util.Map;
 
 public final class SyllableRecord {
 	
-	public SyllableRecord() {
+	private String Directory;
+	
+	public SyllableRecord(String directory) {
+		
+		Directory = directory;
 	}
 
 	// a method to return the correct syllable repository
@@ -56,7 +60,7 @@ public final class SyllableRecord {
 		 */
 		Map<Integer, String> Repositories = new HashMap<>();
 		for (int i = 0; i < NextItemAbstract.RowArray.length; i++) {
-			Repositories.put(i, NextItemAbstract.Directory + "\\Syllable Repositories\\MesoticLetter" + (i + 1) + ".txt");
+			Repositories.put(i, Directory + "\\Syllable Repositories\\MesoticLetter" + (i + 1) + ".txt");
 		}
 
 		// get appropriate syllable repository file

@@ -85,4 +85,14 @@ public final class Sentence extends NextItemAbstract{
 		}	
 		System.out.println(sentence);
 	}
+	
+	public final String ReturnSentence (ArrayList<String[]> outputList) throws IOException, InterruptedException {
+		
+		String[] sentenceArray = outputList.get(0);
+		String sentence = sentenceArray[0];
+		for(int i = 1; i < sentenceArray.length; i ++){
+			sentence = sentence + " " + sentenceArray[i] ;
+		}	
+		return sentence;
+	}
 }

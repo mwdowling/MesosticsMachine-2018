@@ -27,9 +27,9 @@ import java.io.IOException;
 public class Sentences {
 	
 	//input variables for target chapter
-	private static String Comparator;
-	private static String ChapterAddress;
-	private  String[] ChapterArray;
+	static String Comparator;
+	static String ChapterAddress;
+	static String[] ChapterArray;
 	
 	// variables for output files
     private static String Sentences;

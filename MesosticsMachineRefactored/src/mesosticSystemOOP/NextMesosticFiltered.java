@@ -18,8 +18,8 @@ public final class NextMesosticFiltered extends NextItemFiltered {
 	//secondary constructor accesses files on disk 
 	public NextMesosticFiltered (String row, String chapter, String mesostics, NextItem decoratedNextItem) throws IOException {
 		
-		this(new FileToString(RowAddress).output(), new FileToString(ChapterAddress).output(), 
-					Mesostics, new MesosticsLineWriter(mesostics), new NextWord(row, chapter, mesostics), decoratedNextItem, Directory);
+		this(new FileToString(MesosticsGUIOOP.RowAddress).output(), new FileToString(MesosticsGUIOOP.ChapterAddress).output(), 
+				MesosticsGUIOOP.Mesostics, new MesosticsLineWriter(mesostics), new NextWord(row, chapter, mesostics), decoratedNextItem, Directory);
 		//The NextMesostic object creates and uses a NextWord object
 		Nwf = new NextWordFiltered(decoratedNextItem, mesostics);
 	}

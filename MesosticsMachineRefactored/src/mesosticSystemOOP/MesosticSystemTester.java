@@ -22,17 +22,17 @@ public class MesosticSystemTester {
 		// Static variables for the output files
 		NextItemAbstract.Mesostics = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\Mesostics.txt";
 		NextItemAbstract.MesosticsFinished = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\MesosticsFinished.txt";
-		NextItemAbstract.Directory = "C:\\Users\\Martin\\Documents\\MesosticsMachine";
+		NextItemFiltered.Directory = "C:\\Users\\Martin\\Documents\\MesosticsMachine";
 		
 		//variables for sounds
 		NextItemAbstract.OEDSounds = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\Sounds and Places\\OEDSounds Final.txt";
 		NextItemAbstract.SoundWords = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\Sounds and Places\\Chapter Sounds.txt";
-		NextItemAbstract.SoundSentences = NextItemAbstract.Directory + "\\Sounds and Places\\ChapterSoundsSentences.txt";
+		NextItemAbstract.SoundSentences = NextItemFiltered.Directory + "\\Sounds and Places\\ChapterSoundsSentences.txt";
 		
 		//variables for places
-		NextItemAbstract.NotPlace = NextItemAbstract.Directory + "\\Sounds and Places\\Not A Place.txt";
-		NextItemAbstract.PlaceWords = NextItemAbstract.Directory + "\\Sounds and Places\\ChapterPlaces.txt";
-		NextItemAbstract.PlaceSentences = NextItemAbstract.Directory + "\\Sounds and Places\\ChapterPlacesSentences.txt";
+		NextItemAbstract.NotPlace = NextItemFiltered.Directory + "\\Sounds and Places\\Not A Place.txt";
+		NextItemAbstract.PlaceWords = NextItemFiltered.Directory + "\\Sounds and Places\\ChapterPlaces.txt";
+		NextItemAbstract.PlaceSentences = NextItemFiltered.Directory + "\\Sounds and Places\\ChapterPlacesSentences.txt";
 				
 				
 		//local variable for output
@@ -45,8 +45,8 @@ public class MesosticSystemTester {
 		NextWordFiltered nwf = new NextWordFiltered(nw, NextItemAbstract.Mesostics);
 		NextMesosticFiltered nmf = new NextMesosticFiltered(NextItemAbstract.RowAddress, NextItemAbstract.ChapterAddress, 
 				NextItemAbstract.Mesostics, nw);
-		NextChapterFiltered ncf = new NextChapterFiltered(NextWord.RowAddress, NextWord.ChapterAddress, 
-				NextItemAbstract.Mesostics, nm);
+		NextChapterFiltered ncf = new NextChapterFiltered(MesosticsGUIOOP.RowAddress, MesosticsGUIOOP.ChapterAddress, 
+				MesosticsGUIOOP.Mesostics, nm);
 		Sounds s = new Sounds(NextItemAbstract.OEDSounds, NextItemAbstract.ChapterAddress, NextItemAbstract.SoundWords);
 		Places p = new Places(NextItemAbstract.NotPlace, NextItemAbstract.ChapterAddress, NextItemAbstract.PlaceWords);
 		Sentences soundSentences = new Sentences(NextItemAbstract.SoundWords, NextItemAbstract.ChapterAddress, NextItemAbstract.SoundSentences); 
@@ -109,7 +109,7 @@ public class MesosticSystemTester {
 		/* Tackling the problem one mesostic at a time with syllable filter
 		 * This works but not a properly structured object because
 		 * the returned ArrayList is never used
-		 * Webdriver to fragile to accumulate data in an Arraylist of arrays
+		 * Webdriver too fragile to accumulate data in an Arraylist of arrays
 		 * as happens with NextMesostic object above
 		 * 
 		 * Better to use NextWordFiltered inside a for loop in the GUI,

@@ -16,11 +16,10 @@ import java.util.ArrayList;
 
 public final class NextMesostic extends NextItemAbstract {
 
-	//TODO CREATE A COMPLETE COPY OF THE SYSTEM SPECIFICALLY FOR THE GUI WITH THESE INPUTS??
 	//secondary constructor throws exception
 	public NextMesostic(String row, String chapter, String mesostics) throws IOException {
-		this(new FileToString(MesosticsGUIOOP.RowAddress).output(), new FileToString(ChapterAddress).output(), 
-					Mesostics, new MesosticsLineWriter(mesostics), new NextWord(row, chapter, mesostics));
+		this(new FileToString(MesosticsGUIOOP.RowAddress).output(), new FileToString(MesosticsGUIOOP.ChapterAddress).output(), 
+				MesosticsGUIOOP.Mesostics, new MesosticsLineWriter(mesostics), new NextWord(row, chapter, mesostics));
 	}
 
 	//primary constructor
@@ -38,12 +37,17 @@ public final class NextMesostic extends NextItemAbstract {
 		
 		// verify new startIndex on console
 		System.out.println("Chapter Index: " + startIndex);
-		
+		System.out.println("Row length: " + RowArray.length );
 		// A for loop to traverse the mesostic row using NextWord
 		for (int i = 0; i < RowArray.length; i++) {
 			
 			RowArrayIndex = i;
 			output.clear();
+			/*
+			 * TODO This method adds a blank "next line" to the bottom of each mesostic, 
+			 * 		which is nice but needs to be removed before using the finishing objects
+			 * 		(finishers can't read a blank line)
+			 */
 			output = Nw.Item();
 			outputList.add(output.get(0));
 			AdvanceChapterWord(output.get(0)[0]);
@@ -59,8 +63,8 @@ public final class NextMesostic extends NextItemAbstract {
 	}
 
 	@Override
-	public final void AdvanceChapterWord(String index) {
-		super.AdvanceChapterWord(index);
+	public final String AdvanceChapterWord(String index) {
+		return super.AdvanceChapterWord(index);
 	}
 
 }

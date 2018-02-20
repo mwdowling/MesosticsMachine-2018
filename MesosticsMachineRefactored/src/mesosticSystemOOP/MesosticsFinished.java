@@ -25,12 +25,13 @@ import java.io.IOException;
 
 public class MesosticsFinished {
 
-	private String Mesostics;
-	private String MesosticsFinished;
-	private String Chapter;
-	private String[] ChapterArray;
+	private String Mesostics = MesosticsGUIOOP.Mesostics;
+	private String MesosticsFinished = MesosticsGUIOOP.MesosticsFinished;
+	private String Chapter = MesosticsGUIOOP.ChapterAddress;
+	private String[] ChapterArray = MesosticsGUIOOP.ChapterArray;
 
 	public MesosticsFinished(String mesostics, String mesosticsFinished, String chapterAddress) throws IOException {
+		
 		Mesostics = mesostics;
 		MesosticsFinished = mesosticsFinished;
 		Chapter = new FileToString(chapterAddress).output();
@@ -41,7 +42,6 @@ public class MesosticsFinished {
 
 		// file reader with identifiers for lines in mesostics file
 		BufferedReader br = new BufferedReader(new FileReader(new File(Mesostics)));
-
 		String line = br.readLine();
 		br.mark(1000);
 		String nextLine = br.readLine();
@@ -113,20 +113,23 @@ public class MesosticsFinished {
 		nextLine = br.readLine();
 		br.reset();
 
-		// complete for all other cases while the buffer line has not been
-		// reached
-		while (nextLine != null) {
+		// all other cases while the buffer line has not been reached
+		while (line != null) {
 
-			// two-element arrays for the three mesostic words and indexes
+			// two-element arrays for the three mesostic words and indexes (as integers)
 			String[] previousLineContent = previousLine.split("\\t");
-			lineContent = line.split("\\t");
-			nextLineContent = nextLine.split("\\t");
-
-			// the indexes as Integers
 			indexPrevious = new Integer(previousLineContent[0]);
+			
+			lineContent = line.split("\\t");
 			index = new Integer(lineContent[0]);
-			indexNext = new Integer(nextLineContent[0]);
-
+			
+			if(nextLine != null){
+				nextLineContent = nextLine.split("\\t");
+				indexNext = new Integer(nextLineContent[0]);
+			} else {
+				indexNext = index + 43;
+				}
+			
 			// variables for adding adjacent words before the mesostic word
 			wordsToAddBefore = "";
 			length = 0;
@@ -172,6 +175,7 @@ public class MesosticsFinished {
 			br.mark(1000);
 			nextLine = br.readLine();
 			br.reset();
+			//TODO Last line is not reached!!
 		}
 		br.close();
 	}

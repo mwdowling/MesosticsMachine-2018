@@ -27,6 +27,6 @@ public interface NextItem {
 	
 	void Write(ArrayList<String[]> outputList) throws IOException, InterruptedException;
 	
-	void AdvanceChapterWord(String index);
+	String AdvanceChapterWord(String index);
 	
 }

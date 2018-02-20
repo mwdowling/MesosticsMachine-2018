@@ -26,10 +26,10 @@ public final class NextWordFiltered extends NextItemFiltered {
 	// NextWordFiltered secondary constructor
 	public NextWordFiltered(NextItem decoratedNextItem, String mesostics) throws IOException {
 		
-		this(new FileToString(RowAddress).output(), new FileToString(ChapterAddress).output(), RowArrayIndex,
-				ChapterArrayIndex, Mesostics, new MesosticsLineWriter(mesostics), decoratedNextItem, Directory);
+		this(new FileToString(MesosticsGUIOOP.RowAddress).output(), new FileToString(MesosticsGUIOOP.ChapterAddress).output(), MesosticsGUIOOP.RowArrayIndex,
+				MesosticsGUIOOP.ChapterArrayIndex, MesosticsGUIOOP.Mesostics, new MesosticsLineWriter(mesostics), decoratedNextItem, Directory);
 		S = new Syllable();
-		Sr = new SyllableRecord();
+		Sr = new SyllableRecord(MesosticsGUIOOP.Directory);
 		Ls = new SyllableLineWriter(Directory, S, Sr);
 	}
 	
@@ -85,9 +85,9 @@ public final class NextWordFiltered extends NextItemFiltered {
 	}
 	
 	@Override
-	public final void AdvanceChapterWord(String index) {
+	public final String AdvanceChapterWord(String index) {
 		
-		super.AdvanceChapterWord(index);
+		return super.AdvanceChapterWord(index);
 		
 	}
 

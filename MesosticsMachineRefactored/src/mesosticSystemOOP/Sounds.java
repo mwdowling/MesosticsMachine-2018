@@ -17,8 +17,8 @@ public class Sounds extends NextItemAbstract{
 
 	// secondary constructor
 	public Sounds(String comparator, String chapter, String outputFile) throws IOException {
-		this(new FileToString(OEDSounds).output(), new FileToString(ChapterAddress).output(), 
-				new FileToString(SoundWords).output(), new MesosticsLineWriter(outputFile));
+		this(new FileToString(MesosticsGUIOOP.OEDSounds).output(), new FileToString(MesosticsGUIOOP.ChapterAddress).output(), 
+				new FileToString(MesosticsGUIOOP.Sounds).output(), new MesosticsLineWriter(outputFile));
 	}
 	
 	// primary constructor
@@ -63,8 +63,9 @@ public class Sounds extends NextItemAbstract{
 	}
 
 	@Override
-	public void AdvanceChapterWord(String index) {
+	public String AdvanceChapterWord(String index) {
 		// no implementation required
 		System.out.println("This method does nothing");
+		return index;
 	}
 }

@@ -37,7 +37,7 @@ public final class NextWord extends NextItemAbstract {
 		String nextLetter;
 
 		// reformatted variables for the words in the chapter
-		int startIndexInt = new Integer(MesosticsGUIOOP.ChapterArrayIndex).intValue();									
+		int startIndexInt = new Integer(ChapterArrayIndex).intValue();									
 		String startIndex = String.valueOf(startIndexInt);
 		String targetWord = ChapterArray[startIndexInt];
 
@@ -119,11 +119,11 @@ public final class NextWord extends NextItemAbstract {
 	}	
 	
 	@Override
-	public final void AdvanceChapterWord(String index) {	
-		super.AdvanceChapterWord(index);
+	public final String AdvanceChapterWord(String index) {	
+		return super.AdvanceChapterWord(index);
 	}
 
-	public final void AdvanceMesosticLetter() {
+	public final int AdvanceMesosticLetter() {
 		
 		//advance the array index or continue from the beginning
 		if (RowArrayIndex + 1 < RowArray.length) {
@@ -131,6 +131,6 @@ public final class NextWord extends NextItemAbstract {
 		} else
 			RowArrayIndex = 0;
 		System.out.println("Advancing to new row index: " + RowArrayIndex);
-		
+		return RowArrayIndex;		
 	}
 }

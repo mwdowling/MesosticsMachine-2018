@@ -38,7 +38,7 @@ public final class Syllable {
 	public final String SyllableSaved(String word) throws InterruptedException, IOException {
 
 		// The target letter in the row
-		String Letter = NextWord.RowArray[NextWord.RowArrayIndex];
+		String Letter = NextItemAbstract.RowArray[NextItemAbstract.RowArrayIndex];
 	
 		//Firefox not working well
 		//System.setProperty("webdriver.gecko.driver", "C:\\Users\\Martin\\Documents\\Java Libraries\\geckodriver-v0.19.1-win64\\geckodriver.exe");
