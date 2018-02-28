@@ -1,20 +1,28 @@
 package mesosticSystemOOP;
 
+/**
+ * @author Martin Dowling
+ *  
+ *  Tests of all objects using 
+ *  a sample chapter from The Star Factory by Ciaran Carson
+ *  sounds and place comparator files
+ *  
+ *  These tests have been superseded and the constructors do not compile
+ *  
+ *  TODO: In order to run object tests, remove the MesosticsGUIOOP prefix
+ * 		  from the arguments to the secondary constructors in each object
+ * 		  (The objects are now configured to take arguments from the GUI)
+ * 
+ */
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class MesosticSystemTester {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
-
-		/* 
-		 * Using secondary constructor
-		 * also declaring what is needed for primary constructor
-		 * as the latter called implicitly
-		 */
 		
 		//static variables for inputs
-		MesosticsGUIOOP.RowAddress = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\Mesostics Row.txt";
+		NextItemAbstract.RowAddress = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\Mesostics Row.txt";
 		NextItemAbstract.RowArrayIndex = 0;
 		NextItemAbstract.ChapterAddress = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\01 RAGLAN STREET.txt";
 		NextItemAbstract.ChapterArrayIndex = "0";
@@ -40,7 +48,7 @@ public class MesosticSystemTester {
 		
 		// NextItem objects
 		NextWord nw = new NextWord(NextItemAbstract.RowAddress, NextItemAbstract.ChapterAddress, NextItemAbstract.Mesostics);
-		NextMesostic nm = new NextMesostic(NextItemAbstract.RowAddress, NextItemAbstract.ChapterAddress, NextItemAbstract.Mesostics);
+/*		NextMesostic nm = new NextMesostic(NextItemAbstract.RowAddress, NextItemAbstract.ChapterAddress, NextItemAbstract.Mesostics);
 		NextChapter nc = new NextChapter(NextItemAbstract.RowAddress, NextItemAbstract.ChapterAddress, NextItemAbstract.Mesostics); 		
 		NextWordFiltered nwf = new NextWordFiltered(nw, NextItemAbstract.Mesostics);
 		NextMesosticFiltered nmf = new NextMesosticFiltered(NextItemAbstract.RowAddress, NextItemAbstract.ChapterAddress, 
@@ -52,6 +60,7 @@ public class MesosticSystemTester {
 		Sentences soundSentences = new Sentences(NextItemAbstract.SoundWords, NextItemAbstract.ChapterAddress, NextItemAbstract.SoundSentences); 
 		Sentences placeSentences = new Sentences(NextItemAbstract.PlaceWords, NextItemAbstract.ChapterAddress, NextItemAbstract.PlaceSentences);
 		MesosticsFinished mf = new MesosticsFinished(NextItemAbstract.Mesostics, NextItemAbstract.MesosticsFinished, NextItemAbstract.ChapterAddress);
+*/
 
 /*
 		//Using NextWord to get one word at a time (three here)
@@ -61,7 +70,7 @@ public class MesosticSystemTester {
 			 nw.AdvanceChapterWord(outputList.get(0)[0]);
 			 nw.AdvanceMesosticLetter();
 		 }
-*/	
+*/
 
 /*
 		//Using NextMesostic to get one mesostic at a time (two here)			
@@ -161,8 +170,6 @@ public class MesosticSystemTester {
 		//Collating sounds into mesostics file
 		mf.WithItemsCollated(NextItemAbstract.SoundWords);
 */		
-		//(Also can test collation of any two other indexed output files)
-		
-		
+		//(Also can test collation of any two other indexed output files)	
 	}	
 }

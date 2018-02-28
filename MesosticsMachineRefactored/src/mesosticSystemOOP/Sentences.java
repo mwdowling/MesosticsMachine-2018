@@ -32,7 +32,7 @@ public class Sentences {
 	static String[] ChapterArray;
 	
 	// variables for output files
-    private static String Sentences;
+    static String Sentences;
     
     //primary constructor
     public Sentences(String comparator, String chapterAddress, String outputFile) throws IOException {

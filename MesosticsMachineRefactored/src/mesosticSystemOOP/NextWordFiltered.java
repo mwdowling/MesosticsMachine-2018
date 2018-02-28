@@ -48,7 +48,7 @@ public final class NextWordFiltered extends NextItemFiltered {
 		
 		//filter the output through the syllable checking objects
 		String wordIndex = output.get(0)[0];
-		int wordIndexInt = new Integer(wordIndex).intValue();
+		int wordIndexInt = new Integer(wordIndex).intValue(); 
 		String SavedSyllable = S.SyllableSaved(output.get(0)[1]);
 		String Repository = Sr.Repository();
 		Boolean RepoHasSyllable = Sr.RepositoryHasSyllable(Repository, SavedSyllable);

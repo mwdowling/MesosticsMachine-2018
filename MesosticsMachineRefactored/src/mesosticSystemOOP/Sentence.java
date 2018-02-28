@@ -27,7 +27,7 @@ public final class Sentence extends NextItemAbstract{
 	
 	//primary constructor 
 	public Sentence(int wordIndex, String comparator, String chapter) throws IOException {
-		super(wordIndex, new FileToString(ChapterAddress).output());
+		super(wordIndex, new FileToString(MesosticsGUIOOP.ChapterAddress).output());
 		WordIndex = wordIndex; 	
 	}
 
