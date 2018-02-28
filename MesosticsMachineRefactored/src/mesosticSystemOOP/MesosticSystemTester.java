@@ -62,7 +62,7 @@ public class MesosticSystemTester {
 		MesosticsFinished mf = new MesosticsFinished(NextItemAbstract.Mesostics, NextItemAbstract.MesosticsFinished, NextItemAbstract.ChapterAddress);
 */
 
-
+/*
 		//Using NextWord to get one word at a time (three here)
 		for (int i = 0; i < 3; i++) { 	
 			 outputList = nw.Item();
@@ -71,7 +71,7 @@ public class MesosticSystemTester {
 			 nw.AdvanceMesosticLetter();
 		 }
 
-
+*/
 /*
 		//Using NextMesostic to get one mesostic at a time (two here)			
 		for (int i = 0; i < 3; i++) { 
