@@ -64,12 +64,13 @@ public class MesosticsFinished {
 		Integer indexPrevious = 0;
 		Integer index = new Integer(lineContent[0]);
 		Integer indexNext = new Integer(nextLineContent[0]);
+		
 
 		// variables for adding adjacent words before the mesostic word
 		String wordsToAddBefore = "";
 		int length = 0;
 
-		while (length <= 43 && (index - indexPrevious) > 1 && index > lastWord + 1) {
+		while (length <= 43 && (index - indexPrevious) >= 1 && index > lastWord + 1) {
 
 			wordsToAddBefore = ChapterArray[index - 1].toLowerCase().replaceAll("\\W", "").trim() + " "
 					+ wordsToAddBefore;
@@ -224,8 +225,8 @@ public class MesosticsFinished {
 
 			// write the newly spaced line to the output file
 			BufferedWriter bw = new BufferedWriter(new FileWriter(new File(MesosticsFinished), true));
-			bw.newLine();
 			bw.write(lineContent[0] + "\t" + lineContent[1]);
+			bw.newLine();
 			bw.close();
 
 			// move to next line

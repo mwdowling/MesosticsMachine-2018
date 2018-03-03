@@ -36,8 +36,9 @@ public class MesosticsLineWriter {
 	
 	public final void WriteLine(ArrayList<String[]> output) throws IOException {
 		BufferedWriter bw = new BufferedWriter(new FileWriter(new File(File), true));
-		bw.newLine();
+		//bw.newLine();
 		bw.write(output.get(0)[0] + "\t" + output.get(0)[1]);
+		bw.newLine();
 		bw.close();
 	}
 

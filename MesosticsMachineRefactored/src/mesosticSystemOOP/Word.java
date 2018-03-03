@@ -73,7 +73,7 @@ public final class Word extends ItemAbstract {
 				}
 				
 				/* declare the the target letter:  
-				 * IF target letter is the last in the mesostic row,  
+				 * If target letter is the last in the mesostic row,  
 				 * pair it with the first letter of the mesostic row 
 				 */
 				if (RowArrayIndex + 1 < RowArray.length) {

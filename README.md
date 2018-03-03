@@ -2,7 +2,7 @@
 
 MesosticsMachine is a software system to facilitate the implementation of a score by John Cage to create a musical realization of a literary work.  This system was designed using Java 1.8 in Eclipse Neon, integrated with GitHub via EGit.  This is a fully refactored version of a system submitted as a final project for the degree of MSc in Software Development in Queen's University of Belfast in September 2017. OOP design principles and patterns and more effective and concise coding practices have been incorporated in this system.  
 
-Background documentation for the system in the form of a thesis is held in the MesosticsMachine-Archive repository on this GitHub site. This project originated with my collaboration on a realization of the Cage score called "Owenvarragh: A Belfast Circus on The Star Factory." Video of a performance in 2012 produced by sound engineer Úna Monaghan featuring poet Ciaran Carson, author of the memoir "The Star Factory", can be found on my YouTube Channel:
+Background documentation for the system in the form of a thesis is held in the MesosticsMachine-Archive repository on this GitHub site. This project originated with my collaboration on a realization of the Cage score called "Owenvarragh: A Belfast Circus on The Star Factory." Video of a performance in 2012 produced by sound engineer Úna Monaghan featuring poet Ciaran Carson, author of the memoir "The Star Factory", and informational videos explaining the design and operation of this system, can be found on my YouTube Channel:
 
 www.youtube.com/channel/UCzBLSd6k16kPYIATntrnPcA
 
