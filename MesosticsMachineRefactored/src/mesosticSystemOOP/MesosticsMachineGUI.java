@@ -54,7 +54,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Font;
 import javax.swing.JTextArea;
 
-public class MesosticsGUIOOP {
+public class MesosticsMachineGUI {
 
 	// the frame within which all panels are placed
 	private JFrame frame;
@@ -106,7 +106,7 @@ public class MesosticsGUIOOP {
 	private JTextField IndexTextField;
 	
 	// Application constructor with its huge initialize method (see below)
-	public MesosticsGUIOOP() {
+	public MesosticsMachineGUI() {
 		initialize();
 	}
 	
@@ -115,7 +115,7 @@ public class MesosticsGUIOOP {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MesosticsGUIOOP window = new MesosticsGUIOOP();
+					MesosticsMachineGUI window = new MesosticsMachineGUI();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -567,8 +567,8 @@ public class MesosticsGUIOOP {
 				
 				try {
 					//write next word to mesostics and advance the indexes 
-					NextWord nw = new NextWord(RowAddress, ChapterAddress, Mesostics);
-					ArrayList<String[]> output = nw.Item();
+					Word nw = new Word(RowAddress, ChapterAddress, Mesostics);
+					ArrayList<String[]> output = nw.NextItem();
 					nw.Write(output);
 					ChapterArrayIndex = nw.AdvanceChapterWord(output.get(0)[0]);
 					RowArrayIndex = nw.AdvanceMesosticLetter();
@@ -595,8 +595,8 @@ public class MesosticsGUIOOP {
 				
 				try {
 					//instantiate NextMesostic and Item() and Advance() methods
-					 NextMesostic nm = new NextMesostic(RowAddress, ChapterAddress, Mesostics);
-					 ArrayList<String[]> output = nm.Item();
+					 Mesostic nm = new Mesostic(RowAddress, ChapterAddress, Mesostics);
+					 ArrayList<String[]> output = nm.NextItem();
 					 System.out.println("Output length is: " + output.size());
 					 nm.Write(output);
 					 ChapterArrayIndex = nm.AdvanceChapterWord(output.get(new Integer(RowArray.length).intValue() - 1)[0]);
@@ -622,8 +622,8 @@ public class MesosticsGUIOOP {
 				
 				try {
 					//instantiate NextChapter and call Item() and Advance() methods
-					 NextChapter nc = new NextChapter(RowAddress, ChapterAddress, Mesostics); 
-					 ArrayList<String[]> output = nc.Item();
+					 Chapter nc = new Chapter(RowAddress, ChapterAddress, Mesostics); 
+					 ArrayList<String[]> output = nc.NextItem();
 					 nc.Write(output);
 					 
 				} catch (IOException | InterruptedException e1) {
@@ -648,8 +648,8 @@ public class MesosticsGUIOOP {
 					System.out.println(ChapterQueue.get(0));
 					for(String chapter : ChapterQueue){
 						ChapterAddress = chapter;
-						NextChapter nc = new NextChapter(RowAddress, ChapterAddress, Mesostics);
-						 ArrayList<String[]> output = nc.Item();
+						Chapter nc = new Chapter(RowAddress, ChapterAddress, Mesostics);
+						 ArrayList<String[]> output = nc.NextItem();
 						 nc.Write(output);
 						 /*
 						  * TODO Assign ChapterArrayIndex = ChapterArray.length here
@@ -711,9 +711,9 @@ public class MesosticsGUIOOP {
 		
 				try {
 					//Instantiate NextWord, its Decorator, and call Item() and Advance() methods
-					NextWord nw = new NextWord(RowAddress, ChapterAddress, Mesostics);
-					NextItemFiltered nwf = new NextWordFiltered(nw, Directory);
-					ArrayList<String[]> output = nwf.Item();
+					Word nw = new Word(RowAddress, ChapterAddress, Mesostics);
+					ItemFiltered nwf = new WordFiltered(nw, Directory);
+					ArrayList<String[]> output = nwf.NextItem();
 					nwf.Write(output); 
 					ChapterArrayIndex = nwf.AdvanceChapterWord(output.get(0)[0]);
 					RowArrayIndex = nw.AdvanceMesosticLetter();
@@ -742,12 +742,12 @@ public class MesosticsGUIOOP {
 				
 				try {
 					
-					NextItem nw = new NextWord(RowAddress, ChapterAddress, Mesostics);
-					NextItemFiltered nwf = new NextWordFiltered(nw, Directory);
+					Item nw = new Word(RowAddress, ChapterAddress, Mesostics);
+					ItemFiltered nwf = new WordFiltered(nw, Directory);
 					int limit = new Integer(RowArray.length).intValue();
 					System.out.println("Limit; " + limit);
 					for (int i = 0; i < limit; i ++){
-						ArrayList<String[]> output = nwf.Item();
+						ArrayList<String[]> output = nwf.NextItem();
 						nwf.Write(output);
 					}		
 					
@@ -822,7 +822,7 @@ public class MesosticsGUIOOP {
 					
 					Sounds sound = new Sounds(OEDSounds, ChapterAddress, Sounds);
 					ArrayList<String[]> outputList = new ArrayList<String[]>();
-					outputList = sound.Item();
+					outputList = sound.NextItem();
 					sound.Write(outputList);
 
 				} catch (IOException e1) {
@@ -846,7 +846,7 @@ public class MesosticsGUIOOP {
 				try {
 					Places p = new Places(ChapterAddress, NotPlaces, Places);
 					ArrayList<String[]> outputList = new ArrayList<String[]>();
-					outputList = p.Item();
+					outputList = p.NextItem();
 					p.Write(outputList);
 					
 				// catch redirects user to the setup window
@@ -1014,7 +1014,7 @@ public class MesosticsGUIOOP {
 				try {
 					Sentence s = new Sentence(input, Mesostics, ChapterAddress);
 					ArrayList<String[]> outputList = new ArrayList<String[]>();
-					outputList = s.Item();
+					outputList = s.NextItem();
 					s.Write(outputList);
 					JOptionPane.showMessageDialog(null, s.ReturnSentence(outputList));
 					

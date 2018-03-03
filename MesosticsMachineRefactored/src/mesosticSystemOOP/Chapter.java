@@ -15,21 +15,21 @@ package mesosticSystemOOP;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public final class NextChapter extends NextItemAbstract {
+public final class Chapter extends ItemAbstract {
 	
 	//secondary constructor takes arguments from GUI and throws exception
-	public NextChapter(String row, String chapter, String mesostics) throws IOException {
-		this(new FileToString(MesosticsGUIOOP.RowAddress).output(), new FileToString(MesosticsGUIOOP.ChapterAddress).output(), 
-				MesosticsGUIOOP.Mesostics, new MesosticsLineWriter(mesostics), new NextWord(row, chapter, mesostics));
+	public Chapter(String row, String chapter, String mesostics) throws IOException {
+		this(new FileToString(MesosticsMachineGUI.RowAddress).output(), new FileToString(MesosticsMachineGUI.ChapterAddress).output(), 
+				MesosticsMachineGUI.Mesostics, new MesosticsLineWriter(mesostics), new Word(row, chapter, mesostics));
 	}
 
 	//primary constructor
-	public NextChapter(String row, String chapter, String mesostics, MesosticsLineWriter lm, NextWord nw) throws IOException {
+	public Chapter(String row, String chapter, String mesostics, MesosticsLineWriter lm, Word nw) throws IOException {
 		super(row, chapter, mesostics, lm, nw);
 	}
 
 	@Override
-	public final ArrayList<String[]> Item() throws IOException, InterruptedException {
+	public final ArrayList<String[]> NextItem() throws IOException, InterruptedException {
 		
 		ArrayList<String[]> output = new ArrayList<String[]>();
 		ArrayList<String[]> outputList = new ArrayList<String[]>();
@@ -44,7 +44,7 @@ public final class NextChapter extends NextItemAbstract {
 				
 			//write a mesostic to ArrayList
 			output.clear();
-			output = Nw.Item();
+			output = Nw.NextItem();
 			outputList.addAll(output);
 			
 			//advance to next word in chapter and next row of mesostics

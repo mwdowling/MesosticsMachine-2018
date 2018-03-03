@@ -15,22 +15,22 @@ package mesosticSystemOOP;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public final class NextWord extends NextItemAbstract {
+public final class Word extends ItemAbstract {
 	
 	//secondary constructor throws exception
-	public NextWord(String row, String chapter, String mesostics) throws IOException {	
-		this(new FileToString(MesosticsGUIOOP.RowAddress).output(), new FileToString(MesosticsGUIOOP.ChapterAddress).output(), MesosticsGUIOOP.RowArrayIndex,
-				MesosticsGUIOOP.ChapterArrayIndex, MesosticsGUIOOP.Mesostics, new MesosticsLineWriter(mesostics));
+	public Word(String row, String chapter, String mesostics) throws IOException {	
+		this(new FileToString(MesosticsMachineGUI.RowAddress).output(), new FileToString(MesosticsMachineGUI.ChapterAddress).output(), MesosticsMachineGUI.RowArrayIndex,
+				MesosticsMachineGUI.ChapterArrayIndex, MesosticsMachineGUI.Mesostics, new MesosticsLineWriter(mesostics));
 	}
 	
 	//primary constructor
-	public NextWord(String row, String chapter, int rowArrayIndex, String chapterArrayIndex, 
+	public Word(String row, String chapter, int rowArrayIndex, String chapterArrayIndex, 
 					String mesostics, MesosticsLineWriter lm) {
 		super(row, chapter, rowArrayIndex, chapterArrayIndex, mesostics, lm);	
 	}
 
 	@Override
-	public final ArrayList<String[]> Item() throws IOException, InterruptedException {
+	public final ArrayList<String[]> NextItem() throws IOException, InterruptedException {
 		
 		// variables for the mesostic row targets
 		String targetLetter = RowArray[RowArrayIndex];

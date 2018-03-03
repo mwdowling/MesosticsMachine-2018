@@ -21,9 +21,9 @@ package mesosticSystemOOP;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public interface NextItem {
+public interface Item {
 	
-	ArrayList<String[]> Item() throws IOException, InterruptedException;	
+	ArrayList<String[]> NextItem() throws IOException, InterruptedException;	
 	
 	void Write(ArrayList<String[]> outputList) throws IOException, InterruptedException;
 	

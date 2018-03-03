@@ -16,7 +16,7 @@ package mesosticSystemOOP;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public final class NextWordFiltered extends NextItemFiltered {
+public final class WordFiltered extends ItemFiltered {
 	
 	//reference syllable repository objects
 	private Syllable S; 
@@ -24,27 +24,27 @@ public final class NextWordFiltered extends NextItemFiltered {
 	private SyllableLineWriter Ls;
 	
 	// NextWordFiltered secondary constructor
-	public NextWordFiltered(NextItem decoratedNextItem, String mesostics) throws IOException {
+	public WordFiltered(Item decoratedNextItem, String mesostics) throws IOException {
 		
-		this(new FileToString(MesosticsGUIOOP.RowAddress).output(), new FileToString(MesosticsGUIOOP.ChapterAddress).output(), MesosticsGUIOOP.RowArrayIndex,
-				MesosticsGUIOOP.ChapterArrayIndex, MesosticsGUIOOP.Mesostics, new MesosticsLineWriter(mesostics), decoratedNextItem, Directory);
+		this(new FileToString(MesosticsMachineGUI.RowAddress).output(), new FileToString(MesosticsMachineGUI.ChapterAddress).output(), MesosticsMachineGUI.RowArrayIndex,
+				MesosticsMachineGUI.ChapterArrayIndex, MesosticsMachineGUI.Mesostics, new MesosticsLineWriter(mesostics), decoratedNextItem, Directory);
 		S = new Syllable();
-		Sr = new SyllableRecord(MesosticsGUIOOP.Directory);
+		Sr = new SyllableRecord(MesosticsMachineGUI.Directory);
 		Ls = new SyllableLineWriter(Directory, S, Sr);
 	}
 	
 	// NextWordFiltered primary constructor
-	public NextWordFiltered(String row, String chapter, int rowArrayIndex, String chapterArrayIndex, 
-							String mesostics, MesosticsLineWriter lm, NextItem decoratedNextItem, String directory) {
+	public WordFiltered(String row, String chapter, int rowArrayIndex, String chapterArrayIndex, 
+							String mesostics, MesosticsLineWriter lm, Item decoratedNextItem, String directory) {
 		super(row, chapter, rowArrayIndex, chapterArrayIndex, mesostics, lm, decoratedNextItem, directory);
 	}
 
 	@Override
-	public final ArrayList<String[]> Item() throws IOException, InterruptedException {
+	public final ArrayList<String[]> NextItem() throws IOException, InterruptedException {
 		
 		//get the target word and its index from the decorated NextItem's method 
 		ArrayList<String[]> output = new ArrayList<String[]>();
-		output = super.Item();
+		output = super.NextItem();
 		
 		//filter the output through the syllable checking objects
 		String wordIndex = output.get(0)[0];

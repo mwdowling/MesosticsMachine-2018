@@ -72,7 +72,7 @@ public class MesosticsLineWriter {
 		}
 		
 		// write a generic buffering last line to the Mesostics file
-		String[] bottomLine = {String.valueOf(NextItemAbstract.ChapterArray.length), "END"};
+		String[] bottomLine = {String.valueOf(ItemAbstract.ChapterArray.length), "END"};
 		bw.write(bottomLine[0] + "\t" + bottomLine[1]);
 		bw.newLine();
 		bw.close();

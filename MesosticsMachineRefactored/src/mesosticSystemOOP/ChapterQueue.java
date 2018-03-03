@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 
-public class NextChapterQueue {
+public class ChapterQueue {
 
 	JFileChooser JFC = new JFileChooser();
 	ArrayList<String> Addresses = new ArrayList<String>();

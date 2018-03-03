@@ -20,24 +20,24 @@ package mesosticSystemOOP;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public final class NextChapterFiltered extends NextItemFiltered {
+public final class ChapterFiltered extends ItemFiltered {
 	
 	//secondary constructor throws exception
-	public NextChapterFiltered(String row, String chapter, String mesostics, NextItem decoratedNextItem) throws IOException {
+	public ChapterFiltered(String row, String chapter, String mesostics, Item decoratedNextItem) throws IOException {
 		this(new FileToString(RowAddress).output(), new FileToString(ChapterAddress).output(), 
-				Mesostics, new MesosticsLineWriter(mesostics), new NextWord(row, chapter, mesostics), decoratedNextItem, Directory);
-		Nwf = new NextWordFiltered(decoratedNextItem, mesostics);
+				Mesostics, new MesosticsLineWriter(mesostics), new Word(row, chapter, mesostics), decoratedNextItem, Directory);
+		Nwf = new WordFiltered(decoratedNextItem, mesostics);
 	}
 		
 	//primary constructor
-	public NextChapterFiltered(String row, String chapter, String mesostics, MesosticsLineWriter lm, NextWord nw,
-			NextItem decoratedNextItem, String directory) throws IOException {
+	public ChapterFiltered(String row, String chapter, String mesostics, MesosticsLineWriter lm, Word nw,
+			Item decoratedNextItem, String directory) throws IOException {
 		super(row, chapter, mesostics, lm, nw, decoratedNextItem, directory);
 
 	}
 
 	@Override
-	public ArrayList<String[]> Item() throws IOException, InterruptedException {
+	public ArrayList<String[]> NextItem() throws IOException, InterruptedException {
 		
 		ArrayList<String[]> output = new ArrayList<String[]>();
 		ArrayList<String[]> outputList = new ArrayList<String[]>();
@@ -55,7 +55,7 @@ public final class NextChapterFiltered extends NextItemFiltered {
 				
 				//write a mesostic to ArrayList
 				output.clear();
-				output = Nwf.Item();
+				output = Nwf.NextItem();
 				outputList.addAll(output);
 				System.out.println(outputList.size());
 				

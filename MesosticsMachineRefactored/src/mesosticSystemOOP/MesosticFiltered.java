@@ -13,26 +13,26 @@ package mesosticSystemOOP;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public final class NextMesosticFiltered extends NextItemFiltered {
+public final class MesosticFiltered extends ItemFiltered {
 
 	//secondary constructor accesses files on disk 
-	public NextMesosticFiltered (String row, String chapter, String mesostics, NextItem decoratedNextItem) throws IOException {
+	public MesosticFiltered (String row, String chapter, String mesostics, Item decoratedNextItem) throws IOException {
 		
-		this(new FileToString(MesosticsGUIOOP.RowAddress).output(), new FileToString(MesosticsGUIOOP.ChapterAddress).output(), 
-				MesosticsGUIOOP.Mesostics, new MesosticsLineWriter(mesostics), new NextWord(row, chapter, mesostics), decoratedNextItem, Directory);
+		this(new FileToString(MesosticsMachineGUI.RowAddress).output(), new FileToString(MesosticsMachineGUI.ChapterAddress).output(), 
+				MesosticsMachineGUI.Mesostics, new MesosticsLineWriter(mesostics), new Word(row, chapter, mesostics), decoratedNextItem, Directory);
 		//The NextMesostic object creates and uses a NextWord object
-		Nwf = new NextWordFiltered(decoratedNextItem, mesostics);
+		Nwf = new WordFiltered(decoratedNextItem, mesostics);
 	}
 	
 	//primary constructor
-	public NextMesosticFiltered(String row, String chapter, String mesostics, MesosticsLineWriter lm, NextWord nw, NextItem decoratedNextItem,
+	public MesosticFiltered(String row, String chapter, String mesostics, MesosticsLineWriter lm, Word nw, Item decoratedNextItem,
 			String directory) {
 		super(row, chapter, mesostics, lm, nw, decoratedNextItem, directory);		
 	}
 
 	
 	@Override
-	public final ArrayList<String[]> Item() throws IOException, InterruptedException {
+	public final ArrayList<String[]> NextItem() throws IOException, InterruptedException {
 		
 		// input and output variables
 		String startIndex = ChapterArrayIndex;
@@ -49,7 +49,7 @@ public final class NextMesosticFiltered extends NextItemFiltered {
 		for (int i = 0; i < RowArray.length; i++){
 			
 			RowArrayIndex = i;
-			outputList = Nwf.Item();
+			outputList = Nwf.NextItem();
 			Nwf.Write(outputList); 
 			Nwf.AdvanceChapterWord(outputList.get(0)[0]);
 			

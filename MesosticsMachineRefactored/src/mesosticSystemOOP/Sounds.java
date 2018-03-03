@@ -13,12 +13,12 @@ package mesosticSystemOOP;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Sounds extends NextItemAbstract{
+public class Sounds extends ItemAbstract{
 
 	// secondary constructor
 	public Sounds(String comparator, String chapter, String outputFile) throws IOException {
-		this(new FileToString(MesosticsGUIOOP.OEDSounds).output(), new FileToString(MesosticsGUIOOP.ChapterAddress).output(), 
-				new FileToString(MesosticsGUIOOP.Sounds).output(), new MesosticsLineWriter(outputFile));
+		this(new FileToString(MesosticsMachineGUI.OEDSounds).output(), new FileToString(MesosticsMachineGUI.ChapterAddress).output(), 
+				new FileToString(MesosticsMachineGUI.Sounds).output(), new MesosticsLineWriter(outputFile));
 	}
 	
 	// primary constructor
@@ -29,7 +29,7 @@ public class Sounds extends NextItemAbstract{
 	}
 
 	@Override
-	public ArrayList<String[]> Item() throws IOException, InterruptedException {
+	public ArrayList<String[]> NextItem() throws IOException, InterruptedException {
 		
 		ArrayList<String[]> output = new ArrayList<String[]>();
 		ArrayList<String[]> outputList = new ArrayList<String[]>();

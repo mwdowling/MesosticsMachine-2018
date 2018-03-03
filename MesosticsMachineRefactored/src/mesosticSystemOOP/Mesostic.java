@@ -14,21 +14,21 @@ package mesosticSystemOOP;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public final class NextMesostic extends NextItemAbstract {
+public final class Mesostic extends ItemAbstract {
 
 	//secondary constructor throws exception
-	public NextMesostic(String row, String chapter, String mesostics) throws IOException {
-		this(new FileToString(MesosticsGUIOOP.RowAddress).output(), new FileToString(MesosticsGUIOOP.ChapterAddress).output(), 
-				MesosticsGUIOOP.Mesostics, new MesosticsLineWriter(mesostics), new NextWord(row, chapter, mesostics));
+	public Mesostic(String row, String chapter, String mesostics) throws IOException {
+		this(new FileToString(MesosticsMachineGUI.RowAddress).output(), new FileToString(MesosticsMachineGUI.ChapterAddress).output(), 
+				MesosticsMachineGUI.Mesostics, new MesosticsLineWriter(mesostics), new Word(row, chapter, mesostics));
 	}
 
 	//primary constructor
-	public NextMesostic(String row, String chapter, String mesostics, MesosticsLineWriter lm, NextWord nw) {
+	public Mesostic(String row, String chapter, String mesostics, MesosticsLineWriter lm, Word nw) {
 		super(row, chapter, mesostics, lm, nw);			
 	}
 
 	@Override
-	public final ArrayList<String[]> Item() throws IOException, InterruptedException {
+	public final ArrayList<String[]> NextItem() throws IOException, InterruptedException {
 
 		// input and output variables
 		String startIndex = ChapterArrayIndex;		
@@ -48,7 +48,7 @@ public final class NextMesostic extends NextItemAbstract {
 			 * 		which is nice but needs to be removed before using the finishing objects
 			 * 		(finishers can't read a blank line)
 			 */
-			output = Nw.Item();
+			output = Nw.NextItem();
 			outputList.add(output.get(0));
 			AdvanceChapterWord(output.get(0)[0]);
 			

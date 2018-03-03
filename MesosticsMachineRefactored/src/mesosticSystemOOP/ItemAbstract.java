@@ -6,22 +6,22 @@ package mesosticSystemOOP;
  * This abstract class contains all needed variables and constructors
  * for the concrete classes which make mesostics or portions thereof. 
  * 
- * @see NextWord which creates the next word in a mesostic
- * @see NextMesostic  which creates the next whole mesostic
- * @see NextChapter which creates all the successive mesositics in a chapter 
- * @see NextItemFiltered an abstract decorator class 
+ * @see Word which creates the next word in a mesostic
+ * @see Mesostic  which creates the next whole mesostic
+ * @see Chapter which creates all the successive mesositics in a chapter 
+ * @see ItemFiltered an abstract decorator class 
  * which is extended by corresponding syllable filtering classes
  * 
  * TODO none of these static variables integrate with the GUI. What is the point??
  * 
  */
 
-public abstract class NextItemAbstract implements NextItem {
+public abstract class ItemAbstract implements Item {
 
 	// reference classes
 	protected MesosticsLineWriter Lm;
 	protected SyllableLineWriter Ls;
-	protected NextWord Nw;
+	protected Word Nw;
 	protected FileToString Fs;
 	
 	// input variables for the mesostic row
@@ -53,7 +53,7 @@ public abstract class NextItemAbstract implements NextItem {
 	// Primary constructors for each of the concrete "NextX" classes
 	
 	// NextWord primary constructor
-	public NextItemAbstract(String row, String chapter, int rowArrayIndex, 
+	public ItemAbstract(String row, String chapter, int rowArrayIndex, 
 							String chapterArrayIndex, String mesostics, MesosticsLineWriter lm) {
 		RowArray = row.split("");
 		RowArrayIndex = rowArrayIndex;
@@ -64,21 +64,21 @@ public abstract class NextItemAbstract implements NextItem {
 	}
 	
 	// nextMesostic and NextChapter primary constructor 
-	public NextItemAbstract(String row, String chapter, String mesostics, MesosticsLineWriter lm, NextWord nw) {
-		MesosticsGUIOOP.RowArray = row.split("");//TODO Don't understand why this prefix is needed here, but not above
+	public ItemAbstract(String row, String chapter, String mesostics, MesosticsLineWriter lm, Word nw) {
+		MesosticsMachineGUI.RowArray = row.split("");//TODO Don't understand why this prefix is needed here, but not above
 		Mesostics = mesostics;
 		Nw = nw;
 		Lm = lm;
 	}
 	
 	//Sounds, Places and Sentences primary constructor 
-	public NextItemAbstract(String comparator, String chapter, String outputFile, MesosticsLineWriter lm) {	
+	public ItemAbstract(String comparator, String chapter, String outputFile, MesosticsLineWriter lm) {	
 		ChapterArray = chapter.split("\\s+");
 		Lm = lm;
 	}
 		
 	//Sentence primary constructor
-	public NextItemAbstract(int wordIndex, String chapter) {
+	public ItemAbstract(int wordIndex, String chapter) {
 		ChapterArray = chapter.split("\\s+");
 	}
 

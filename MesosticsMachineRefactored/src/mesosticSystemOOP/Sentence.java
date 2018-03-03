@@ -21,18 +21,18 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 
-public final class Sentence extends NextItemAbstract{
+public final class Sentence extends ItemAbstract{
 
 	int WordIndex;
 	
 	//primary constructor 
 	public Sentence(int wordIndex, String comparator, String chapter) throws IOException {
-		super(wordIndex, new FileToString(MesosticsGUIOOP.ChapterAddress).output());
+		super(wordIndex, new FileToString(MesosticsMachineGUI.ChapterAddress).output());
 		WordIndex = wordIndex; 	
 	}
 
 
-	public final ArrayList<String[]> Item() throws IOException, InterruptedException {		
+	public final ArrayList<String[]> NextItem() throws IOException, InterruptedException {		
 		
 		ArrayList<String[]> outputList = new ArrayList<String[]>();
 		outputList.clear();

@@ -16,23 +16,23 @@ package mesosticSystemOOP;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public abstract class NextItemFiltered extends NextItemAbstract {
+public abstract class ItemFiltered extends ItemAbstract {
 
-	protected NextItem DecoratedNextItem;
-	protected NextWordFiltered Nwf; //for use by NextMesosticFiltered and NextChapterFiltered
+	protected Item DecoratedNextItem;
+	protected WordFiltered Nwf; //for use by NextMesosticFiltered and NextChapterFiltered
 	static String Directory;
 	
 	// NextWordFiltered primary constructor
-	public NextItemFiltered(String row, String chapter, int rowArrayIndex, String chapterArrayIndex, 
-							String mesostics, MesosticsLineWriter lm, NextItem decoratedNextItem, String directory) {
+	public ItemFiltered(String row, String chapter, int rowArrayIndex, String chapterArrayIndex, 
+							String mesostics, MesosticsLineWriter lm, Item decoratedNextItem, String directory) {
 		super(row, chapter, rowArrayIndex, chapterArrayIndex, mesostics, lm);
 		Directory = directory; 
 		DecoratedNextItem = decoratedNextItem;		
 	}
 	
 	//NextMesosticFiltered and NextChapterFiltered primary constructor
-	public NextItemFiltered(String row, String chapter, String mesostics, MesosticsLineWriter lm,
-							NextWord nw, NextItem decoratedNextItem, String directory) {
+	public ItemFiltered(String row, String chapter, String mesostics, MesosticsLineWriter lm,
+							Word nw, Item decoratedNextItem, String directory) {
 		super(row, chapter, mesostics, lm, nw);
 		Directory = directory; 
 		DecoratedNextItem = decoratedNextItem;
@@ -41,8 +41,8 @@ public abstract class NextItemFiltered extends NextItemAbstract {
 	
 	//The abstract decorator calls all the methods of the decorated object:
 	@Override
-	public ArrayList<String[]> Item() throws IOException, InterruptedException {
-		return DecoratedNextItem.Item();
+	public ArrayList<String[]> NextItem() throws IOException, InterruptedException {
+		return DecoratedNextItem.NextItem();
 	}
 	
 	@Override

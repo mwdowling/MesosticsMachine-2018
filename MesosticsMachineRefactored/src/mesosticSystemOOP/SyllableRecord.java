@@ -49,7 +49,7 @@ public final class SyllableRecord {
 	public final String Repository() throws IOException {
 		
 		// The target letter in the row
-		String Letter = NextItemAbstract.RowArray[NextItemAbstract.RowArrayIndex];
+		String Letter = ItemAbstract.RowArray[ItemAbstract.RowArrayIndex];
 		
 		// The repository for the target letter's syllables
 		String Repository = null;
@@ -59,7 +59,7 @@ public final class SyllableRecord {
 		 * (NOTE: these files are created with these exact names via the GUI)
 		 */
 		Map<Integer, String> Repositories = new HashMap<>();
-		for (int i = 0; i < NextItemAbstract.RowArray.length; i++) {
+		for (int i = 0; i < ItemAbstract.RowArray.length; i++) {
 			Repositories.put(i, Directory + "\\Syllable Repositories\\MesoticLetter" + (i + 1) + ".txt");
 		}
 
@@ -70,7 +70,7 @@ public final class SyllableRecord {
 			BufferedReader br = new BufferedReader(new FileReader(new File(Repository)));
 			String line = br.readLine();
 
-			int n = NextItemAbstract.RowArrayIndex + 1;
+			int n = ItemAbstract.RowArrayIndex + 1;
 			String m = n + Letter;
 			if (line.startsWith(m)) {
 				break;

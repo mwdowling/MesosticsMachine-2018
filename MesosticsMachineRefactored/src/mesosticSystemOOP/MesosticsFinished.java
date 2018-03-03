@@ -3,17 +3,17 @@ package mesosticSystemOOP;
 /**
  * @author Martin Dowling
  * 
- * This class contains three methods for properly formatting 
- * the files produced by the NextItem objects 
- * according to the requirements specification by:
+ * A class to return an object which properly formats 
+ * in accordance with the requirements specification
+ * a mesostics file produced by the system. 
  * 
- * (1) adding adjacent words from the text to each side of the words in the mesostics 
+ * Three methods to:
+ * 
+ * (1) add adjacent words from the text to each side of the words in the mesostics 
  *		to allow the user to create poems "according to taste"
- * (2) centring each line on the capitalised letter of the mesostic row
- * (3) collating into the mesostics text the sound and place words
+ * (2) centre each line on the capitalised letter of the mesostic row
+ * (3) collate into the mesostics text the sound and place words
  * 		appropriately according to their index value
- * 
- * TODO this is a first pass at refactoring 12 February 2018 and requires testing
  */
 
 import java.io.BufferedReader;
@@ -25,10 +25,10 @@ import java.io.IOException;
 
 public class MesosticsFinished {
 
-	private String Mesostics = MesosticsGUIOOP.Mesostics;
-	private String MesosticsFinished = MesosticsGUIOOP.MesosticsFinished;
-	private String Chapter = MesosticsGUIOOP.ChapterAddress;
-	private String[] ChapterArray = MesosticsGUIOOP.ChapterArray;
+	private String Mesostics = MesosticsMachineGUI.Mesostics;
+	private String MesosticsFinished = MesosticsMachineGUI.MesosticsFinished;
+	private String Chapter = MesosticsMachineGUI.ChapterAddress;
+	private String[] ChapterArray = MesosticsMachineGUI.ChapterArray;
 
 	public MesosticsFinished(String mesostics, String mesosticsFinished, String chapterAddress) throws IOException {
 		
@@ -55,6 +55,7 @@ public class MesosticsFinished {
 		Integer lastWord = new Integer(-1);
 
 		// edge case: first line in target file
+		
 		// two-element arrays for the three mesostic words and indexes
 		String[] lineContent = line.split("\\t");
 		String[] nextLineContent = nextLine.split("\\t");
@@ -76,6 +77,7 @@ public class MesosticsFinished {
 			length = wordsToAddBefore.length();
 
 		}
+		
 		/*
 		 * Add words after the mesostic word, ensuring that the process stops
 		 * when (1) 43 characters have been added (2) the mesostic word from the

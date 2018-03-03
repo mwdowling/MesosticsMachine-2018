@@ -17,37 +17,37 @@ package mesosticSystemOOP;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MesosticSystemTester {
+public class MesosticsMachineTester {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 		
 		//static variables for inputs
-		NextItemAbstract.RowAddress = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\Mesostics Row.txt";
-		NextItemAbstract.RowArrayIndex = 0;
-		NextItemAbstract.ChapterAddress = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\01 RAGLAN STREET.txt";
-		NextItemAbstract.ChapterArrayIndex = "0";
+		ItemAbstract.RowAddress = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\Mesostics Row.txt";
+		ItemAbstract.RowArrayIndex = 0;
+		ItemAbstract.ChapterAddress = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\01 RAGLAN STREET.txt";
+		ItemAbstract.ChapterArrayIndex = "0";
 
 		// Static variables for the output files
-		NextItemAbstract.Mesostics = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\Mesostics.txt";
-		NextItemAbstract.MesosticsFinished = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\MesosticsFinished.txt";
-		NextItemFiltered.Directory = "C:\\Users\\Martin\\Documents\\MesosticsMachine";
+		ItemAbstract.Mesostics = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\Mesostics.txt";
+		ItemAbstract.MesosticsFinished = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\MesosticsFinished.txt";
+		ItemFiltered.Directory = "C:\\Users\\Martin\\Documents\\MesosticsMachine";
 		
 		//variables for sounds
-		NextItemAbstract.OEDSounds = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\Sounds and Places\\OEDSounds Final.txt";
-		NextItemAbstract.SoundWords = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\Sounds and Places\\Chapter Sounds.txt";
-		NextItemAbstract.SoundSentences = NextItemFiltered.Directory + "\\Sounds and Places\\ChapterSoundsSentences.txt";
+		ItemAbstract.OEDSounds = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\Sounds and Places\\OEDSounds Final.txt";
+		ItemAbstract.SoundWords = "C:\\Users\\Martin\\Documents\\MesosticsMachine\\Sounds and Places\\Chapter Sounds.txt";
+		ItemAbstract.SoundSentences = ItemFiltered.Directory + "\\Sounds and Places\\ChapterSoundsSentences.txt";
 		
 		//variables for places
-		NextItemAbstract.NotPlace = NextItemFiltered.Directory + "\\Sounds and Places\\Not A Place.txt";
-		NextItemAbstract.PlaceWords = NextItemFiltered.Directory + "\\Sounds and Places\\ChapterPlaces.txt";
-		NextItemAbstract.PlaceSentences = NextItemFiltered.Directory + "\\Sounds and Places\\ChapterPlacesSentences.txt";
+		ItemAbstract.NotPlace = ItemFiltered.Directory + "\\Sounds and Places\\Not A Place.txt";
+		ItemAbstract.PlaceWords = ItemFiltered.Directory + "\\Sounds and Places\\ChapterPlaces.txt";
+		ItemAbstract.PlaceSentences = ItemFiltered.Directory + "\\Sounds and Places\\ChapterPlacesSentences.txt";
 				
 				
 		//local variable for output
 		ArrayList<String[]> outputList = new ArrayList<String[]>();
 		
 		// NextItem objects
-		NextWord nw = new NextWord(NextItemAbstract.RowAddress, NextItemAbstract.ChapterAddress, NextItemAbstract.Mesostics);
+		Word nw = new Word(ItemAbstract.RowAddress, ItemAbstract.ChapterAddress, ItemAbstract.Mesostics);
 /*		NextMesostic nm = new NextMesostic(NextItemAbstract.RowAddress, NextItemAbstract.ChapterAddress, NextItemAbstract.Mesostics);
 		NextChapter nc = new NextChapter(NextItemAbstract.RowAddress, NextItemAbstract.ChapterAddress, NextItemAbstract.Mesostics); 		
 		NextWordFiltered nwf = new NextWordFiltered(nw, NextItemAbstract.Mesostics);

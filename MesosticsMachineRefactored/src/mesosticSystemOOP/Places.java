@@ -8,11 +8,11 @@ package mesosticSystemOOP;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Places extends NextItemAbstract {
+public class Places extends ItemAbstract {
 
 	public Places(String comparator, String chapter, String outputFile) throws IOException {
-		this(new FileToString(MesosticsGUIOOP.NotPlaces).output(), new FileToString(MesosticsGUIOOP.ChapterAddress).output(),
-				new FileToString(MesosticsGUIOOP.Places).output(), new MesosticsLineWriter(outputFile));
+		this(new FileToString(MesosticsMachineGUI.NotPlaces).output(), new FileToString(MesosticsMachineGUI.ChapterAddress).output(),
+				new FileToString(MesosticsMachineGUI.Places).output(), new MesosticsLineWriter(outputFile));
 	}
 
 	public Places(String comparator, String chapter, String outputFile, MesosticsLineWriter lm) {
@@ -21,7 +21,7 @@ public class Places extends NextItemAbstract {
 	}
 
 	@Override
-	public ArrayList<String[]> Item() throws IOException, InterruptedException {
+	public ArrayList<String[]> NextItem() throws IOException, InterruptedException {
 		
 		String index = "";
 		String wordInChapter = "";
