@@ -8,7 +8,7 @@ package mesosticSystemOOP;
  * stopping at a hard-coded number of words before 
  * the last word in the chapter
  * 
- * @see NextWord to which is delegated the task of finding successive words
+ * @see Word to which is delegated the task of finding successive words
  * @see MesosticsLineWriter to which is delegated the task of writing lines to a file
  * 
  */

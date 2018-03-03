@@ -6,7 +6,7 @@ package mesosticSystemOOP;
  * A concrete implementation of NextItem 
  * which produces one full mesostics poem in a chapter
  * 
- * @see NextWord to which is delegated the task of finding successive words
+ * @see Word to which is delegated the task of finding successive words
  * @see MesosticsLineWriter to which is delegated the task of writing lines to a file
  * 
  */

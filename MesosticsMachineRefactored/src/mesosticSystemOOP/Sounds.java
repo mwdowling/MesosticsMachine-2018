@@ -6,7 +6,9 @@ package mesosticSystemOOP;
  * This object extracts words from the target chapter 
  * that match words in a OED sound repository
  * and appends those words with the approriate array index value to
- * the "Chapter Sounds" file  
+ * the "Chapter Sounds" file.
+ * 
+ *   TODO: Train this on sample chapters
  * 
  */
 

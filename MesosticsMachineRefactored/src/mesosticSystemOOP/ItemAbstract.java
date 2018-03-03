@@ -12,8 +12,9 @@ package mesosticSystemOOP;
  * @see ItemFiltered an abstract decorator class 
  * which is extended by corresponding syllable filtering classes
  * 
- * TODO none of these static variables integrate with the GUI. What is the point??
- * 
+ * TODO I began making static variables because 
+ * 		they were requried in secondary constructors.
+ * 		Clarify how these static variables integrate with the GUI.
  */
 
 public abstract class ItemAbstract implements Item {

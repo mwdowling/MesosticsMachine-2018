@@ -2,7 +2,8 @@ package mesosticSystemOOP;
 
 /**
  * @author Martin Dowling
- * @TODO test it!
+ * 
+ * @TODO Train this on sample chapters.
  */
 
 import java.io.IOException;
