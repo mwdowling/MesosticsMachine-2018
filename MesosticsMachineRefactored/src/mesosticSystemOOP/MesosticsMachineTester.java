@@ -38,7 +38,7 @@ public class MesosticsMachineTester {
 		ItemAbstract.SoundSentences = ItemFiltered.Directory + "\\Sounds and Places\\ChapterSoundsSentences.txt";
 		
 		//variables for places
-		ItemAbstract.NotPlace = ItemFiltered.Directory + "\\Sounds and Places\\Not A Place.txt";
+		String NotPlace = ItemFiltered.Directory + "\\Sounds and Places\\Not A Place.txt";
 		ItemAbstract.PlaceWords = ItemFiltered.Directory + "\\Sounds and Places\\ChapterPlaces.txt";
 		ItemAbstract.PlaceSentences = ItemFiltered.Directory + "\\Sounds and Places\\ChapterPlacesSentences.txt";
 				

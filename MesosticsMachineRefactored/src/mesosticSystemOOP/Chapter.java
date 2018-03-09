@@ -44,12 +44,12 @@ public final class Chapter extends ItemAbstract {
 				
 			//write a mesostic to ArrayList
 			output.clear();
-			output = Nw.NextItem();
+			output = NextWord.NextItem();
 			outputList.addAll(output);
 			
 			//advance to next word in chapter and next row of mesostics
 			AdvanceChapterWord(outputList.get(outputList.size()-1)[0]);			
-			Nw.AdvanceMesosticLetter();
+			NextWord.AdvanceMesosticLetter();
 			
 			//advance counter			
 			index = Integer.parseInt(outputList.get(outputList.size()-1)[0]);
@@ -61,7 +61,7 @@ public final class Chapter extends ItemAbstract {
 
 	@Override
 	public final void Write(ArrayList<String[]> outputList) throws IOException, InterruptedException {
-		Lm.WriteChapter(outputList);
+		Writer.WriteChapter(outputList);
 	}
 
 	@Override

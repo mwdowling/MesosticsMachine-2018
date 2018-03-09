@@ -36,11 +36,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class SyllableRecord {
+public final class SyllableStored {
 	
 	private String Directory;
 	
-	public SyllableRecord(String directory) {
+	public SyllableStored(String directory) {
 		
 		Directory = directory;
 	}

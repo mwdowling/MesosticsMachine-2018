@@ -11,13 +11,13 @@ import java.util.ArrayList;
  * @author Martin Dowling
  * 
  * A class for the creation of objects with methods 
- * that take the outputs from NextTIem methods 
+ * that take the outputs from Item methods 
  * (ArrayLists of two-element Arrays of Strings 
  * which contain the output words paired with their indexes)
  * and write them to the Mesostics output file 
  * 
  * Each NextItem has a reference to an object of this class
- * and uses its methods in the NextItem.Write(ArrayList<String[]> outputList) method 
+ * and uses its methods in the Item.Write(ArrayList<String[]> outputList) method 
  * 
  * There are three methods corresponding to the three concrete NextItems:
  * 	(1) write one line at a time
@@ -36,7 +36,6 @@ public class MesosticsLineWriter {
 	
 	public final void WriteLine(ArrayList<String[]> output) throws IOException {
 		BufferedWriter bw = new BufferedWriter(new FileWriter(new File(File), true));
-		//bw.newLine();
 		bw.write(output.get(0)[0] + "\t" + output.get(0)[1]);
 		bw.newLine();
 		bw.close();
@@ -46,13 +45,10 @@ public class MesosticsLineWriter {
 		BufferedWriter bw = new BufferedWriter(new FileWriter(new File(File), true));
 		
 		//traverse the Arraylist of index/word pairs and write them to file 
-		//bw.newLine();
 		for(String[] s : outputList){	
 			bw.newLine();
 			bw.write(s[0] + "\t" + s[1]);	
-			//bw.newLine();
 		}
-		
 		bw.close();	
 	}
 	

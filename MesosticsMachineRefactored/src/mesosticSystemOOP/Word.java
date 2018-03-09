@@ -115,7 +115,7 @@ public final class Word extends ItemAbstract {
 	
 	@Override
 	public final void Write(ArrayList<String[]> output) throws IOException {
-		Lm.WriteLine(output);	
+		Writer.WriteLine(output);	
 	}	
 	
 	@Override

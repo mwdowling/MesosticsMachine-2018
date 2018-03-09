@@ -18,21 +18,19 @@ import java.util.ArrayList;
 
 public class SyllableLineWriter {
 	
-	private String Directory;
-	private Syllable S; 
-	private SyllableRecord Sr;
+	private Syllable Syll; 
+	private SyllableStored Stored;
 	
-	public SyllableLineWriter (String directory, Syllable s, SyllableRecord sr) {
-		Directory = directory;
-		S = s;//in this application s = new Syllable(output)
-		Sr = sr;
+	public SyllableLineWriter (Syllable s, SyllableStored ss) {
+		Syll = s;//in this application s = new Syllable(output)
+		Stored = ss;
 	}
 	
 	void WriteSyllable(ArrayList<String[]> output) throws IOException, InterruptedException{
 		
-		String savedSyllable = S.SyllableSaved(output.get(0)[1]);
-		String Repository = Sr.Repository();
-		Sr.WriteSyllableToRepository(Repository, savedSyllable);
+		String savedSyllable = Syll.Saved(output.get(0)[1]);
+		String Repository = Stored.Repository();
+		Stored.WriteSyllableToRepository(Repository, savedSyllable);
 	}
 
 }

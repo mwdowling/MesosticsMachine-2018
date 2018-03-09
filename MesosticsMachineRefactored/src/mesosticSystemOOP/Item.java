@@ -3,17 +3,18 @@ package mesosticSystemOOP;
 
 /**
  * @author Martin Dowling
+
  * 
  * An interface containing the essential abstract methods
  * for traversing the mesostic row and the target chapter, 
  * selecting appropriate words from the target chapter 
  * to create appropriate mesostics, and writing the content of same to a file.
  * 
- * @see NextWord which selects the next appropriate word in the chapter
- * @see NextMesostic, which selects all the words of one mesostic row
- * @see NextChapter, which selects all the mesostics in one chapter
+ * @see Word which selects the next appropriate word in the chapter
+ * @see Mesostic, which selects all the words of one mesostic row
+ * @see Chapter, which selects all the mesostics in one chapter
  * 
- * @see NextItemFiltered, an implementation of the "decorator" design pattern 
+ * @see ItemFiltered, an implementation of the "decorator" design pattern 
  * used embellish these classes with syllable filters and repositories.
  * 
  */

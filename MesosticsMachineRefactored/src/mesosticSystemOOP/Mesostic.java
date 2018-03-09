@@ -48,7 +48,7 @@ public final class Mesostic extends ItemAbstract {
 			 * 		which is nice but needs to be removed before using the finishing objects
 			 * 		(finishers can't read a blank line)
 			 */
-			output = Nw.NextItem();
+			output = NextWord.NextItem();
 			outputList.add(output.get(0));
 			AdvanceChapterWord(output.get(0)[0]);
 			
@@ -59,7 +59,7 @@ public final class Mesostic extends ItemAbstract {
 	
 	@Override
 	public final void Write(ArrayList<String[]> outputList) throws IOException, InterruptedException {
-		Lm.WriteMesostic(outputList);
+		Writer.WriteMesostic(outputList);
 	}
 
 	@Override

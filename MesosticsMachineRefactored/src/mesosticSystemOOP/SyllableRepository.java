@@ -45,7 +45,7 @@ public final class SyllableRepository {
 				// write identifying first line to the file
 				out.println(i + 1 + RowArray[i]);
 			} catch (FileNotFoundException e1) {
-
+				System.out.println("Error: syllable repository not found.");
 				e1.printStackTrace();
 			}
 		}

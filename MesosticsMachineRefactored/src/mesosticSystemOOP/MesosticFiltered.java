@@ -20,8 +20,9 @@ public final class MesosticFiltered extends ItemFiltered {
 		
 		this(new FileToString(MesosticsMachineGUI.RowAddress).output(), new FileToString(MesosticsMachineGUI.ChapterAddress).output(), 
 				MesosticsMachineGUI.Mesostics, new MesosticsLineWriter(mesostics), new Word(row, chapter, mesostics), decoratedNextItem, Directory);
-		//The NextMesostic object creates and uses a NextWord object
-		Nwf = new WordFiltered(decoratedNextItem, mesostics);
+		//The Mesostic object creates and uses a Word object
+		NextWordFiltered = new WordFiltered(decoratedNextItem, mesostics);
+		
 	}
 	
 	//primary constructor
@@ -36,23 +37,30 @@ public final class MesosticFiltered extends ItemFiltered {
 		
 		// input and output variables
 		String startIndex = ChapterArrayIndex;
+		ArrayList<String[]> output = new ArrayList<String[]>();
 		ArrayList<String[]> outputList = new ArrayList<String[]>();
 		
-		// verify new startIndex on console
+		// verify index position
 		System.out.println("Chapter Index: " + startIndex);
+		System.out.println("Row length: " + RowArray.length );
 		
 		/* 
 		 * For each mesostic letter, 
 		 * use NextWord to find and output 
 		 * a target word with its index in ChapterArray 
 		 */
-		for (int i = 0; i < RowArray.length; i++){
+		while (RowArrayIndex != RowArray.length){
 			
-			RowArrayIndex = i;
-			outputList = Nwf.NextItem();
-			Nwf.Write(outputList); 
-			Nwf.AdvanceChapterWord(outputList.get(0)[0]);
+			output.clear();
+			output = NextWordFiltered.NextItem();
 			
+			if(output.get(0)[1] != "don't write it"){
+				outputList.add(output.get(0));
+				NextWordFiltered.AdvanceChapterWord(output.get(0)[0]);
+				RowArrayIndex++;
+				System.out.println("Advancing to row index: " + RowArrayIndex);
+			}
+			NextWordFiltered.AdvanceChapterWord(output.get(0)[0]);
 		}
 		
 		return outputList;	
@@ -60,6 +68,6 @@ public final class MesosticFiltered extends ItemFiltered {
 	
 	@Override
 	public final void Write(ArrayList<String[]> outputList) throws IOException, InterruptedException {	
-		Lm.WriteMesostic(outputList);
+		Writer.WriteMesostic(outputList);
 	}
 }

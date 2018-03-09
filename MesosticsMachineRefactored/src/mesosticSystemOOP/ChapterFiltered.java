@@ -24,9 +24,9 @@ public final class ChapterFiltered extends ItemFiltered {
 	
 	//secondary constructor throws exception
 	public ChapterFiltered(String row, String chapter, String mesostics, Item decoratedNextItem) throws IOException {
-		this(new FileToString(RowAddress).output(), new FileToString(ChapterAddress).output(), 
-				Mesostics, new MesosticsLineWriter(mesostics), new Word(row, chapter, mesostics), decoratedNextItem, Directory);
-		Nwf = new WordFiltered(decoratedNextItem, mesostics);
+		this(new FileToString(MesosticsMachineGUI.RowAddress).output(), new FileToString(MesosticsMachineGUI.ChapterAddress).output(), 
+				MesosticsMachineGUI.Mesostics, new MesosticsLineWriter(mesostics), new Word(row, chapter, mesostics), decoratedNextItem, Directory);
+		NextWordFiltered = new WordFiltered(decoratedNextItem, mesostics);
 	}
 		
 	//primary constructor
@@ -41,32 +41,35 @@ public final class ChapterFiltered extends ItemFiltered {
 		
 		ArrayList<String[]> output = new ArrayList<String[]>();
 		ArrayList<String[]> outputList = new ArrayList<String[]>();
-		outputList.clear(); 
+		
 		
 		/* 
 		 * A while loop marking the index of the target word
 		 * and repeating the loop through the row
 		 * until the end of the chapter is nearly reached
 		 */
-		int counter = 0;
-		while (counter < ChapterArray.length - 100) {
+		int count = 0; 
+		while (count < ChapterArray.length - 100) {
 
-			for (int i = 0; i < RowArray.length; i++) {
+			while (RowArrayIndex != RowArray.length) {
 				
-				//write a mesostic to ArrayList
 				output.clear();
-				output = Nwf.NextItem();
-				outputList.addAll(output);
-				System.out.println(outputList.size());
+				output = NextWordFiltered.NextItem();
 				
-				//advance to next word in chapter
-				AdvanceChapterWord(outputList.get(outputList.size()-1)[0]);			
-				
-				//advance counter			
-				counter = Integer.parseInt(outputList.get(outputList.size()-1)[0]);
-				
-			} // end of for loop
-		}//end of while loop
+				if(output.get(0)[1] != "don't write it"){
+					outputList.add(output.get(0));
+					count = new Integer(NextWordFiltered.AdvanceChapterWord(output.get(0)[0])).intValue();
+					RowArrayIndex++;
+					System.out.println("Advancing to row index: " + RowArrayIndex);
+				}
+				count = new Integer(NextWordFiltered.AdvanceChapterWord(output.get(0)[0])).intValue();	
+			}// end of inner while loop
+			
+			Write(outputList);
+			outputList.clear();
+			RowArrayIndex = 0;
+			
+		}//end of outer while loop
 			
 		return outputList;
 		 
@@ -74,7 +77,7 @@ public final class ChapterFiltered extends ItemFiltered {
 
 	@Override
 	public void Write(ArrayList<String[]> outputList) throws IOException, InterruptedException {
-		super.Write(outputList);
+		Writer.WriteMesostic(outputList);
 	}
 
 	@Override

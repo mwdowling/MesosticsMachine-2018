@@ -61,7 +61,7 @@ public class Sounds extends ItemAbstract{
 
 	@Override
 	public void Write(ArrayList<String[]> outputList) throws IOException, InterruptedException {
-		Lm.WriteChapter(outputList);		
+		Writer.WriteChapter(outputList);		
 	}
 
 	@Override

@@ -7,7 +7,7 @@ package mesosticSystemOOP;
  * http://toolsqa.com/selenium-webdriver/webelement-commands/
  * 
  * This class permits the creation of an object that: 
- * (1) takes a word from target text produced by the method NextWord.Item
+ * (1) takes a word from target text produced by the method Word.Item
  * (2) searches the web site HowManySyllables.com to find the syllabic division of the word
  * (3) identifies and returns the appropriate syllable in the word
  * (4) if the web site does not provide a syllable division, 
@@ -26,7 +26,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+//import org.openqa.selenium.firefox.FirefoxDriver;
 
 public final class Syllable {
 
@@ -34,18 +34,18 @@ public final class Syllable {
 	}
 
 	// a method to return a syllable saved from www.howmanysyllables.com
-	public final String SyllableSaved(String word) throws InterruptedException, IOException {
+	public final String Saved(String word) throws InterruptedException, IOException {
 
 		// The target letter in the row
 		String Letter = ItemAbstract.RowArray[ItemAbstract.RowArrayIndex];
 	
-		//Firefox not working well
+		//Firefox not working well February 2018
 		//System.setProperty("webdriver.gecko.driver", "C:\\Users\\Martin\\Documents\\Java Libraries\\geckodriver-v0.19.1-win64\\geckodriver.exe");
 		//WebDriver Driver = new FirefoxDriver();
+		
 		//Use a ChromeDriver instead 		
 		System.setProperty("webdriver.chrome.driver", "C:\\Users\\Martin\\Documents\\Java Libraries\\chromedriver_win32\\chromedriver.exe");
-		WebDriver Driver = new ChromeDriver();
-		
+		WebDriver Driver = new ChromeDriver();		
 		Driver.get("http://www.howmanysyllables.com/");
 
 		// Get word divided into syllables from website
@@ -68,24 +68,23 @@ public final class Syllable {
 		 */
 		
 		//WebElement result;
-		String[] wordAsSyllables = new String[1];
+		String[] wordSyllables = new String[1];
 		try {
 			
 			WebElement result = Driver.findElement(By.id("SyllableContentContainer")).findElement(By.className("Answer_Red"));
-
 			// divide the output String into an array of syllables
-			wordAsSyllables = result.getText().split("-");
+			wordSyllables = result.getText().split("-");
 		} catch (Exception ex) {
-			System.out.println("Syllable division not found. Saving whole word as one syllable");
-			wordAsSyllables[0] = word;
+			System.out.println("Syllable division not found. Saving whole word as one syllable.");
+			wordSyllables[0] = word;
 		}
 
 		// save syllable that contains the target letter
-		String savedSyllable = wordAsSyllables[0];
-		for (int i = 0; i < wordAsSyllables.length; i++) {
+		String savedSyllable = wordSyllables[0];
+		for (int i = 0; i < wordSyllables.length; i++) {
 
-			if (wordAsSyllables[i].contains(Letter)) {
-				savedSyllable = wordAsSyllables[i].trim();
+			if (wordSyllables[i].contains(Letter)) {
+				savedSyllable = wordSyllables[i].trim();
 			}
 		}
 		Driver.quit();

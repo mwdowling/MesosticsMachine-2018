@@ -5,11 +5,11 @@ package mesosticSystemOOP;
  * 
  * This class allows creation of a 
  * a concrete decorator having the same contract with the interface NextItem
- * as the abstract decorator NextItemFiltered, which it extends.
+ * as the abstract decorator ItemFiltered, which it extends.
  * 
  * This provides the runtime ability to instantiate NextWord
- * and instantiate this class with the NextWord object in its constructor,
- * thereby adding the appropriate syllable filtering procedures to NextWord 
+ * and instantiate this class with the Word object in its constructor,
+ * thereby adding the appropriate syllable filtering procedures to Word 
  * 
  */
 
@@ -19,21 +19,21 @@ import java.util.ArrayList;
 public final class WordFiltered extends ItemFiltered {
 	
 	//reference syllable repository objects
-	private Syllable S; 
-	private SyllableRecord Sr;
-	private SyllableLineWriter Ls;
+	private Syllable Syll; 
+	private SyllableStored Stored;
+	private SyllableLineWriter Writer;
 	
-	// NextWordFiltered secondary constructor
+	// WordFiltered secondary constructor
 	public WordFiltered(Item decoratedNextItem, String mesostics) throws IOException {
 		
 		this(new FileToString(MesosticsMachineGUI.RowAddress).output(), new FileToString(MesosticsMachineGUI.ChapterAddress).output(), MesosticsMachineGUI.RowArrayIndex,
 				MesosticsMachineGUI.ChapterArrayIndex, MesosticsMachineGUI.Mesostics, new MesosticsLineWriter(mesostics), decoratedNextItem, Directory);
-		S = new Syllable();
-		Sr = new SyllableRecord(MesosticsMachineGUI.Directory);
-		Ls = new SyllableLineWriter(Directory, S, Sr);
+		Syll = new Syllable();
+		Stored = new SyllableStored(MesosticsMachineGUI.Directory);
+		Writer = new SyllableLineWriter(Syll, Stored);
 	}
 	
-	// NextWordFiltered primary constructor
+	// WordFiltered primary constructor
 	public WordFiltered(String row, String chapter, int rowArrayIndex, String chapterArrayIndex, 
 							String mesostics, MesosticsLineWriter lm, Item decoratedNextItem, String directory) {
 		super(row, chapter, rowArrayIndex, chapterArrayIndex, mesostics, lm, decoratedNextItem, directory);
@@ -42,29 +42,27 @@ public final class WordFiltered extends ItemFiltered {
 	@Override
 	public final ArrayList<String[]> NextItem() throws IOException, InterruptedException {
 		
-		//get the target word and its index from the decorated NextItem's method 
+		//get the target word and its index using the decorated Item's method 
 		ArrayList<String[]> output = new ArrayList<String[]>();
 		output = super.NextItem();
 		
 		//filter the output through the syllable checking objects
 		String wordIndex = output.get(0)[0];
-		int wordIndexInt = new Integer(wordIndex).intValue(); 
-		String SavedSyllable = S.SyllableSaved(output.get(0)[1]);
-		String Repository = Sr.Repository();
-		Boolean RepoHasSyllable = Sr.RepositoryHasSyllable(Repository, SavedSyllable);
+		String savedSyllable = Syll.Saved(output.get(0)[1]);
+		String repository = Stored.Repository();
+		Boolean repoHasSyllable = Stored.RepositoryHasSyllable(repository, savedSyllable);
 		
-		if (RepoHasSyllable) {
+		if (repoHasSyllable) {
 			
 			System.out.println("Repository has Syllable.");
 			System.out.println("Continuing with the current row index: " + RowArrayIndex);
-			wordIndex = String.valueOf(wordIndexInt);
 			output.get(0)[0] = wordIndex;
 			output.get(0)[1] = "don't write it";
 			return output;
 			
 		} else
 			
-		Ls.WriteSyllable(output);	
+		Writer.WriteSyllable(output);	
 		return output;
 	}
 
@@ -73,14 +71,11 @@ public final class WordFiltered extends ItemFiltered {
 		
 		//if Repository has syllable, do not write to mesostic file
 		if(output.get(0)[1].equals("don't write it")){
-			System.out.println("dont write it");
-			AdvanceChapterWord(output.get(0)[0]);
+			System.out.println("don't write it");
 			
 		}else {
 			super.Write(output);
 			System.out.println("Adding to mesostics: " + output.get(0)[1]);
-			AdvanceChapterWord(output.get(0)[0]);
-			AdvanceMesosticLetter();
 		}
 	}
 	
@@ -91,7 +86,7 @@ public final class WordFiltered extends ItemFiltered {
 		
 	}
 
-	public final void AdvanceMesosticLetter() {
+	public final int AdvanceMesosticLetter() {
 		
 		//advance the array index or continue from the beginning
 		if (RowArrayIndex + 1 < RowArray.length) {
@@ -99,5 +94,7 @@ public final class WordFiltered extends ItemFiltered {
 			} else
 				RowArrayIndex = 0;
 		System.out.println("Advancing to new row index: " + RowArrayIndex);
-		}
+		
+		return RowArrayIndex;	
+	}
 }

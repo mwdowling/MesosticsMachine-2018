@@ -63,7 +63,7 @@ public class Places extends ItemAbstract {
 
 	@Override
 	public void Write(ArrayList<String[]> outputList) throws IOException, InterruptedException {
-		Lm.WriteChapter(outputList);
+		Writer.WriteChapter(outputList);
 
 	}
 }

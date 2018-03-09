@@ -20,14 +20,12 @@ package mesosticSystemOOP;
 public abstract class ItemAbstract implements Item {
 
 	// reference classes
-	protected MesosticsLineWriter Lm;
-	protected SyllableLineWriter Ls;
-	protected Word Nw;
-	protected FileToString Fs;
+	protected Word NextWord;
+	protected MesosticsLineWriter Writer;
 	
 	// input variables for the mesostic row
 	static String RowAddress;// = MesosticsGUIOOP.RowAddress;
-	static String[] RowArray;// = MesosticsGUIOOP.RowArray;
+	static String[] RowArray;// = MesosticsMachineGUI.RowArray;
 	static int RowArrayIndex;// = MesosticsGUIOOP.RowArrayIndex;
 
 	// input variables for the chapter
@@ -46,7 +44,7 @@ public abstract class ItemAbstract implements Item {
 	static String SoundSentences;
 	
 	//variables for places
-	static String NotPlace;
+	//static String NotPlace;
 	static String NotPlaceArray[];
 	static String PlaceWords;
 	static String PlaceSentences;
@@ -55,27 +53,27 @@ public abstract class ItemAbstract implements Item {
 	
 	// NextWord primary constructor
 	public ItemAbstract(String row, String chapter, int rowArrayIndex, 
-							String chapterArrayIndex, String mesostics, MesosticsLineWriter lm) {
+							String chapterArrayIndex, String mesostics, MesosticsLineWriter writer) {
 		RowArray = row.split("");
 		RowArrayIndex = rowArrayIndex;
 		ChapterArray = chapter.split("\\s+");
 		ChapterArrayIndex = chapterArrayIndex;
 		Mesostics = mesostics;
-		Lm = lm; 
+		Writer = writer; 
 	}
 	
 	// nextMesostic and NextChapter primary constructor 
 	public ItemAbstract(String row, String chapter, String mesostics, MesosticsLineWriter lm, Word nw) {
-		MesosticsMachineGUI.RowArray = row.split("");//TODO Don't understand why this prefix is needed here, but not above
+		RowArray = row.split("");//TODO Don't understand why this prefix is needed here, but not above
 		Mesostics = mesostics;
-		Nw = nw;
-		Lm = lm;
+		NextWord = nw;
+		Writer = lm;
 	}
 	
 	//Sounds, Places and Sentences primary constructor 
 	public ItemAbstract(String comparator, String chapter, String outputFile, MesosticsLineWriter lm) {	
 		ChapterArray = chapter.split("\\s+");
-		Lm = lm;
+		Writer = lm;
 	}
 		
 	//Sentence primary constructor
