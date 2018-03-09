@@ -10,7 +10,7 @@ A documentary portfolio on the Owenvarragh project by Úna Monaghan and Martin Do
 
 www.blackmountainstudiesjournal.org/volume-iv-9-16/martin-dowling-and-una-monaghan-owenvarragh-a-belfast-circus-on-the-star-factory/
 
-As of 3 March 2018, all objects in the system are functioning and have been tested using test data from the Owenvarragh project. GUI is functioning but requires further testing on training data. Almost ready! 
+As of 9 March 2018, all objects in the system are functioning and have been tested using test data from the Owenvarragh project. The system is now being trained on its first new text, "My Antonia" by Willa Cathar. 
 
 If you are interested in finding out more about how to implement this system and make a realisation of Cage's score, please contact me via my website: 
 
