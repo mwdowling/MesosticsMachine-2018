@@ -24,32 +24,31 @@ public abstract class ItemAbstract implements Item {
 	protected MesosticsLineWriter Writer;
 	
 	// input variables for the mesostic row
-	static String RowAddress;// = MesosticsGUIOOP.RowAddress;
-	static String[] RowArray;// = MesosticsMachineGUI.RowArray;
-	static int RowArrayIndex;// = MesosticsGUIOOP.RowArrayIndex;
+	static String RowAddress; 
+	static String[] RowArray;
+	static int RowArrayIndex;
 
 	// input variables for the chapter
-	static String ChapterAddress;// = MesosticsGUIOOP.ChapterAddress;
-	static String[] ChapterArray;// = MesosticsGUIOOP.ChapterArray;
-	static String ChapterArrayIndex;// = MesosticsGUIOOP.ChapterArrayIndex;
+	static String ChapterAddress;
+	static String[] ChapterArray;
+	static String ChapterArrayIndex;
 	
 	// location variables for mesostics files
-	static String Mesostics;// = MesosticsGUIOOP.Mesostics; //location of Mesostics file
-	static String MesosticsFinished;//output of finishing methods
+	static String Mesostics;
+	static String MesosticsFinished;
 	
-	//variables for sounds 
+	//variables for sounds files
 	static String OEDSounds;
 	static String[] OEDSoundsArray;
 	static String SoundWords;
 	static String SoundSentences;
 	
-	//variables for places
-	//static String NotPlace;
+	//variables for places files
 	static String NotPlaceArray[];
 	static String PlaceWords;
 	static String PlaceSentences;
 	
-	// Primary constructors for each of the concrete "NextX" classes
+	// Primary constructors for concrete classes implementing Item interface
 	
 	// NextWord primary constructor
 	public ItemAbstract(String row, String chapter, int rowArrayIndex, 
@@ -81,7 +80,7 @@ public abstract class ItemAbstract implements Item {
 		ChapterArray = chapter.split("\\s+");
 	}
 
-	//further refinement of this in the NextItemFiltered objects
+	//further refinement of this method in the ItemFiltered hierarchy
 	@Override
 	public String AdvanceChapterWord(String index) {	
 		

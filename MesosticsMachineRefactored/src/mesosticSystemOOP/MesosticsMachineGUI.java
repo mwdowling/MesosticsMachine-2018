@@ -6,7 +6,7 @@ package mesosticSystemOOP;
  * Within a JFrame lies a navigable hierarchy of JPanel "panels":
  * 
  *		(1) Welcome panel with links to setup, run, and view cards 
- *		(2) Setup panel for choosing the project directory, mesostic row, 
+ *		(2) Setup panel for choosing the mesostic row, 
  *         	and target chapters (with linked FileChoosers and text fields)
  *		(3) Run panel to call methods in the system's core objects 
  *         	to create mesostics with and without syllable filtering 
@@ -14,22 +14,20 @@ package mesosticSystemOOP;
  * 
  * Please note the following:
  * 
- * 		(1) The following Prefixes used for panel and filechooser objects: 
+ * 		(1) Prefixes used for the names of panel and filechooser objects: 
  * 			JPxxx = a JPanel object xxx 
  * 			JFCxxx = a JFileChooser xxx
  *         
  * 		(2) There are TEMPORAL COUPLING WARNINGS in the code generated because 
- * 			this GUI will only function properly under these conditions (see guidance notes):
- * 
- *         	(a) The user must choose the project directory first        
- *         	(b) The user must choose the target chapter(s) after the project directory is set
- *         	(c) The user must establish the mesostic row after the project directory is set
- *         	(d) The project directory, target chapter(s) and mesostic row must be set 
- *         	   before the user engages the functions on the Run panel and its sub-panels 
+ * 			the user must choose the target chapter(s) and establish the mesostic row 
+ *         	on the Setup panel before invoking the functions on the Run panel and its sub-panels. 
  *         
- * 		(3) The location notepad.exe is hard coded in this GUI. 
+ * 		(3) From the View panel, the location notepad.exe is hard coded in this GUI. 
  * 			If the user of the GUI stores notepad.exe in another location
  * 			or prefers to use another program to open .txt files, this code must be changed
+ * 
+ * 		(4) This GUI creates a default directory oc C:\mesosticMachine, with subdirectories.
+ * 			See the guidance notes for proper setup of the directories.
  * 
  */
 
@@ -60,22 +58,26 @@ public class MesosticsMachineGUI {
 
 	// the panels in the frame
 	private JPanel JPWelcome;// the welcome panel
+	
 	private JPanel JPSetup;// the setup panel
-	private JPanel JPMesosticRow;// sup-panel to the setup panel
+	//panels behind the setup panel buttons
+	private JPanel JPMesosticRow;
 	private JPanel JPChapters;
-	private JPanel JPInfo;// sub-panel to the setup panel
+	private JPanel JPInfo;
+	
 	private JPanel JPRun;// the run panel
-	private JPanel JPMesosticsLonger; // sub-panel to the run panel
-	private JPanel JPMesosticsShorter; // sub-panel to the run panel
-	private JPanel JPFinish;// the finish panel
+	//panels behind the ru panel buttons
+	private JPanel JPMesosticsLonger; 
+	private JPanel JPMesosticsShorter;
+	private JPanel JPFinish;
 	private JPanel JPSentence;
+	
 	private JPanel JPView;// the view panel
 
 	// Default directory for the GUI
 	static String Directory = "C:\\MesosticsMachine";
-	private JFileChooser JFCDirectory;
 
-	// Static variables for target chapters
+	// Static variables for target chapter(s)
 	static String ChapterAddress;
 	static String[] ChapterArray;
 	static String ChapterArrayIndex = "0";
@@ -100,7 +102,7 @@ public class MesosticsMachineGUI {
 	static String Places = Directory + "\\Sounds and Places\\Chapter Places.txt";
 	static String PlacesSentences = Directory + "\\Sounds and Places\\Chapter Places Sentences.txt";
 
-	// field for user input of the mesostic row in GUI
+	// text fields for user input of the mesostic row in GUI
 	private JTextField RowtextField;
 	private JTextField IndexTextField;
 
@@ -109,7 +111,7 @@ public class MesosticsMachineGUI {
 		initialize();
 	}
 
-	// Launch the application.
+	// main method to launch the GUI.
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -124,11 +126,13 @@ public class MesosticsMachineGUI {
 	}
 
 	/*
-	 * This method initializes the contents of the frame by: (1) initializing
-	 * the frame (2) initializing the panels for the frame (3) placing the
-	 * panels in the frame (4) initializing buttons and labels on the panels (5)
-	 * specifying behaviour of ActionListeners behind buttons (5) setting the
-	 * visibility of panels
+	 * Summary of the initialize() method:
+	 * (1) initializes the frame 
+	 * (2) initializes the panels for the frame 
+	 * (3) places the panels in the frame 
+	 * (4) initializes buttons and labels on the panels 
+	 * (5) specifies behaviour of ActionListeners behind buttons 
+	 * (6) sets the visibility of panels
 	 */
 	private void initialize() {
 
@@ -282,17 +286,14 @@ public class MesosticsMachineGUI {
 		/*
 		 * The submit button on the SetMesosticRow panel does a lot of work:
 		 * 
-		 * (1) Assigns the properly formatted user input to a variable (2)
-		 * Writes the formatted row to a text file in the project directory
+		 * (1) Assigns the properly formatted user input to a variable 
+		 * (2) Writes the formatted row to a text file in the project directory
 		 * 
 		 * Then, calling the RepositoryWriter() method of a Repository object:
 		 * (3) Creates a syllable repository file for each letter of the row
 		 * adding an identifying string to the first line of each file
-		 * 
-		 * TEMPORAL COUPLING WARNING: This button uses the Directory variable,
-		 * which must be previously set by the user with the Set Project Folder
-		 * button
 		 */
+		
 		JButton btnMesosticRowSubmit = new JButton("submit");
 		btnMesosticRowSubmit.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		btnMesosticRowSubmit.addActionListener(new ActionListener() {
@@ -310,7 +311,7 @@ public class MesosticsMachineGUI {
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
-
+				//TODO Add a warning here. This will overwrite existing repositories.
 				// create a syllable repository for each letter in the row
 				new SyllableRepository(Row, Directory).RepositoryWriter();
 
@@ -346,12 +347,7 @@ public class MesosticsMachineGUI {
 
 		/*
 		 * Set Single Chapter button on Chapter Setup Panel opens up a
-		 * "txt file only" JFileChooser which opens the directory set by
-		 * JFCDirectory above
-		 * 
-		 * TEMPORAL COUPLING WARNING: This button uses the Directory variable,
-		 * which must be previously set by the user with the Set Project Folder
-		 * button
+		 * "txt file only" JFileChooser which opens the default directory
 		 */
 		JButton btnSelectSingleChapter = new JButton("Select a Single Chapter");
 		btnSelectSingleChapter.setFont(new Font("Tahoma", Font.PLAIN, 42));
@@ -387,19 +383,15 @@ public class MesosticsMachineGUI {
 		JPChapters.add(btnSelectSingleChapter);
 
 		/*
-		 * Set Chapter Queue button uses filechooser to populate an array of
+		 * Set Chapter Queue button uses a Filechooser to populate an array of
 		 * chapters
-		 * 
-		 * TEMPORAL COUPLING WARNING: This button uses the Directory variable,
-		 * which must be previously set by the user with the Set Project Folder
-		 * button
 		 */
 		JButton btnSetChapterQueue = new JButton("Setup Chapter Queue");
 		btnSetChapterQueue.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		btnSetChapterQueue.setBounds(214, 234, 460, 68);
 		btnSetChapterQueue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TEST THIS CODE
+	
 				JPSetup.setVisible(false);
 				JFileChooser JFCChapter = new JFileChooser();
 				JFCChapter.setBounds(0, 0, 438, 241);
@@ -464,12 +456,6 @@ public class MesosticsMachineGUI {
 
 		// END OF SETUP CODE; BEGIN RUN CODE
 
-		/*
-		 * TEMPORAL COUPLING WARNING: This button uses the Directory variable,
-		 * which must be previously set by the user with the Set Project Folder
-		 * button
-		 */
-
 		// run panel and its label
 		JPRun.setLayout(null);
 		JPRun.setVisible(false);// default = not visible
@@ -478,8 +464,7 @@ public class MesosticsMachineGUI {
 		lblWelcomeToRun.setBounds(285, 21, 319, 62);
 		JPRun.add(lblWelcomeToRun);
 
-		// Make Mesostics (Longer) button makes MesosticsLonger sub-panel
-		// visible
+		// Make Mesostics (Longer) button makes MesosticsLonger sub-panel visible
 		JButton btnMakeMesosticsLonger = new JButton("Make Mesostics (Longer)");
 		btnMakeMesosticsLonger.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		btnMakeMesosticsLonger.addActionListener(new ActionListener() {
@@ -508,14 +493,14 @@ public class MesosticsMachineGUI {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					// write next word to mesostics and advance the indexes
+					// write the next word to mesostics file and advance the indexes
 					Word nextWord = new Word(RowAddress, ChapterAddress, Mesostics);
 					ArrayList<String[]> output = nextWord.NextItem();
 					nextWord.Write(output);
 					ChapterArrayIndex = nextWord.AdvanceChapterWord(output.get(0)[0]);
 					RowArrayIndex = nextWord.AdvanceMesosticLetter();
 
-					// catches redirect user to the setup window
+				// catches redirect user to the setup window
 				} catch (IOException | InterruptedException e1) {
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, "An error has occurred." + "\nSetup may be incorrect."
@@ -535,7 +520,7 @@ public class MesosticsMachineGUI {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-
+					//write the next whole mesostic to the mesotics file and advance the chapter index
 					Mesostic nextMesostic = new Mesostic(RowAddress, ChapterAddress, Mesostics);
 					ArrayList<String[]> output = nextMesostic.NextItem();
 					System.out.println("Output length is: " + output.size());
@@ -562,8 +547,10 @@ public class MesosticsMachineGUI {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					// instantiate NextChapter and call Item() and Advance()
-					// methods
+					/*
+					 * Write all the mesostics in a chapter to file, 
+					 * stopping 100 words before the end of the chapter 
+					 */
 					Chapter nc = new Chapter(RowAddress, ChapterAddress, Mesostics);
 					ArrayList<String[]> output = nc.NextItem();
 					nc.Write(output);
@@ -592,6 +579,7 @@ public class MesosticsMachineGUI {
 						Chapter nc = new Chapter(RowAddress, ChapterAddress, Mesostics);
 						ArrayList<String[]> output = nc.NextItem();
 						nc.Write(output);
+						
 						/*
 						 * TODO Assign ChapterArrayIndex = ChapterArray.length
 						 * here to give one continuous index for entire book?
@@ -621,8 +609,7 @@ public class MesosticsMachineGUI {
 		});
 		JPMesosticsLonger.add(btnMesosticLongerDone);
 
-		// Make Mesostics (Shorter) button makes MesosticsShorter sub-panel
-		// visible
+		// Make Mesostics (Shorter) button makes MesosticsShorter sub-panel visible
 		JButton btnMakeMesosticsShorter = new JButton("Make Mesostics (Shorter)");
 		btnMakeMesosticsShorter.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		btnMakeMesosticsShorter.setBounds(154, 104, 581, 62);
@@ -651,8 +638,7 @@ public class MesosticsMachineGUI {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					// Instantiate NextWord, its Decorator, and call Item() and
-					// Advance() methods
+					// As above but "decorated" with a syllable filter
 					Word nextWord = new Word(RowAddress, ChapterAddress, Mesostics);
 					ItemFiltered nextWordFiltered = new WordFiltered(nextWord, Directory);
 					ArrayList<String[]> output = nextWordFiltered.NextItem();
@@ -685,7 +671,7 @@ public class MesosticsMachineGUI {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-
+					//As above but "decorated" with a syllable filter
 					Item nextWord = new Word(RowAddress, ChapterAddress, Mesostics);
 					MesosticFiltered nextMesosticFiltered = new MesosticFiltered(RowAddress, ChapterAddress, Mesostics, nextWord);
 					ArrayList<String[]> outputList = nextMesosticFiltered.NextItem();
@@ -716,12 +702,12 @@ public class MesosticsMachineGUI {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
+						//As above but "decorated" with a syllable filter
 						Item nextWord = new Word(RowAddress, ChapterAddress, Mesostics);
 						ChapterFiltered nextChapterFiltered = new ChapterFiltered(RowAddress, ChapterAddress, Mesostics, nextWord);
-						ArrayList<String[]> outputList = nextChapterFiltered.NextItem();
-						//nextChapterFiltered.Write(outputList);					
+						nextChapterFiltered.NextItem();				
 						
-						// catches redirect user to the setup window
+					// catches redirect user to the setup window
 					} catch (IOException e1) {
 						e1.printStackTrace();
 						JOptionPane.showMessageDialog(null, "An error has occurred." + "\nSetup may be incorrect."
@@ -748,7 +734,7 @@ public class MesosticsMachineGUI {
 
 				JOptionPane.showMessageDialog(null,
 						"This function not operational." + "\nCurrent functioning of webdriver is too slow and fragile."
-								+ "\nBetter to make one mesostic at a time.");
+								+ "\nBetter to make one chapter at a time.");
 			}
 		});
 		JPMesosticsShorter.add(btnAllChaptersShorter);
@@ -799,10 +785,10 @@ public class MesosticsMachineGUI {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					Places p = new Places(ChapterAddress, NotPlaces, Places);
+					Places place = new Places(ChapterAddress, NotPlaces, Places);
 					ArrayList<String[]> outputList = new ArrayList<String[]>();
-					outputList = p.NextItem();
-					p.Write(outputList);
+					outputList = place.NextItem();
+					place.Write(outputList);
 
 					// catch redirects user to the setup window
 				} catch (IOException e1) {
@@ -846,8 +832,8 @@ public class MesosticsMachineGUI {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					MesosticsFinished mf = new MesosticsFinished(Mesostics, MesosticsFinished, ChapterAddress);
-					mf.WithAdjacentWords();
+					MesosticsFinished mesosticsFinished = new MesosticsFinished(Mesostics, MesosticsFinished, ChapterAddress);
+					mesosticsFinished.WithAdjacentWords();
 				} catch (IOException e1) {
 					e1.printStackTrace();
 					// redirect user to the setup window
@@ -867,8 +853,8 @@ public class MesosticsMachineGUI {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					MesosticsFinished mf = new MesosticsFinished(Mesostics, MesosticsFinished, ChapterAddress);
-					mf.WithCentredLines();
+					MesosticsFinished mesosticsFinished = new MesosticsFinished(Mesostics, MesosticsFinished, ChapterAddress);
+					mesosticsFinished.WithCentredLines();
 
 					// catches redirect user to the setup window
 				} catch (IOException e1) {
@@ -889,8 +875,8 @@ public class MesosticsMachineGUI {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					MesosticsFinished mf = new MesosticsFinished(Mesostics, MesosticsFinished, ChapterAddress);
-					mf.WithItemsCollated(Sounds);
+					MesosticsFinished mesosticsFinished = new MesosticsFinished(Mesostics, MesosticsFinished, ChapterAddress);
+					mesosticsFinished.WithItemsCollated(Sounds);
 				} catch (IOException e1) {
 					JOptionPane.showMessageDialog(null, "An error has occurred." + "\nSetup may be incorrect."
 							+ "\nClose programme and return to Setup");
@@ -908,8 +894,8 @@ public class MesosticsMachineGUI {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					MesosticsFinished mf = new MesosticsFinished(Mesostics, MesosticsFinished, ChapterAddress);
-					mf.WithItemsCollated(Places);
+					MesosticsFinished mesosticsFinished = new MesosticsFinished(Mesostics, MesosticsFinished, ChapterAddress);
+					mesosticsFinished.WithItemsCollated(Places);
 				} catch (IOException e1) {
 					JOptionPane.showMessageDialog(null, "An error has occurred." + "\nSetup may be incorrect."
 							+ "\nClose programme and return to Setup");
@@ -999,10 +985,11 @@ public class MesosticsMachineGUI {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					Sentences sp = new Sentences(Places, ChapterAddress, PlacesSentences);
-					sp.WriteSentence();
-					Sentences ss = new Sentences(Sounds, ChapterAddress, SoundsSentences);
-					ss.WriteSentence();
+					Sentences sentencesOfPlaces = new Sentences(Places, ChapterAddress, PlacesSentences);
+					sentencesOfPlaces.Write();
+					Sentences sentencesOfSounds = new Sentences(Sounds, ChapterAddress, SoundsSentences);
+					sentencesOfSounds.Write();
+					
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -1078,8 +1065,7 @@ public class MesosticsMachineGUI {
 				}
 
 				else if (JFCChapter.showOpenDialog(null) == JFileChooser.CANCEL_OPTION) {
-
-					JFCDirectory.setVisible(false);
+					
 					JPView.setVisible(false);
 					JPWelcome.setVisible(true);
 

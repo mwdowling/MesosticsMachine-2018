@@ -42,7 +42,7 @@ public class Sentences {
 		Sentences = outputFile;
 	} 
 
-	public void WriteSentence() throws IOException{
+	public void Write() throws IOException{
 		
 		// read and reformat the first line of the target file
 		BufferedReader br = new BufferedReader(new FileReader(new File(Comparator)));
