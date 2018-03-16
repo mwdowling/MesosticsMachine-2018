@@ -1,5 +1,7 @@
 package mesosticSystemOOP;
 
+import java.util.ArrayList;
+
 /**
  * @author Martin Dowling
  * 
@@ -44,7 +46,7 @@ public abstract class ItemAbstract implements Item {
 	static String SoundSentences;
 	
 	//variables for places files
-	static String NotPlaceArray[];
+	static ArrayList<String> NotPlaceList;
 	static String PlaceWords;
 	static String PlaceSentences;
 	

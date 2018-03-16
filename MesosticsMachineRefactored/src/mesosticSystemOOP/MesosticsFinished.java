@@ -19,6 +19,7 @@ package mesosticSystemOOP;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -240,7 +241,7 @@ public class MesosticsFinished {
 
 	public final void WithItemsCollated(String filetoCollate) throws IOException {
 
-		// Reader of Mesostics file reader
+		// Reader of Mesostics file 
 		BufferedReader br1 = new BufferedReader(new FileReader(new File(Mesostics)));
 		String line1 = br1.readLine();// first line of first mesostic
 		String[] line1Array = line1.split("\t");
@@ -329,5 +330,25 @@ public class MesosticsFinished {
 		}//end of WHILE statement
 		br1.close();
 		br2.close();
+	}
+	
+	public final void WithIndexRemoved () throws IOException{
+		
+		// Reader of Mesostics file 
+		BufferedReader br = new BufferedReader(new FileReader(new File(Mesostics)));
+		String line = br.readLine();// first line of first mesostic
+		
+		while (line != null) {
+			
+			String[] lineArray = line.split("\t");
+			BufferedWriter bw1 = new BufferedWriter(new FileWriter(new File(MesosticsFinished), true));
+			bw1.write(lineArray[1]);
+			bw1.newLine();
+			bw1.close();
+			line = br.readLine();
+		
+		}
+		
+		
 	}
 }

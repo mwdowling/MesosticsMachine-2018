@@ -26,6 +26,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 //import org.openqa.selenium.firefox.FirefoxDriver;
 
 public final class Syllable {
@@ -40,12 +41,13 @@ public final class Syllable {
 		String Letter = ItemAbstract.RowArray[ItemAbstract.RowArrayIndex];
 	
 		//Firefox not working well February 2018
-		//System.setProperty("webdriver.gecko.driver", "C:\\Users\\Martin\\Documents\\Java Libraries\\geckodriver-v0.19.1-win64\\geckodriver.exe");
+		//System.setProperty("webdriver.gecko.driver", "C:\\Users\\Martin\\Documents\\Java Libraries\\geckodriver-v0.20.0-win64\\geckodriver.exe");
 		//WebDriver Driver = new FirefoxDriver();
 		
 		//Use a ChromeDriver instead 		
 		System.setProperty("webdriver.chrome.driver", "C:\\Users\\Martin\\Documents\\Java Libraries\\chromedriver_win32\\chromedriver.exe");
-		WebDriver Driver = new ChromeDriver();		
+		WebDriver Driver = new ChromeDriver();	
+		TimeUnit.SECONDS.sleep(1);
 		Driver.get("http://www.howmanysyllables.com/");
 
 		// Get word divided into syllables from website

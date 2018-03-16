@@ -71,8 +71,6 @@ public class MesosticsMachineGUI {
 	private JPanel JPMesosticsShorter;
 	private JPanel JPFinish;
 	private JPanel JPSentence;
-	
-	private JPanel JPView;// the view panel
 
 	// Default directory for the GUI
 	static String Directory = "C:\\MesosticsMachine";
@@ -153,7 +151,6 @@ public class MesosticsMachineGUI {
 		JPMesosticsShorter = new JPanel();
 		JPFinish = new JPanel();
 		JPSentence = new JPanel();
-		JPView = new JPanel();
 
 		// add the panels to the frame
 		frame.getContentPane().add(JPWelcome);
@@ -200,18 +197,6 @@ public class MesosticsMachineGUI {
 		});
 		btnWelcomeRun.setBounds(365, 205, 160, 64);
 		JPWelcome.add(btnWelcomeRun);
-
-		// View button on Welcome panel makes View panel visible
-		JButton btnWelcomeView = new JButton("View");
-		btnWelcomeView.setFont(new Font("Tahoma", Font.PLAIN, 42));
-		btnWelcomeView.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JPView.setVisible(true);
-				JPWelcome.setVisible(false);
-			}
-		});
-		btnWelcomeView.setBounds(365, 392, 161, 64);
-		JPWelcome.add(btnWelcomeView);
 
 		// Finish button on Welcome panel makes Finish panel visible
 		JButton btnWelcomeFinish = new JButton("Finish");
@@ -486,7 +471,7 @@ public class MesosticsMachineGUI {
 		// Next Word (Longer) button
 		JButton btnNextWordLonger = new JButton("Next Word");
 		btnNextWordLonger.setFont(new Font("Tahoma", Font.PLAIN, 42));
-		btnNextWordLonger.setBounds(278, 130, 307, 74);
+		btnNextWordLonger.setBounds(261, 130, 368, 74);
 		btnNextWordLonger.addActionListener(new ActionListener() {
 
 			@Override
@@ -513,7 +498,7 @@ public class MesosticsMachineGUI {
 		// Next Mesostic (Longer) button
 		JButton btnNextMesosticLonger = new JButton("Next Mesostic");
 		btnNextMesosticLonger.setFont(new Font("Tahoma", Font.PLAIN, 42));
-		btnNextMesosticLonger.setBounds(278, 216, 307, 74);
+		btnNextMesosticLonger.setBounds(261, 216, 368, 74);
 		btnNextMesosticLonger.addActionListener(new ActionListener() {
 
 			@Override
@@ -538,9 +523,9 @@ public class MesosticsMachineGUI {
 		JPMesosticsLonger.add(btnNextMesosticLonger);
 
 		// The Next Chapter (Longer) button
-		JButton btnNextChapterLonger = new JButton("Next Chapter");
+		JButton btnNextChapterLonger = new JButton("Whole Chapter");
 		btnNextChapterLonger.setFont(new Font("Tahoma", Font.PLAIN, 42));
-		btnNextChapterLonger.setBounds(278, 302, 307, 74);
+		btnNextChapterLonger.setBounds(261, 302, 368, 74);
 		btnNextChapterLonger.addActionListener(new ActionListener() {
 
 			@Override
@@ -567,7 +552,7 @@ public class MesosticsMachineGUI {
 		// The Multiple Chapters (Longer) button
 		JButton btnAllChaptersLonger = new JButton("Multiple Chapters");
 		btnAllChaptersLonger.setFont(new Font("Tahoma", Font.PLAIN, 42));
-		btnAllChaptersLonger.setBounds(278, 388, 307, 74);
+		btnAllChaptersLonger.setBounds(261, 388, 368, 74);
 		btnAllChaptersLonger.addActionListener(new ActionListener() {
 
 			@Override
@@ -631,7 +616,7 @@ public class MesosticsMachineGUI {
 		// Next Word (Shorter) button
 		JButton btnNextWordShorter = new JButton("Next Word");
 		btnNextWordShorter.setFont(new Font("Tahoma", Font.PLAIN, 42));
-		btnNextWordShorter.setBounds(300, 125, 290, 61);
+		btnNextWordShorter.setBounds(256, 125, 378, 61);
 		btnNextWordShorter.addActionListener(new ActionListener() {
 
 			@Override
@@ -663,7 +648,7 @@ public class MesosticsMachineGUI {
 
 		// The Next Mesostic (Shorter) button
 		JButton btnNextMesosticShorter = new JButton("Next Mesostic");
-		btnNextMesosticShorter.setBounds(300, 221, 290, 61);
+		btnNextMesosticShorter.setBounds(256, 221, 378, 61);
 		btnNextMesosticShorter.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		btnNextMesosticShorter.addActionListener(new ActionListener() {
 
@@ -676,7 +661,7 @@ public class MesosticsMachineGUI {
 					MesosticFiltered nextMesosticFiltered = new MesosticFiltered(RowAddress, ChapterAddress, Mesostics, nextWord);
 					ArrayList<String[]> outputList = nextMesosticFiltered.NextItem();
 					nextMesosticFiltered.Write(outputList);
-					ChapterArrayIndex = nextMesosticFiltered.AdvanceChapterWord(outputList.get(new Integer(RowArray.length).intValue() - 1)[0]);
+					ChapterArrayIndex = nextMesosticFiltered.AdvanceChapterWord(outputList.get(8)[0]);
 
 					// catches redirect user to the setup window
 				} catch (IOException e1) {
@@ -693,8 +678,8 @@ public class MesosticsMachineGUI {
 		JPMesosticsShorter.add(btnNextMesosticShorter);
 
 		// The Next Chapter (Shorter) button
-		JButton btnNextChapterShorter = new JButton("Next Chapter");
-		btnNextChapterShorter.setBounds(300, 313, 290, 61);
+		JButton btnNextChapterShorter = new JButton("Whole Chapter");
+		btnNextChapterShorter.setBounds(256, 313, 378, 61);
 		btnNextChapterShorter.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		btnNextChapterShorter.addActionListener(new ActionListener() {
 
@@ -716,7 +701,14 @@ public class MesosticsMachineGUI {
 						e1.printStackTrace();
 						JOptionPane.showMessageDialog(null,
 								"Internet connection interrupted" + "\nClose programme and start over");
+					}catch (ArrayIndexOutOfBoundsException e1) {
+						e1.printStackTrace();
+						JOptionPane.showMessageDialog(null,
+								"Chapter Index Error.  End of chapter reached."
+										+ "\nMesostics complete for this chapter.");
 					}
+				
+				
 				}
 			
 		
@@ -724,8 +716,8 @@ public class MesosticsMachineGUI {
 		JPMesosticsShorter.add(btnNextChapterShorter);
 
 		// Multiple Chapters button
-		JButton btnAllChaptersShorter = new JButton("All Chapters");
-		btnAllChaptersShorter.setBounds(300, 404, 290, 61);
+		JButton btnAllChaptersShorter = new JButton("Multiple Chapters");
+		btnAllChaptersShorter.setBounds(256, 404, 378, 61);
 		btnAllChaptersShorter.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		btnAllChaptersShorter.addActionListener(new ActionListener() {
 
@@ -733,7 +725,7 @@ public class MesosticsMachineGUI {
 			public void actionPerformed(ActionEvent e) {
 
 				JOptionPane.showMessageDialog(null,
-						"This function not operational." + "\nCurrent functioning of webdriver is too slow and fragile."
+						"This function not operational." + "\nCurrent functioning of webdriver is too slow."
 								+ "\nBetter to make one chapter at a time.");
 			}
 		});
@@ -760,7 +752,7 @@ public class MesosticsMachineGUI {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-
+					
 					Sounds sound = new Sounds(OEDSounds, ChapterAddress, Sounds);
 					ArrayList<String[]> outputList = new ArrayList<String[]>();
 					outputList = sound.NextItem();
@@ -785,10 +777,12 @@ public class MesosticsMachineGUI {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					Places place = new Places(ChapterAddress, NotPlaces, Places);
+					Places place = new Places(NotPlaces, ChapterAddress, Places);
 					ArrayList<String[]> outputList = new ArrayList<String[]>();
+					ArrayList<String[]> outputListNonPlacesRemoved = new ArrayList<String[]>();
 					outputList = place.NextItem();
-					place.Write(outputList);
+					outputListNonPlacesRemoved = place.NonPlacesRemoved(outputList);
+					place.Write(outputListNonPlacesRemoved);
 
 					// catch redirects user to the setup window
 				} catch (IOException e1) {
@@ -827,7 +821,7 @@ public class MesosticsMachineGUI {
 		JPFinish.add(lblWelcomeToFinish);
 
 		// this button calls the AdjacentWordAdder object
-		JButton btnAddWords = new JButton("Add Adjacent Words");
+		JButton btnAddWords = new JButton("With Adjacent Words");
 		btnAddWords.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -843,12 +837,12 @@ public class MesosticsMachineGUI {
 
 			}
 		});
-		btnAddWords.setBounds(22, 108, 409, 61);
+		btnAddWords.setBounds(22, 108, 446, 61);
 		btnAddWords.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		JPFinish.add(btnAddWords);
 
 		// this button calls the MesosticCentredLines object
-		JButton btnCentreMesosticLines = new JButton("Centre Lines");
+		JButton btnCentreMesosticLines = new JButton("With Centred Lines");
 		btnCentreMesosticLines.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -865,9 +859,34 @@ public class MesosticsMachineGUI {
 				}
 			}
 		});
-		btnCentreMesosticLines.setBounds(22, 181, 271, 61);
+		btnCentreMesosticLines.setBounds(22, 181, 446, 61);
 		btnCentreMesosticLines.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		JPFinish.add(btnCentreMesosticLines);
+		
+		// this button calls the WithIndexRemoved  method
+		JButton btnWithIndexRemoved = new JButton("With Index Removed");
+		btnWithIndexRemoved.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				MesosticsFinished mesosticsFinished;
+				try {
+					mesosticsFinished = new MesosticsFinished(Mesostics, MesosticsFinished, ChapterAddress);
+					mesosticsFinished.WithIndexRemoved();
+					
+				} catch (IOException e1) {
+					
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "An error has occurred." + "\nSetup may be incorrect."
+							+ "\nClose programme and return to Setup");
+				}		
+			}
+		});
+		
+		btnWithIndexRemoved.setFont(new Font("Tahoma", Font.PLAIN, 42));
+		btnWithIndexRemoved.setBounds(22, 266, 446, 61);
+		JPFinish.add(btnWithIndexRemoved);
 
 		// this button calls the Collation object for sounds
 		JButton btnCollateSounds = new JButton("Collate Sounds");
@@ -916,7 +935,7 @@ public class MesosticsMachineGUI {
 			}
 		});
 		btnGetSentence.setFont(new Font("Tahoma", Font.PLAIN, 42));
-		btnGetSentence.setBounds(266, 282, 358, 61);
+		btnGetSentence.setBounds(269, 351, 358, 61);
 		JPFinish.add(btnGetSentence);
 
 		// the Sentence subpanel and its label
@@ -974,7 +993,6 @@ public class MesosticsMachineGUI {
 		btnWordIndexSubmit.setFont(new Font("Tahoma", Font.PLAIN, 42));
 		btnWordIndexSubmit.setBounds(303, 240, 183, 59);
 		JPSentence.add(btnWordIndexSubmit);
-		frame.getContentPane().add(JPView);
 
 		/*
 		 * The Get Sentences button writes all the sentences for indexed words
@@ -991,14 +1009,15 @@ public class MesosticsMachineGUI {
 					sentencesOfSounds.Write();
 					
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, "An error has occurred." + "\nSetup may be incorrect."
+							+ "\nClose programme and return to Setup");
 					e1.printStackTrace();
 				}
 
 			}
 		});
 		btnGetSentences.setFont(new Font("Tahoma", Font.PLAIN, 42));
-		btnGetSentences.setBounds(266, 364, 358, 61);
+		btnGetSentences.setBounds(269, 424, 358, 61);
 		JPFinish.add(btnGetSentences);
 
 		// all done buttons return to Welcome panel
@@ -1012,79 +1031,5 @@ public class MesosticsMachineGUI {
 		btnFinishDone.setBounds(777, 498, 82, 36);
 		btnFinishDone.setFont(new Font("Tahoma", Font.PLAIN, 21));
 		JPFinish.add(btnFinishDone);
-
-		// END OF FINISH PANEL CODE; BEGINNING OF VIEW PANELS CODE
-
-		/*
-		 * The View card has one button that opens up a "txt file only"
-		 * filechooser on the directory and opens the selected file with
-		 * notepad.exe
-		 * 
-		 * NOTE: THE LOCATION OF notepad.exe IS HARD CODED HERE THE USER'S
-		 * COMPUTER MAY STORE notepad.exe SOMEWHERE ELSE OR THE USER MAY WISH TO
-		 * USE A DIFFERENT PROGRAM To OPEN FILES
-		 * 
-		 */
-
-		// initialize the View panel and its label
-		JPView.setLayout(null);
-		JPView.setVisible(false);// default = not visible
-		JLabel lblWelcomeToView = new JLabel("Open a file in your directory");
-		lblWelcomeToView.setFont(new Font("Tahoma", Font.PLAIN, 42));
-		lblWelcomeToView.setBounds(172, 0, 544, 63);
-		JPView.add(lblWelcomeToView);
-
-		/*
-		 * The Open button calls a fileChooser which uses notepad.exe to open
-		 * the selected file
-		 */
-		JButton btnOpen = new JButton("Open");
-		btnOpen.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				JPView.setVisible(false);
-				JFileChooser JFCChapter = new JFileChooser();
-				JFileChooser fileChooserOpen = new JFileChooser();
-				fileChooserOpen.setBounds(0, 0, 438, 241);
-				fileChooserOpen.setCurrentDirectory(new File(Directory));
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("txt file", "txt");
-				fileChooserOpen.setFileFilter(filter);
-
-				if (fileChooserOpen.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-
-					String selected = fileChooserOpen.getSelectedFile().getAbsolutePath();
-					Runtime runtime = Runtime.getRuntime();
-					try {
-						runtime.exec("C:\\windows\\system32\\notepad.exe" + " " + selected);
-					} catch (IOException e1) {
-
-						e1.printStackTrace();
-					}
-					JPSetup.setVisible(false);
-
-				}
-
-				else if (JFCChapter.showOpenDialog(null) == JFileChooser.CANCEL_OPTION) {
-					
-					JPView.setVisible(false);
-					JPWelcome.setVisible(true);
-
-				}
-			}
-		});
-		btnOpen.setFont(new Font("Tahoma", Font.PLAIN, 42));
-		btnOpen.setBounds(339, 160, 159, 93);
-		JPView.add(btnOpen);
-
-		// all the done buttons make the welcome panel visible
-		JButton btnViewDone = new JButton("Done");
-		btnViewDone.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JPView.setVisible(false);
-				JPWelcome.setVisible(true);
-			}
-		});
-		btnViewDone.setBounds(651, 485, 143, 35);
-		JPView.add(btnViewDone);
 	}
 }
