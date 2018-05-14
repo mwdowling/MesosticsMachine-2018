@@ -66,7 +66,7 @@ public class MesosticsMachineGUI {
 	private JPanel JPInfo;
 	
 	private JPanel JPRun;// the run panel
-	//panels behind the ru panel buttons
+	//panels behind the run panel buttons
 	private JPanel JPMesosticsLonger; 
 	private JPanel JPMesosticsShorter;
 	private JPanel JPFinish;
